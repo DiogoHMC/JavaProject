@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.osgi_3.18.200.v20221116-1324.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.osgi_3.18.200.v20221116-1324.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.core.commands_3.10.300.v20221024-2137.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.core.commands_3.10.300.v20221024-2137.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.equinox.common_3.17.0.v20221108-1156.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.equinox.common_3.17.0.v20221108-1156.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.equinox.registry_3.11.200.v20220817-1601.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.equinox.registry_3.11.200.v20220817-1601.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.core.runtime_3.26.100.v20221021-0005.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.core.runtime_3.26.100.v20221021-0005.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.text_3.12.300.v20220921-1010.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.text_3.12.300.v20220921-1010.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.swt.win32.win32.x86_64_3.122.0.v20221123-2302.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.swt.win32.win32.x86_64_3.122.0.v20221123-2302.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.jface_3.28.0.v20221024-1426.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.jface_3.28.0.v20221024-1426.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.jface.text_3.22.0.v20221119-1047.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.jface.text_3.22.0.v20221119-1047.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.ui.workbench_3.127.0.v20221024-2137.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.ui.workbench_3.127.0.v20221024-2137.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/com.ibm.icu_73.2.0.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/com.ibm.icu_73.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.ui.forms_3.11.500.v20221024-2137.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.ui.forms_3.11.500.v20221024-2137.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/javax.annotation_1.3.5.v20221112-0806.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/javax.annotation_1.3.5.v20221112-0806.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mgand/.p2/pool/plugins/org.eclipse.e4.ui.di_1.4.100.v20221024-2137.jar" sourcepath="C:/Users/mgand/.p2/pool/plugins/org.eclipse.e4.ui.di_1.4.100.v20221024-2137.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
