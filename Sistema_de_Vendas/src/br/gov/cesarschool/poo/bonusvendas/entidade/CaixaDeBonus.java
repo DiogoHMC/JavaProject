@@ -3,10 +3,12 @@ import java.time.LocalDateTime;
 
 public class CaixaDeBonus {
 	
+	/* attribute  */
 	private long numeros;
 	private double saldo;
 	private LocalDateTime dataHoraAtualizacao;
 	
+	/* constructor */ 
 	public CaixaDeBonus(long numeros, double saldo) {
 			
 		this.numeros = numeros;

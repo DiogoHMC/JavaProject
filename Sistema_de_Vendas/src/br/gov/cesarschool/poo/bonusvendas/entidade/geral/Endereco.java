@@ -3,6 +3,7 @@ import java.lang.String;
 
 public class Endereco {
 	
+	/* attribute  */
 	private String logradouro;
 	private int numero;
 	private String complemento;
@@ -11,6 +12,7 @@ public class Endereco {
 	private String estado;
 	private String pais;
 	
+	/* constructor */ 
 	public Endereco(String logradouro, int numero, String complemento, String cep, String cidade, String estado, String pais) {
 		
 		this.logradouro = logradouro;
