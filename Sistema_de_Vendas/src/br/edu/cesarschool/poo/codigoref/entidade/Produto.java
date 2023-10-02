@@ -1,6 +1,5 @@
 package br.edu.cesarschool.poo.codigoref.entidade;
 
-import java.lang.String;
 import java.io.Serializable;
 
 public class Produto implements Serializable {

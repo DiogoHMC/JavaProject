@@ -1,9 +1,9 @@
 package br.edu.cesarschool.poo.codigoref.entidade;
 
-import java.lang.String;
 /**
  * Pesquisar sobre "enum" em Java, ler sobre e se inteirar do assunto
  */
+
 public enum TipoProduto {
 	
 	ALIMENTO(1, "Alimento"), 

@@ -1,8 +1,5 @@
 package br.edu.cesarschool.poo.codigoref.entidade;
 
-import java.lang.String;
-
-
 public class ProdutoPerecivel extends Produto {
 	
 	private int prazoValidade;
