@@ -1,6 +1,6 @@
-# JavaProject
+# Sistema de Vendas
 
-Projeto em desenvolvimento para disciplina POO - Programação Orientada a Objeto - do curso de Ciência de Computação da Faculdade César School. SisVenda é um sistema de controle de bonificação em vendas.
+Projeto em desenvolvimento para disciplina POO - Programação Orientada a Objeto - do curso de Ciência de Computação da Faculdade CESAR School. Sistema_De_Vendas é um sistema de controle de bonificação em vendas.
 
 O sistema permitirá que o vendedor acumule bônus proporcional às suas vendas e estes bônus poderão ser resgatados para compra de produtos, serviços ou saque em cash. 
 
