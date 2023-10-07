@@ -9,6 +9,8 @@ O sistema permitirá que o vendedor acumule bônus proporcional às suas vendas 
 # Tecnologias utilizadas
 * Java
 * Programação Orientada a Objeto
+* Eclipse IDE
+* JUnit
 
 # Colaboradores
 
