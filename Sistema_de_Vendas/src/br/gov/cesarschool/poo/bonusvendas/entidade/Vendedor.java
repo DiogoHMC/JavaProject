@@ -1,7 +1,10 @@
 package br.gov.cesarschool.poo.bonusvendas.entidade;
 
-public class Vendedor {
+import java.io. Serializable;
+
+public class Vendedor implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String cpf;
 	private String nomeCompleto;
 	private br.gov.cesarschool.poo.bonusvendas.entidade.geral.Sexo sexo;
