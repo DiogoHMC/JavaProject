@@ -27,5 +27,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/PersistenciaObjetos.jar"/>
 	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/PersistenciaObjetos.jar"/>
+	<classpathentry kind="lib" path="/Users/Sofia1/Desktop/PersistenciaObjetos.jar"/>
+	<classpathentry kind="lib" path="/Users/Sofia1/Documents/Codigos/PersistenciaObjetos.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
