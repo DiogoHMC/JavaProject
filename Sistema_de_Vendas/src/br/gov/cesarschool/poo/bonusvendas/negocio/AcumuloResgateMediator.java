@@ -27,7 +27,8 @@ public class AcumuloResgateMediator {
     
     
     public long gerarCaixaDeBonus(Vendedor vendedor) {
-    	String cpf = vendedor.getCpf();
+    	String cpf = vendedor.getCpf().replaceAll("[^0-9]", "");
+    	cpf = cpf.substring(0, cpf.length() - 2);
     	
     	
     	Date dataAtual = new Date();
