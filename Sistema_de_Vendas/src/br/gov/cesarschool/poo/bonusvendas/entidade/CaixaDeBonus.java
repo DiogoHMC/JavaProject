@@ -37,7 +37,7 @@ public class CaixaDeBonus implements Serializable{
         return dataHoraAtualizacao;
     }   
 	    
-	void creditar(double valor) {
+	public void creditar(double valor) {
 		
 			saldo = saldo + valor;
 		}
