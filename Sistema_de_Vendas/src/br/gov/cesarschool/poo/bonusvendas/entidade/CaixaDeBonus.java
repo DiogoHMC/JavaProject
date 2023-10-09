@@ -1,8 +1,14 @@
 package br.gov.cesarschool.poo.bonusvendas.entidade;
 import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class CaixaDeBonus {
+
+public class CaixaDeBonus implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/* attribute  */
 	private long numeros;
 	private double saldo;
@@ -31,7 +37,7 @@ public class CaixaDeBonus {
         return dataHoraAtualizacao;
     }   
 	    
-	void creditar(double valor) {
+	public void creditar(double valor) {
 		
 			saldo = saldo + valor;
 		}

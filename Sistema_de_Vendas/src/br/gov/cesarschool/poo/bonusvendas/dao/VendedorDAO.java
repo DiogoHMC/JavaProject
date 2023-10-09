@@ -17,6 +17,7 @@ public class VendedorDAO {
 			
 			return false;
 		} 
+		
 		else {
 			
 			cadastro.incluir(cpf, BRANCO + cpf.getCpf());
@@ -31,6 +32,7 @@ public class VendedorDAO {
 		if (prodBusca == null) {
 			return false;
 		} 
+		
 		else {
 			
 			cadastro.alterar(cpf, BRANCO + cpf.getCpf());
