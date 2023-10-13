@@ -39,7 +39,7 @@ public class VendedorMediator {
     	//Validar CPF
     	String cpfAtual = vendedor.getCpf();
     	if (StringUtil.ehNuloOuBranco(cpfAtual) == true)  {
-    	    return "CPF não informado";
+    	    return "CPF nao informado";
     	} else if (ValidadorCPF.ehCpfValido(cpfAtual) == false){
     		return "CPF invalido";
     	}
@@ -72,13 +72,24 @@ public class VendedorMediator {
      	    return "Renda menor que zero";
      	}
     	 
-    	 
     	// Validar Endereco
     	 Endereco enderecoAtual = vendedor.getEndereco();
     	 if (enderecoAtual == null) {
     	     return "Endereco nao informado";
     	 }
 
+    	 // Validar logradouro
+    	 if (StringUtil.ehNuloOuBranco(enderecoAtual.getLogradouro()) == true) {
+    	     return "Logradouro nao informado";
+    	 } else if (enderecoAtual.getLogradouro().length() < 4) {
+    	     return "Logradouro tem menos de 04 caracteres";
+    	 }
+
+    	 // Validar numero
+    	 if (enderecoAtual.getNumero() < 0) {
+    	     return "Numero menor que zero";
+    	 }
+    	 
     	 // Validar Cidade
     	 if (StringUtil.ehNuloOuBranco(enderecoAtual.getCidade()) == true) {
     	     return "Cidade nao informada";
@@ -89,21 +100,9 @@ public class VendedorMediator {
     	     return "Estado nao informado";
     	 }
 
-    	 // Validar logradouro
-    	 if (StringUtil.ehNuloOuBranco(enderecoAtual.getLogradouro()) == true) {
-    	     return "Logradouro nao informado";
-    	 } else if (enderecoAtual.getLogradouro().length() < 4) {
-    	     return "Logradouro tem menos de 04 caracteres";
-    	 }
-
     	 // Validar pais
     	 if (StringUtil.ehNuloOuBranco(enderecoAtual.getPais()) == true) {
     	     return "Pais nao informado";
-    	 }
-
-    	 // Validar numero
-    	 if (enderecoAtual.getNumero() < 0) {
-    	     return "Numero menor que zero";
     	 }
 
     	return null;
@@ -124,32 +123,32 @@ public class VendedorMediator {
         	
         	/* validação VPF */
         	if (StringUtil.ehNuloOuBranco(vendedor.getCpf())){
-        		return new ResultadoInclusaoVendedor(0,"CPF não informado");
+        		return new ResultadoInclusaoVendedor(0,"CPF nao informado");
         	}
         	
         	if (!ValidadorCPF.ehCpfValido(vendedor.getCpf())) {
-        		return new ResultadoInclusaoVendedor(0, "CPF inválido");
+        		return new ResultadoInclusaoVendedor(0, "CPF invalido");
         	}
         	
         	/* validação do nome completo */
         	if (StringUtil.ehNuloOuBranco(vendedor.getNomeCompleto())){
-        		return new ResultadoInclusaoVendedor(0, "Nome completo não informado");
+        		return new ResultadoInclusaoVendedor(0, "Nome completo nao informado");
         	}
         	
         	/* validação sexo */
         	if (vendedor.getSexo() == null) {
-        		return new ResultadoInclusaoVendedor(0,"Sexo não informado");
+        		return new ResultadoInclusaoVendedor(0,"Sexo nao informado");
         	}
         	
         	/* validação data de nascimento */
         	if (vendedor.getDataNascimento() == null) {
-        		return new ResultadoInclusaoVendedor(0,"Data de nascimento não informado");
+        		return new ResultadoInclusaoVendedor(0,"Data de nascimento nao informado");
         	} else {
         		LocalDate dataAtual = LocalDate.now();
         		LocalDate dataNascimento = vendedor.getDataNascimento();
         		Period idade = Period.between(dataNascimento, dataAtual);
         		if (idade.getYears() < 17) {
-        			return new ResultadoInclusaoVendedor(0, "Data de nascimento menor ou igual à data atual menos 17 anos");
+        			return new ResultadoInclusaoVendedor(0, "Data de nascimento invalida");
         		}
         	}
         	
@@ -160,12 +159,12 @@ public class VendedorMediator {
         	
         	/* validação do Endereço */
         	if (vendedor.getEndereco() == null) {
-        		return new ResultadoInclusaoVendedor(0, "Endereço não informado");
+        		return new ResultadoInclusaoVendedor(0, "Endereco nao informado");
         	} else {
         		
         		/* validacao do logradouro */
         		if (StringUtil.ehNuloOuBranco(vendedor.getEndereco().getLogradouro())) {
-        			return new ResultadoInclusaoVendedor(0, "Logradouro não informado");
+        			return new ResultadoInclusaoVendedor(0, "Logradouro nao informado");
         		}
         		if (vendedor.getEndereco().getLogradouro().length() < 4) {
         			return new ResultadoInclusaoVendedor(0, "Logradouro tem menos de 04 caracteres");
@@ -219,23 +218,23 @@ public class VendedorMediator {
     public String alterar(Vendedor vendedor) {
         
         if (vendedor == null) {
-            return "Vendedor nulo não pode ser alterado.";
+            return "Vendedor nulo nao pode ser alterado.";
         }
 
         
         if (vendedor.getNomeCompleto() == null || vendedor.getNomeCompleto().isEmpty()) {
-            return "Nome do vendedor é obrigatório.";
+            return "Nome do vendedor e obrigatorio.";
         }
 
         if (vendedor.getCpf() == null || vendedor.getCpf().isEmpty()) {
-            return "CPF do vendedor é obrigatório.";
+            return "CPF do vendedor e obrigatorio.";
         }
 
       
         Vendedor vendedorExistente = buscar(vendedor.getCpf());
         
         if (vendedorExistente == null) {
-            return "Vendedor com CPF " + vendedor.getCpf() + " não encontrado no repositório.";
+            return "Vendedor com CPF " + vendedor.getCpf() + " nao encontrado no repositorio.";
         }
 
        
