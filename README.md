@@ -1,8 +1,6 @@
 # Sistema de Vendas
 
-Projeto em desenvolvimento para disciplina POO - Programação Orientada a Objeto - do curso de Ciência de Computação da Faculdade CESAR School. Sistema_De_Vendas é um sistema de controle de bonificação em vendas.
-
-O sistema permitirá que o vendedor acumule bônus proporcional às suas vendas e estes bônus poderão ser resgatados para compra de produtos, serviços ou saque em cash. 
+Projeto em desenvolvimento para disciplina POO - Programação Orientada a Objeto - do curso de Ciência de Computação da Faculdade CESAR School. **Sistema de Vendas** é um sistema de controle de bonificação em vendas que permitirá que o vendedor acumule bônus proporcional às suas vendas e estes bônus poderão ser resgatados para compra de produtos, serviços ou saque em cash. 
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
