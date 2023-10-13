@@ -36,5 +36,37 @@ public class VendedorMediator {
             return null; // Retorne null em caso de erro
         }
     }
+    
+    public String alterar(Vendedor vendedor) {
+        
+        if (vendedor == null) {
+            return "Vendedor nulo não pode ser alterado.";
+        }
+
+        
+        if (vendedor.getNomeCompleto() == null || vendedor.getNomeCompleto().isEmpty()) {
+            return "Nome do vendedor é obrigatório.";
+        }
+
+        if (vendedor.getCpf() == null || vendedor.getCpf().isEmpty()) {
+            return "CPF do vendedor é obrigatório.";
+        }
+
+      
+        Vendedor vendedorExistente = buscar(vendedor.getCpf());
+        
+        if (vendedorExistente == null) {
+            return "Vendedor com CPF " + vendedor.getCpf() + " não encontrado no repositório.";
+        }
+
+       
+        try {
+            vendedorCons.alterar(vendedor);
+            return null; 
+        } 
+        catch (Exception e) {
+            return "Erro ao atualizar o vendedor: " + e.getMessage();
+        }
+    }
 
 }
