@@ -134,26 +134,73 @@ public class VendedorMediator {
         }
     }
     
+    
     public String alterar(Vendedor vendedor) {
         
-        if (vendedor == null) {
-            return "Vendedor nulo não pode ser alterado.";
+        if (StringUtil.ehNuloOuBranco(vendedor.getCpf())) {
+            return "CPF nao informado";
         }
-
         
-        if (vendedor.getNomeCompleto() == null || vendedor.getNomeCompleto().isEmpty()) {
-            return "Nome do vendedor é obrigatório.";
+        if (!ValidadorCPF.ehCpfValido(vendedor.getCpf())) {
+            return "CPF invalido";
+        }
+        
+        if (StringUtil.ehNuloOuBranco(vendedor.getNomeCompleto())) {
+            return "Nome completo nao informado";
+        }
+        
+        if (vendedor.getSexo() == null) {
+            return "Sexo nao informado";
+        }
+        
+        if (vendedor.getDataNascimento() == null) {
+            return "Data de nascimento nao informada";
+        } else {
+            LocalDate dataAtual = LocalDate.now();
+            LocalDate dataNascimento = vendedor.getDataNascimento();
+            Period idade = Period.between(dataNascimento, dataAtual);
+            if (idade.getYears() < 17) {
+                return "Data de nascimento invalida";
+            }
+        }
+        
+        if (vendedor.getRenda() < 0) {
+            return "Renda menor que zero";
+        }
+        
+        if (vendedor.getEndereco() == null) {
+            return "Endereco nao informado";
+        } else {
+            
+            if (StringUtil.ehNuloOuBranco(vendedor.getEndereco().getLogradouro())) {
+                return "Logradouro nao informado";
+            }
+            if (vendedor.getEndereco().getLogradouro().length() < 4) {
+                return "Logradouro tem menos de 04 caracteres";
+            }
+            
+            if (vendedor.getEndereco().getNumero() < 0) {
+                return "Numero menor que zero";
+            }
+            
+            if (StringUtil.ehNuloOuBranco(vendedor.getEndereco().getCidade())) {
+                return "Cidade nao informada";
+            }
+            
+            if (StringUtil.ehNuloOuBranco(vendedor.getEndereco().getEstado())) {
+                return "Estado nao informado";
+            }
+            
+            if (StringUtil.ehNuloOuBranco(vendedor.getEndereco().getPais())) {
+                return "Pais nao informado";
+            }       
+            
         }
 
-        if (vendedor.getCpf() == null || vendedor.getCpf().isEmpty()) {
-            return "CPF do vendedor é obrigatório.";
-        }
-
-      
         Vendedor vendedorExistente = buscar(vendedor.getCpf());
         
         if (vendedorExistente == null) {
-            return "Vendedor com CPF " + vendedor.getCpf() + " não encontrado no repositório.";
+            return "Vendedor inexistente";
         }
 
        
@@ -165,5 +212,6 @@ public class VendedorMediator {
             return "Erro ao atualizar o vendedor: " + e.getMessage();
         }
     }
+
 
 }
