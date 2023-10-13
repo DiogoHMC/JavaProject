@@ -9,7 +9,6 @@ public class ResultadoInclusaoVendedor {
     	this.mensagemErroValidacao = mensagem;
     }
     
-    
     public long getNumeroCaixaDeBonus() {
     	return this.numeroCaixaDeBonus;
     }

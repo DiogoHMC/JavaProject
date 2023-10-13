@@ -51,14 +51,14 @@ public class AcumuloResgateMediator {
     
     public String acumularBonus(long numeroCaixaDeBonus, double valor) {
     	if (valor <= 0) {
-            return "Erro: O valor deve ser maior que zero.";
+            return "Valor menor ou igual a zero";
         }
     	
     	
     	CaixaDeBonus caixaDeBonus = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
     	
     	if (caixaDeBonus == null) {
-            return "Erro: Caixa de bonus inexistente.";
+            return "Caixa de bonus inexistente";
         }
     	
     	
@@ -75,17 +75,17 @@ public class AcumuloResgateMediator {
     
     public String resgatar(long numeroCaixaDeBonus, double valor, TipoResgate tipo) {
     	if (valor <= 0) {
-            return "Erro: O valor deve ser maior que zero.";
+            return "Valor menor ou igual a zero";
         }
     	
     	CaixaDeBonus caixaDeBonus = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
     	
     	if (caixaDeBonus == null) {
-            return "Erro: Caixa de bonus inexistente.";
+            return "Caixa de bonus inexistente";
         }
     	
     	if (caixaDeBonus.getSaldo() < valor) {
-            return "Erro: Saldo insuficiente.";
+            return "Saldo insuficiente";
         }
     	
     	caixaDeBonus.debitar(valor);
