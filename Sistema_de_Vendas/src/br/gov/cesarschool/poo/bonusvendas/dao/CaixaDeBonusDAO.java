@@ -28,6 +28,20 @@ public class CaixaDeBonusDAO {
 		}		 
 	}
 	
+	public boolean excluir(CaixaDeBonus prod) {
+		CaixaDeBonus prodBusca = buscar(prod.getNumeros()); 
+    	
+    	 if (prodBusca == null) {
+    		 
+	        return false;
+	    }
+    	 else {
+    		 
+	        cadastro.excluir(prod, BRANCO + prod.getNumeros());
+	        return true;
+	    }
+    }
+	
 	public boolean alterar(CaixaDeBonus prod) {
 			
 		CaixaDeBonus prodBusca = buscar(prod.getNumeros());

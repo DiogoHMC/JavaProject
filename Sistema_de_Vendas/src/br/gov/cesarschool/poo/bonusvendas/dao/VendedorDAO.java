@@ -25,6 +25,20 @@ public class VendedorDAO {
 		}
     }
     
+    public boolean excluir(Vendedor cpf) {
+    	Vendedor prodBusca = buscar(cpf.getCpf()); 
+    	
+    	 if (prodBusca == null) {
+    		 
+	        return false;
+	    }
+    	 else {
+    		 
+	        cadastro.excluir(cpf, BRANCO + cpf.getCpf());
+	        return true;
+	    }
+    }
+    
     public boolean alterar(Vendedor cpf) {
     	
     	Vendedor prodBusca = buscar(cpf.getCpf());

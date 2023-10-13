@@ -26,6 +26,22 @@ public class LancamentoBonusDAO {
 		}		 
 	}
 	
+	public boolean excluir(LancamentoBonus prod) {
+		
+		long timestamp = prod.getDataHoraLancamento().toEpochSecond(java.time.ZoneOffset.UTC);
+		LancamentoBonus prodBusca = buscar(timestamp);
+    	
+    	 if (prodBusca == null) {
+    		 
+	        return false;
+	    }
+    	 else {
+    		 
+	        cadastro.excluir(prod, BRANCO + timestamp);
+	        return true;
+	    }
+    }
+	
 	public boolean alterar(LancamentoBonus prod) {
 		
 		long timestamp = prod.getDataHoraLancamento().toEpochSecond(java.time.ZoneOffset.UTC);
@@ -44,7 +60,6 @@ public class LancamentoBonusDAO {
 	}
 	public LancamentoBonus buscar(long timestamp) {
 		
-		// Esta operação entre () vai ter significado mais à frente! 
 		return (LancamentoBonus)cadastro.buscar(BRANCO + timestamp);
 	}
 	
@@ -55,7 +70,6 @@ public class LancamentoBonusDAO {
 		
 		for(int i=0; i<rets.length; i++) {
 			
-			// Esta operação entre () vai ter significado mais à frente! 
 			prods[i] = (LancamentoBonus)rets[i];
 		}
 		
