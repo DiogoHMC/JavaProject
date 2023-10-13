@@ -58,7 +58,7 @@ public class AcumuloResgateMediator {
     	CaixaDeBonus caixaDeBonus = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
     	
     	if (caixaDeBonus == null) {
-            return "Erro: Caixa de bônus não encontrada.";
+            return "Erro: Caixa de bonus inexistente.";
         }
     	
     	
@@ -81,11 +81,11 @@ public class AcumuloResgateMediator {
     	CaixaDeBonus caixaDeBonus = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
     	
     	if (caixaDeBonus == null) {
-            return "Erro: Caixa de bônus não encontrada.";
+            return "Erro: Caixa de bonus inexistente.";
         }
     	
     	if (caixaDeBonus.getSaldo() < valor) {
-            return "Erro: Saldo insuficiente para o resgate.";
+            return "Erro: Saldo insuficiente.";
         }
     	
     	caixaDeBonus.debitar(valor);
