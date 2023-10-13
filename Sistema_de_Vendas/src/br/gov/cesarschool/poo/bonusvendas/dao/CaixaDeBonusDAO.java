@@ -37,7 +37,7 @@ public class CaixaDeBonusDAO {
 	    }
     	 else {
     		 
-	        cadastro.excluir(prod, BRANCO + prod.getNumeros());
+	        cadastro.excluir(BRANCO + prod.getNumeros());
 	        return true;
 	    }
     }

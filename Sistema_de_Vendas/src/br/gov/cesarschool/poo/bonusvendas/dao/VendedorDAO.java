@@ -34,7 +34,7 @@ public class VendedorDAO {
 	    }
     	 else {
     		 
-	        cadastro.excluir(cpf, BRANCO + cpf.getCpf());
+	        cadastro.excluir(BRANCO + cpf.getCpf());
 	        return true;
 	    }
     }

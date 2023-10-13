@@ -37,7 +37,7 @@ public class LancamentoBonusDAO {
 	    }
     	 else {
     		 
-	        cadastro.excluir(prod, BRANCO + timestamp);
+	        cadastro.excluir(BRANCO + timestamp);
 	        return true;
 	    }
     }
