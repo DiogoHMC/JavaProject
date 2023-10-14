@@ -9,8 +9,6 @@ import javax.swing.JOptionPane;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.DateTime;
@@ -27,9 +25,9 @@ public class TelaCadastroGUI {
 
 	protected Shell shlTelaDeCdastro;
 	
-	VendedorDAO vendedorDAO = new VendedorDAO();
-	AcumuloResgateMediator acumuloResgateMediator = new AcumuloResgateMediator();
-	VendedorMediator mediator = VendedorMediator.getInstance(vendedorDAO, acumuloResgateMediator);
+	static VendedorDAO vendedorDAO = new VendedorDAO();
+	static AcumuloResgateMediator acumuloResgateMediator = new AcumuloResgateMediator();
+	static VendedorMediator mediator = VendedorMediator.getInstance(vendedorDAO, acumuloResgateMediator);
 	
 	private Text txtNome;
 	private Text txtRenda;
@@ -87,8 +85,8 @@ public class TelaCadastroGUI {
 		// Definição do Botão de IncluirAlterar
 		Button btnIncluirAlterar = new Button(shlTelaDeCdastro, SWT.NONE);
 		btnIncluirAlterar.setEnabled(false);
-		btnIncluirAlterar.setBounds(128, 241, 90, 30);
-		btnIncluirAlterar.setText("Incluir");
+		btnIncluirAlterar.setBounds(117, 241, 112, 30);
+		btnIncluirAlterar.setText("Incluir/Alterar");
 		
 		// Definição do Botão Buscar
 		Button btnBuscar = new Button(shlTelaDeCdastro, SWT.NONE);
@@ -252,39 +250,45 @@ public class TelaCadastroGUI {
 					txtCodigo.setText("");
 					txtRenda.setText("");
 					txtNome.setText("");
-					btnIncluirAlterar.setText("Incluir");
+					btnIncluirAlterar.setText("Alterar");
 				}
 			}
 		}); */
 
-		// Código do Botão de Buscar do Exemplo
-/*		btnBuscar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				Entidade ent = TelaExemploCadastro.mediator.buscar(txtCodigo.getText());
-				if (ent == null) {
-					JOptionPane.showMessageDialog(null, 
-					"Entidade n o existente!");
-				} else {
-					txtNome.setText(ent.getNome());
-					txtRenda.setText(ent.getRenda() + "");
-					btnIncluirAlterar.setText("Alterar");
-					btnIncluirAlterar.setEnabled(true);
-					btnCancelar.setEnabled(true);
-					txtNome.setEnabled(true);
-					txtRenda.setEnabled(true);
-					btnNovo.setEnabled(false);
-					btnBuscar.setEnabled(false);
-					txtCodigo.setEnabled(false);
-				}			
-			}
-		}); */
-		
-		btnNovo.addMouseListener(new MouseAdapter() {
+		// Código do Botão de Buscar
+		btnBuscar.addSelectionListener(new SelectionAdapter() {
 		    @Override
-		    public void mouseDown(MouseEvent e) {
+		    public void widgetSelected(SelectionEvent e) {
+		        String cpf = txtcpf.getText();
+
+		        if (cpf.isEmpty()) {
+		        	
+		            JOptionPane.showMessageDialog(null, "Informe um CPF válido para buscar um vendedor.");
+		            return;
+		        }
+
+		        Vendedor vendedor = mediator.buscar(cpf);
+
+		        if (vendedor != null) {
+		        	
+		            // Preencha os campos do formulário com os dados do vendedor encontrado
+		            txtNome.setText(vendedor.getNomeCompleto());
+		            txtRenda.setText(Double.toString(vendedor.getRenda()));
+
+		            // Resto do código para preencher os campos de endereço e outros dados...
+
+		            JOptionPane.showMessageDialog(null, "Vendedor encontrado com sucesso.");
+		        } 
 		        
-		        // Validação dos campos de entrada
+		        else {
+		            JOptionPane.showMessageDialog(null, "Vendedor não encontrado.");
+		        }
+		    }
+		});
+
+		btnNovo.addSelectionListener(new SelectionAdapter() {
+		    @Override
+		    public void widgetSelected(SelectionEvent e) {
 		        String cpf = txtcpf.getText();
 		        String nome = txtNome.getText();
 		        String rendaStr = txtRenda.getText();
@@ -297,61 +301,35 @@ public class TelaCadastroGUI {
 		        String pais = txtPais.getText();
 		        boolean sexoM = btnM.getSelection();
 		        boolean sexoF = btnF.getSelection();
+		        LocalDate dataNascimento = LocalDate.of(dateTime.getYear(), dateTime.getMonth() + 1, dateTime.getDay());
 
 		        if (cpf.isEmpty() || nome.isEmpty() || rendaStr.isEmpty() || logradouro.isEmpty() ||
 		            numeroStr.isEmpty() || complemento.isEmpty() || cep.isEmpty() || cidade.isEmpty() ||
 		            estado.isEmpty() || pais.isEmpty() || (!sexoM && !sexoF)) {
-		        	
-		            JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios.");
-		        } 
-		        
-		        else {
 
-		        	try {
-		        		
-		                double renda = Double.parseDouble(rendaStr);
-		                Sexo sexo = sexoM ? Sexo.MASCULINO : Sexo.FEMININO;
-		                LocalDate dataNascimento = LocalDate.of(dateTime.getYear(), dateTime.getMonth() + 1, dateTime.getDay());
-		                Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
+		            JOptionPane.showMessageDialog(null, "Campos obrigatórios faltando.");
+		            return;
+		        }
 
-		                Vendedor novoVendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
+		        try {
+		            double renda = Double.parseDouble(rendaStr);
+		            Sexo sexo = sexoM ? Sexo.MASCULINO : Sexo.FEMININO;
+		            Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
 
-		                // Chamada do método para inclusão do vendedor no Mediator.
-		                ResultadoInclusaoVendedor resultado = mediator.incluir(novoVendedor);
+		            Vendedor novoVendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
+		            ResultadoInclusaoVendedor resultado = mediator.incluir(novoVendedor);
 
-		                if (resultado.getNumeroCaixaDeBonus() > 0) {
-		                	
-		                    JOptionPane.showMessageDialog(null, "Vendedor incluído com sucesso. Número do caixa de bônus: " + resultado.getNumeroCaixaDeBonus());
-		                } 
-		                
-		                else {
-		                	
-		                    JOptionPane.showMessageDialog(null, "Erro ao incluir o vendedor: " + resultado.getMensagemErroValidacao());
-		                }
-		                
-		            } 
-		        	
-		        	catch (NumberFormatException ex) {
-		            	
-		                JOptionPane.showMessageDialog(null, "Erro: A renda deve ser um número válido.");
+		            if (resultado.getNumeroCaixaDeBonus() > 0) {
+		                JOptionPane.showMessageDialog(null, "Vendedor incluído com sucesso. Número do caixa de bônus: " + resultado.getNumeroCaixaDeBonus());
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Erro ao incluir o vendedor: " + resultado.getMensagemErroValidacao());
 		            }
+		        } catch (NumberFormatException ex) {
+		            JOptionPane.showMessageDialog(null, "Erro: A renda deve ser um número válido.");
 		        }
 		    }
 		});
-
-        // Código do Botão de Cancelar WIP
-        btnCancelar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseDown(MouseEvent e) {
-                btnCancelar.setEnabled(true);
-                txtNome.setEnabled(false);
-                txtRenda.setEnabled(false);
-                btnNovo.setEnabled(true);
-                txtRenda.setText("");
-                txtNome.setText("");
-            }
-        });
-
+		
         // Código do Botão de Limpar
         btnLimpar.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -368,6 +346,7 @@ public class TelaCadastroGUI {
                 txtCep.setText("");
                 txtCidade.setText("");
                 txtEstado.setText("");
+                txtPais.setText("");
             }
         });
 		
@@ -381,6 +360,7 @@ public class TelaCadastroGUI {
 		        }
 		    }
 		});
+		
 		btnF.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
@@ -390,5 +370,6 @@ public class TelaCadastroGUI {
 		        }
 		    }
 		});
+
 	}
 }
