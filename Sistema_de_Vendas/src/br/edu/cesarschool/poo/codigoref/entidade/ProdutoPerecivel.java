@@ -2,6 +2,10 @@ package br.edu.cesarschool.poo.codigoref.entidade;
 
 public class ProdutoPerecivel extends Produto {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int prazoValidade;
 
 	public ProdutoPerecivel(long codigo, String nome, double preco, TipoProduto tipo, int prazoValidade) {

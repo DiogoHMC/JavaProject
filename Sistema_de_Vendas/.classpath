@@ -24,8 +24,7 @@
 			<accessrule kind="accessible" pattern="com/sun/javafx/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/PersistenciaObjetos.jar"/>
-	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/oblesqbom.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/mgand/Downloads/PersistenciaObjetos.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

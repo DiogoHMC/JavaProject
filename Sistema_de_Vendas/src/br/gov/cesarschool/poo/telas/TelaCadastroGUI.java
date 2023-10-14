@@ -8,23 +8,22 @@ import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
-
-import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
-import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
-import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Sexo;
-import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
-import br.gov.cesarschool.poo.bonusvendas.negocio.VendedorMediator;
-
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.custom.ViewForm;
 
-public class TelaCadastrogui {
+import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
+import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Sexo;
+import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
+import br.gov.cesarschool.poo.bonusvendas.negocio.VendedorMediator;
+
+public class TelaCadastroGUI {
 
 	protected Shell shlTelaDeCdastro;
 	
@@ -41,14 +40,15 @@ public class TelaCadastrogui {
 	private Text txtCep;
 	private Text txtCidade;
 	private Text txtEstado;
-
+	private Text txtPais;
+	
 	/**
 	 * Launch the application.
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		try {
-			TelaCadastrogui window = new TelaCadastrogui();
+			TelaCadastroGUI window = new TelaCadastroGUI();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,34 +76,34 @@ public class TelaCadastrogui {
 	protected void createContents() {
 		
 		shlTelaDeCdastro = new Shell();
-		shlTelaDeCdastro.setSize(606, 323);
+		shlTelaDeCdastro.setSize(606, 340);
 		shlTelaDeCdastro.setText("Tela de cadastro");
 		
 		// Definição do Botão Novo
 		Button btnNovo = new Button(shlTelaDeCdastro, SWT.NONE);
-		btnNovo.setBounds(10, 223, 90, 30);
+		btnNovo.setBounds(10, 241, 90, 30);
 		btnNovo.setText("Novo");
 		
 		// Definição do Botão de IncluirAlterar
 		Button btnIncluirAlterar = new Button(shlTelaDeCdastro, SWT.NONE);
 		btnIncluirAlterar.setEnabled(false);
-		btnIncluirAlterar.setBounds(129, 223, 90, 30);
+		btnIncluirAlterar.setBounds(128, 241, 90, 30);
 		btnIncluirAlterar.setText("Incluir");
 		
 		// Definição do Botão Buscar
 		Button btnBuscar = new Button(shlTelaDeCdastro, SWT.NONE);
-		btnBuscar.setBounds(252, 223, 90, 30);
+		btnBuscar.setBounds(252, 241, 90, 30);
 		btnBuscar.setText("Buscar");
 
 		// Definição do Botão Cancelar
 		Button btnCancelar = new Button(shlTelaDeCdastro, SWT.NONE);
 		btnCancelar.setEnabled(false);
-		btnCancelar.setBounds(488, 223, 90, 30);
+		btnCancelar.setBounds(488, 241, 90, 30);
 		btnCancelar.setText("Cancelar");
 		
 		// Definição do Botão Limpar
 		Button btnLimpar = new Button(shlTelaDeCdastro, SWT.NONE);
-		btnLimpar.setBounds(368, 223, 90, 30);
+		btnLimpar.setBounds(367, 241, 90, 30);
 		btnLimpar.setText("Limpar");
 		
 		// Definição do Label Nome
@@ -164,61 +164,66 @@ public class TelaCadastrogui {
 
 		DateTime dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
 		dateTime.setBounds(64, 139, 118, 28);
-
-		java.time.LocalDate initialDate = LocalDate.of(dateTime.getYear(), dateTime.getMonth() + 1, dateTime.getDay());
 		
 		// Definição do Label Endereço
 		Label lblEndereo = new Label(shlTelaDeCdastro, SWT.NONE);
 		lblEndereo.setText("Endereço");
-		lblEndereo.setBounds(418, 24, 70, 20);
+		lblEndereo.setBounds(418, 10, 70, 20);
 
 		// Definição do Label Logradouro
 		txtLogradouro = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtLogradouro.setText("Logradouro");
+		txtLogradouro.setMessage("Logradouro");
 		txtLogradouro.setToolTipText("");
 		txtLogradouro.setTouchEnabled(true);
 		txtLogradouro.setEnabled(true);
-		txtLogradouro.setBounds(339, 58, 239, 26);
+		txtLogradouro.setBounds(339, 36, 239, 26);
 
 		// Definição do Label Número
 		txtNumero = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtNumero.setText("Número");
+		txtNumero.setMessage("N°");
 		txtNumero.setTouchEnabled(true);
 		txtNumero.setToolTipText("");
 		txtNumero.setEnabled(true);
-		txtNumero.setBounds(339, 102, 70, 26);
+		txtNumero.setBounds(339, 68, 47, 26);
 		
 		// Definição do Label Complemento
 		txtComplemento = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtComplemento.setText("Complemento");
+		txtComplemento.setMessage("Complemento");
 		txtComplemento.setTouchEnabled(true);
 		txtComplemento.setToolTipText("");
 		txtComplemento.setEnabled(true);
-		txtComplemento.setBounds(418, 102, 160, 26);
+		txtComplemento.setBounds(392, 68, 186, 26);
 
 		// Definição do Texto CEP
 		txtCep = new Text(shlTelaDeCdastro, SWT.BORDER);
 		txtCep.setTouchEnabled(true);
 		txtCep.setToolTipText("");
-		txtCep.setText("CEP");
+		txtCep.setMessage("CEP");
 		txtCep.setEnabled(true);
-		txtCep.setBounds(339, 136, 239, 26);
+		txtCep.setBounds(339, 102, 239, 26);
 
 		// Definição do Texto Cidade
 		txtCidade = new Text(shlTelaDeCdastro, SWT.BORDER);
 		txtCidade.setTouchEnabled(true);
 		txtCidade.setToolTipText("");
-		txtCidade.setText("Cidade");
+		txtCidade.setMessage("Cidade");
 		txtCidade.setEnabled(true);
-		txtCidade.setBounds(340, 181, 148, 26);
+		txtCidade.setBounds(339, 141, 148, 26);
 
 		// Definição do Texto Estado
 		txtEstado = new Text(shlTelaDeCdastro, SWT.BORDER);
 		txtEstado.setTouchEnabled(true);
 		txtEstado.setToolTipText("");
-		txtEstado.setText("Estado");
+		txtEstado.setMessage("Estado");
 		txtEstado.setEnabled(true);
-		txtEstado.setBounds(496, 181, 82, 26);
+		txtEstado.setBounds(496, 141, 82, 26);
+		
+		txtPais = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtPais.setTouchEnabled(true);
+		txtPais.setToolTipText("");
+		txtPais.setMessage("País");
+		txtPais.setEnabled(true);
+		txtPais.setBounds(339, 184, 239, 26);
 
 		// Código do Botão de IncluirAlterar do Exemplo
 /*		btnIncluirAlterar.addMouseListener(new MouseAdapter() {
@@ -275,71 +280,96 @@ public class TelaCadastrogui {
 			}
 		}); */
 		
-		// Código do Botão de Novo WIP
-/*		btnNovo.addMouseListener(new MouseAdapter() { 
+		btnNovo.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseDown(MouseEvent e) {
-		        if (txtcpf.getText().isEmpty() || txtNome.getText().isEmpty() || txtRenda.getText().isEmpty()) {
+		        
+		        // Validação dos campos de entrada
+		        String cpf = txtcpf.getText();
+		        String nome = txtNome.getText();
+		        String rendaStr = txtRenda.getText();
+		        String logradouro = txtLogradouro.getText();
+		        String numeroStr = txtNumero.getText();
+		        String complemento = txtComplemento.getText();
+		        String cep = txtCep.getText();
+		        String cidade = txtCidade.getText();
+		        String estado = txtEstado.getText();
+		        String pais = txtPais.getText();
+		        boolean sexoM = btnM.getSelection();
+		        boolean sexoF = btnF.getSelection();
+
+		        if (cpf.isEmpty() || nome.isEmpty() || rendaStr.isEmpty() || logradouro.isEmpty() ||
+		            numeroStr.isEmpty() || complemento.isEmpty() || cep.isEmpty() || cidade.isEmpty() ||
+		            estado.isEmpty() || pais.isEmpty() || (!sexoM && !sexoF)) {
+		        	
 		            JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios.");
-		        } else {
-		            String cpf = txtcpf.getText();
-		            String nome = txtNome.getText();
-		            double renda = Double.parseDouble(txtRenda.getText());
-		            Sexo sexo = btnM.getSelection() ? Sexo.MASCULINO : Sexo.FEMININO;
-		            LocalDate dataNascimento = LocalDate.of(dateTime.getYear(), dateTime.getMonth() + 1, dateTime.getDay());
-		            Endereco endereco = new Endereco(txtEndereco.getText(), 0, nome, nome, nome, nome, nome);
-		            
-		            Vendedor novoVendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
-		            
-		            TelaCadastrogui.mediator.salvarVendedor(novoVendedor);
-		            
-		            txtcpf.setText("");
-		            txtNome.setText("");
-		            txtRenda.setText("");
-		            txtEndereco.setText("");
-		            btnM.setSelection(false);
-		            btnF.setSelection(false);
-		            
-		            btnCancelar.setEnabled(false);
-		            txtNome.setEnabled(false);
-		            txtRenda.setEnabled(false);
-		            btnNovo.setEnabled(true);
+		        } 
+		        
+		        else {
+
+		        	try {
+		        		
+		                double renda = Double.parseDouble(rendaStr);
+		                Sexo sexo = sexoM ? Sexo.MASCULINO : Sexo.FEMININO;
+		                LocalDate dataNascimento = LocalDate.of(dateTime.getYear(), dateTime.getMonth() + 1, dateTime.getDay());
+		                Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
+
+		                Vendedor novoVendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
+
+		                // Chamada do método para inclusão do vendedor no Mediator.
+		                ResultadoInclusaoVendedor resultado = mediator.incluir(novoVendedor);
+
+		                if (resultado.getNumeroCaixaDeBonus() > 0) {
+		                	
+		                    JOptionPane.showMessageDialog(null, "Vendedor incluído com sucesso. Número do caixa de bônus: " + resultado.getNumeroCaixaDeBonus());
+		                } 
+		                
+		                else {
+		                	
+		                    JOptionPane.showMessageDialog(null, "Erro ao incluir o vendedor: " + resultado.getMensagemErroValidacao());
+		                }
+		                
+		            } 
+		        	
+		        	catch (NumberFormatException ex) {
+		            	
+		                JOptionPane.showMessageDialog(null, "Erro: A renda deve ser um número válido.");
+		            }
 		        }
 		    }
-		}); */
-
-		// Código do Botão de Cancelar WIP
-		btnCancelar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				btnCancelar.setEnabled(false);
-				txtNome.setEnabled(false);
-				txtRenda.setEnabled(false);
-				btnNovo.setEnabled(true);
-				txtRenda.setText("");
-				txtNome.setText("");
-			}
 		});
-		
-		// Código do Botão de Limpar
-		btnLimpar.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				txtcpf.setText("");
-				txtNome.setText("");
-				txtRenda.setText("");
-				btnM.setSelection(false);
-				btnF.setSelection(false);
-				dateTime.setDate(initialDate.getYear(), initialDate.getMonthValue() - 1, initialDate.getDayOfMonth());
-				txtLogradouro.setText("Logradouro");
-				txtNumero.setText("Número");
-				txtComplemento.setText("Complemento");
-				txtCep.setText("CEP");
-				txtCidade.setText("Cidade");
-				txtEstado.setText("Estado");
 
-			}
-		});
+        // Código do Botão de Cancelar WIP
+        btnCancelar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDown(MouseEvent e) {
+                btnCancelar.setEnabled(true);
+                txtNome.setEnabled(false);
+                txtRenda.setEnabled(false);
+                btnNovo.setEnabled(true);
+                txtRenda.setText("");
+                txtNome.setText("");
+            }
+        });
+
+        // Código do Botão de Limpar
+        btnLimpar.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                txtcpf.setText("");
+                txtNome.setText("");
+                txtRenda.setText("");
+                btnM.setSelection(false);
+                btnF.setSelection(false);
+                dateTime.setDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1, LocalDate.now().getDayOfMonth());
+                txtLogradouro.setText("");
+                txtNumero.setText("");
+                txtComplemento.setText("");
+                txtCep.setText("");
+                txtCidade.setText("");
+                txtEstado.setText("");
+            }
+        });
 		
 		// CONDIÇÃO PARA QUE NÃO SEJA POSSÍVEL APERTAR AMBOS M E F
 		btnM.addSelectionListener(new SelectionAdapter() {
