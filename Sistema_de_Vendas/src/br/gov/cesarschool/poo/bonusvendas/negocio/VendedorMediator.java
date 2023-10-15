@@ -124,16 +124,6 @@ public class VendedorMediator {
 		}
     }
     
-    public Vendedor buscar(String cpf) {
-        try {
-            
-            return vendedorCons.buscar(cpf);
-        } catch (Exception e) {
-            
-            return null; // Retorne null em caso de erro
-        }
-    }
-    
     
     public String alterar(Vendedor vendedor) {
         
@@ -211,6 +201,15 @@ public class VendedorMediator {
         catch (Exception e) {
             return "Erro ao atualizar o vendedor: " + e.getMessage();
         }
+    }
+    
+    public Vendedor buscar(String cpf) {
+    	if(StringUtil.ehNuloOuBranco(cpf) == true) {
+    		return null;
+    	}else {
+    		return vendedorCons.buscar(cpf);
+    	}
+    	
     }
 
 
