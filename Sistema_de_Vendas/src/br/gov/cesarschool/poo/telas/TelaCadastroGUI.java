@@ -24,6 +24,7 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Sexo;
 import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
 import br.gov.cesarschool.poo.bonusvendas.negocio.VendedorMediator;
+import org.eclipse.swt.widgets.Combo;
 
 public class TelaCadastroGUI {
 
@@ -41,8 +42,9 @@ public class TelaCadastroGUI {
 	private Text txtComplemento;
 	private Text txtCep;
 	private Text txtCidade;
-	private Text txtEstado;
+	private Text txtEstado1;
 	private Text txtPais;
+	private Combo txtEstado;
 	
 	/**
 	 * Launch the application.
@@ -321,25 +323,35 @@ public class TelaCadastroGUI {
 		txtCidade.setEnabled(true);
 		txtCidade.setBounds(339, 141, 148, 26);
 
-		// Definição do Texto Estado
-		txtEstado = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtEstado.setTouchEnabled(true);
-		txtEstado.setToolTipText("");
-		txtEstado.setMessage("Estado");
-		txtEstado.setEnabled(true);
-		txtEstado.setBounds(496, 141, 82, 26);
-		
+		// Definição do Texto País
 		txtPais = new Text(shlTelaDeCdastro, SWT.BORDER);
 		txtPais.setTouchEnabled(true);
 		txtPais.setToolTipText("");
 		txtPais.setMessage("País");
-		txtPais.setEnabled(true);
+		txtPais.setEnabled(false);
+		txtPais.setText("Brasil");
 		txtPais.setBounds(339, 184, 239, 26);
 		
-		Button btnCheckButton = new Button(shlTelaDeCdastro, SWT.CHECK);
-		btnCheckButton.addSelectionListener(new SelectionAdapter() {
+		/* Check button criado porem não esta sendo usado */
+		// Button btnCheckButton = new Button(shlTelaDeCdastro, SWT.CHECK);
+		
+		/* Inserir campo tipo combo para seleção do estado brasileiro */
+		txtEstado = new Combo(shlTelaDeCdastro, SWT.DROP_DOWN |SWT.NONE);
+		txtEstado.setBounds(495, 141, 82, 26);
+		
+		/* Lista dos estados brasileiros - ordem alfabética */
+        String[] estados = {
+            "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
+            "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
+            "RS", "RO", "RR", "SC", "SP","SE", "TO"
+        };
+        
+        txtEstado.setItems(estados);
+		
+        txtEstado.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String selectedState = txtEstado.getText();
 			}
 		});
 
