@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Label;
 
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
+import java.time.DateTimeException;
 
 
 import org.eclipse.swt.SWT;
@@ -123,6 +124,45 @@ public class TelaCadastroGUI {
 		        }
 
 		        try {
+		        	/* Validação CPF */
+		        	if (cpf.length() != 11 || !cpf.matches("\\d{11}")) {
+		        	    JOptionPane.showMessageDialog(null, "CPF invalido. Deve conter 11 digitos.");
+		        	    return;
+		        	}
+		        	
+		        	/* Validação da Data de Nascimento */
+		        	int day = dateTime.getDay();
+		        	int month = dateTime.getMonth() + 1; 
+		        	int year = dateTime.getYear();
+
+		        	try {
+		        	    LocalDate.of(year, month, day); 
+		        	} catch (DateTimeException ex) {
+		        	    JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Use o formato dd/mm/yyyy.");
+		        	    return;
+		        	}
+
+		        	/* Validação Verificação da Renda */
+		        	try {
+		        	    double renda = Double.parseDouble(rendaStr);
+		        	} catch (NumberFormatException ex) {
+		        	    JOptionPane.showMessageDialog(null, "Renda inválida. Use um número decimal válido com ponto como separador.");
+		        	    return;
+		        	}
+
+		        	/* Validação Verificação do Número */
+		        	if (numeroStr.length() > 7 || !numeroStr.matches("\\d{1,7}")) {
+		        	    JOptionPane.showMessageDialog(null, "Número inválido. Deve ser um número inteiro com até 7 dígitos.");
+		        	    return;
+		        	}
+
+		        	/* Validação do CEP */
+		        	if (cep.length() != 8 || !cep.matches("\\d{2}\\.\\d{3}-\\d{3}")) {
+		        	    JOptionPane.showMessageDialog(null, "CEP inválido. Use o formato 99.999-999.");
+		        	    return;
+		        	}
+
+		        	
 		            double renda = Double.parseDouble(rendaStr);
 		            Sexo sexo = sexoM ? Sexo.MASCULINO : Sexo.FEMININO;
 		            Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
