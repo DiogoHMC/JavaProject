@@ -44,32 +44,32 @@ public class VendedorMediator {
         	
         	/* validação CPF */
         	if (StringUtil.ehNuloOuBranco(vendedor.getCpf())){
-        		return new ResultadoInclusaoVendedor(0,"CPF não informado");
+        		return new ResultadoInclusaoVendedor(0,"CPF nao informado");
         	}
         	
         	if (!ValidadorCPF.ehCpfValido(vendedor.getCpf())) {
-        		return new ResultadoInclusaoVendedor(0, "CPF inválido");
+        		return new ResultadoInclusaoVendedor(0, "CPF invalido");
         	}
         	
         	/* validação do nome completo */
         	if (StringUtil.ehNuloOuBranco(vendedor.getNomeCompleto())){
-        		return new ResultadoInclusaoVendedor(0, "Nome completo não informado");
+        		return new ResultadoInclusaoVendedor(0, "Nome completo nao informado");
         	}
         	
         	/* validação sexo */
         	if (vendedor.getSexo() == null) {
-        		return new ResultadoInclusaoVendedor(0,"Sexo não informado");
+        		return new ResultadoInclusaoVendedor(0,"Sexo nao informado");
         	}
         	
         	/* validação data de nascimento */
         	if (vendedor.getDataNascimento() == null) {
-        		return new ResultadoInclusaoVendedor(0,"Data de nascimento não informado");
+        		return new ResultadoInclusaoVendedor(0,"Data de nascimento nao informada");
         	} else {
         		LocalDate dataAtual = LocalDate.now();
         		LocalDate dataNascimento = vendedor.getDataNascimento();
         		Period idade = Period.between(dataNascimento, dataAtual);
         		if (idade.getYears() < 17) {
-        			return new ResultadoInclusaoVendedor(0, "Data de nascimento menor ou igual à data atual menos 17 anos");
+        			return new ResultadoInclusaoVendedor(0, "Data de nascimento invalida");
         		}
         	}
         	
@@ -80,12 +80,12 @@ public class VendedorMediator {
         	
         	/* validação do Endereço */
         	if (vendedor.getEndereco() == null) {
-        		return new ResultadoInclusaoVendedor(0, "Endereço não informado");
+        		return new ResultadoInclusaoVendedor(0, "Endereco nao informado");
         	} else {
         		
         		/* validacao do logradouro */
         		if (StringUtil.ehNuloOuBranco(vendedor.getEndereco().getLogradouro())) {
-        			return new ResultadoInclusaoVendedor(0, "Logradouro não informado");
+        			return new ResultadoInclusaoVendedor(0, "Logradouro nao informado");
         		}
         		if (vendedor.getEndereco().getLogradouro().length() < 4) {
         			return new ResultadoInclusaoVendedor(0, "Logradouro tem menos de 04 caracteres");
