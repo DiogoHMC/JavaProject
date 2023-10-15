@@ -131,7 +131,7 @@ public class TelaAcumuloResgate {
 		Label label = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setBounds(0, 211, 434, 2);
 
-/* EVENTO BOTÃO BUSCAR */
+		/* EVENTO BOTÃO BUSCAR */
 		btnBuscar.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -146,10 +146,10 @@ public class TelaAcumuloResgate {
                     return;
                 }
                 
-                /* Converta a String em um long */
+                /* Converter a String num long */
                 long numeroCaixaLong = Long.parseLong(numeroCaixa);
 				
-                /* Pesquisar no mediator para trazer os dados */
+                /* Pesquisar no mediator para trazer o saldo atual */
                 double saldo = mediator.buscarSaldoCaixaDeBonus(numeroCaixaLong);
  
                 if (saldo >= 0) {
@@ -158,15 +158,19 @@ public class TelaAcumuloResgate {
                     radAcumular.setEnabled(false);
                     radResgatar.setEnabled(false);
                     btnBuscar.setEnabled(false);
-
-                    /* Definir qual será a operação */
+                    
+                    /* Redefinir texto do botão de acordo com a operação */
                     if (radAcumular.getSelection()) {
                         btnAcumularResgatar.setText("Acumular");
+                        
                     } else if (radResgatar.getSelection()) {
-                        cboTipoResgate.setEnabled(true);
-                        txtValor.setEnabled(true);
+                        cboTipoResgate.setEnabled(true);                      
                         btnAcumularResgatar.setText("Resgatar");
                     }
+                    
+                    txtValor.setEnabled(true);
+                    btnAcumularResgatar.setEnabled(true);
+                    
                 } else {               
                     showMessage("Caixa de bonus inexistente");
                 }
