@@ -221,11 +221,11 @@ public class TelaCadastroGUI {
 		txtNome.setEnabled(true);
 		txtNome.setBounds(64, 58, 225, 26);
 		
-				// Definição do Label e Botão Check Sexo
-				Label lblSexo = new Label(shlTelaDeCdastro, SWT.NONE);
-				lblSexo.setTouchEnabled(true);
-				lblSexo.setText("Sexo");
-				lblSexo.setBounds(10, 105, 47, 20);
+		// Definição do Label e Botão Check Sexo
+		Label lblSexo = new Label(shlTelaDeCdastro, SWT.NONE);
+		lblSexo.setTouchEnabled(true);
+		lblSexo.setText("Sexo");
+		lblSexo.setBounds(10, 105, 47, 20);
 
 		Button btnF = new Button(shlTelaDeCdastro, SWT.RADIO);
 		btnF.setBounds(146, 105, 36, 20);
@@ -264,10 +264,10 @@ public class TelaCadastroGUI {
 		DateTime dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
 		dateTime.setBounds(64, 139, 118, 28);
 		
-				// Definição do Label Renda
-				Label lblRenda = new Label(shlTelaDeCdastro, SWT.NONE);
-				lblRenda.setBounds(10, 187, 47, 20);
-				lblRenda.setText("Renda");
+		// Definição do Label Renda
+		Label lblRenda = new Label(shlTelaDeCdastro, SWT.NONE);
+		lblRenda.setBounds(10, 187, 47, 20);
+		lblRenda.setText("Renda");
 		
 		txtRenda = new Text(shlTelaDeCdastro, SWT.BORDER);
 		txtRenda.setTouchEnabled(true);
