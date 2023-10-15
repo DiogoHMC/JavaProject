@@ -42,9 +42,11 @@ public class TelaCadastroGUI {
 	private Text txtComplemento;
 	private Text txtCep;
 	private Text txtCidade;
-	private Text txtEstado1;
 	private Text txtPais;
 	private Combo txtEstado;
+	private Button btnM;
+	private Button btnF;
+	private DateTime dateTime;
 	
 	/**
 	 * Launch the application.
@@ -231,7 +233,7 @@ public class TelaCadastroGUI {
 		lblSexo.setText("Sexo");
 		lblSexo.setBounds(10, 105, 47, 20);
 
-		Button btnF = new Button(shlTelaDeCdastro, SWT.RADIO);
+		btnF = new Button(shlTelaDeCdastro, SWT.RADIO);
 		btnF.setBounds(146, 105, 36, 20);
 		btnF.setText("F");
 		
@@ -245,7 +247,7 @@ public class TelaCadastroGUI {
 		    }
 		});
 
-		Button btnM = new Button(shlTelaDeCdastro, SWT.RADIO);
+		btnM = new Button(shlTelaDeCdastro, SWT.RADIO);
 		btnM.setBounds(64, 105, 36, 20);
 		btnM.setText("M");
 		
@@ -265,7 +267,8 @@ public class TelaCadastroGUI {
 		lblDataDeNascimento.setText("Data");
 		lblDataDeNascimento.setBounds(10, 139, 36, 20);
 
-		DateTime dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
+		// DateTime dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
+		dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
 		dateTime.setBounds(64, 139, 118, 28);
 		
 		// Definição do Label Renda
