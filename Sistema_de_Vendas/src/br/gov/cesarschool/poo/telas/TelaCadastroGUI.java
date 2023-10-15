@@ -79,101 +79,101 @@ public class TelaCadastroGUI {
 		shlTelaDeCdastro.setSize(606, 340);
 		shlTelaDeCdastro.setText("Tela de cadastro");
 				
-				// Definição do Botão Novo
-				Button btnNovo = new Button(shlTelaDeCdastro, SWT.NONE);
-				btnNovo.setBounds(10, 241, 90, 30);
-				btnNovo.setText("Novo");
+		// Definição do Botão Novo
+		Button btnNovo = new Button(shlTelaDeCdastro, SWT.NONE);
+		btnNovo.setBounds(10, 241, 90, 30);
+		btnNovo.setText("Novo");
 				
-						btnNovo.addSelectionListener(new SelectionAdapter() {
-						    @Override
-						    public void widgetSelected(SelectionEvent e) {
-						        String cpf = txtcpf.getText();
-						        String nome = txtNome.getText();
-						        String rendaStr = txtRenda.getText();
-						        String logradouro = txtLogradouro.getText();
-						        String numeroStr = txtNumero.getText();
-						        String complemento = txtComplemento.getText();
-						        String cep = txtCep.getText();
-						        String cidade = txtCidade.getText();
-						        String estado = txtEstado.getText();
-						        String pais = txtPais.getText();
-						        boolean sexoM = btnM.getSelection();
-						        boolean sexoF = btnF.getSelection();
-						        LocalDate dataNascimento = LocalDate.of(dateTime.getYear(), dateTime.getMonth() + 1, dateTime.getDay());
+		btnNovo.addSelectionListener(new SelectionAdapter() {
+		    @Override
+		    public void widgetSelected(SelectionEvent e) {
+		        String cpf = txtcpf.getText();
+		        String nome = txtNome.getText();
+		        String rendaStr = txtRenda.getText();
+		        String logradouro = txtLogradouro.getText();
+		        String numeroStr = txtNumero.getText();
+		        String complemento = txtComplemento.getText();
+		        String cep = txtCep.getText();
+		        String cidade = txtCidade.getText();
+		        String estado = txtEstado.getText();
+		        String pais = txtPais.getText();
+		        boolean sexoM = btnM.getSelection();
+		        boolean sexoF = btnF.getSelection();
+		        LocalDate dataNascimento = LocalDate.of(dateTime.getYear(), dateTime.getMonth() + 1, dateTime.getDay());
+
+		        if (cpf.isEmpty() || nome.isEmpty() || rendaStr.isEmpty() || logradouro.isEmpty() ||
+		            numeroStr.isEmpty() || complemento.isEmpty() || cep.isEmpty() || cidade.isEmpty() ||
+		            estado.isEmpty() || pais.isEmpty() || (!sexoM && !sexoF)) {
+
+		            JOptionPane.showMessageDialog(null, "Campos obrigatórios faltando.");
+		            return;
+		        }
+
+		        try {
+		            double renda = Double.parseDouble(rendaStr);
+		            Sexo sexo = sexoM ? Sexo.MASCULINO : Sexo.FEMININO;
+		            Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
+
+		            Vendedor novoVendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
+		            ResultadoInclusaoVendedor resultado = mediator.incluir(novoVendedor);
+
+		            if (resultado.getNumeroCaixaDeBonus() > 0) {
+		                JOptionPane.showMessageDialog(null, "Vendedor incluído com sucesso. Número do caixa de bônus: " + resultado.getNumeroCaixaDeBonus());
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Erro ao incluir o vendedor: " + resultado.getMensagemErroValidacao());
+		            }
+		        } catch (NumberFormatException ex) {
+		            JOptionPane.showMessageDialog(null, "Erro: A renda deve ser um número válido.");
+		        }
+		    }
+		});
 				
-						        if (cpf.isEmpty() || nome.isEmpty() || rendaStr.isEmpty() || logradouro.isEmpty() ||
-						            numeroStr.isEmpty() || complemento.isEmpty() || cep.isEmpty() || cidade.isEmpty() ||
-						            estado.isEmpty() || pais.isEmpty() || (!sexoM && !sexoF)) {
+		// Definição do Botão de IncluirAlterar
+		Button btnIncluirAlterar = new Button(shlTelaDeCdastro, SWT.NONE);
+		btnIncluirAlterar.setEnabled(false);
+		btnIncluirAlterar.setBounds(117, 241, 112, 30);
+		btnIncluirAlterar.setText("Incluir/Alterar");
+		
+		// Definição do Botão Buscar
+		Button btnBuscar = new Button(shlTelaDeCdastro, SWT.NONE);
+		btnBuscar.setBounds(252, 241, 90, 30);
+		btnBuscar.setText("Buscar");
 				
-						            JOptionPane.showMessageDialog(null, "Campos obrigatórios faltando.");
-						            return;
-						        }
+		// Código do Botão de Buscar
+		btnBuscar.addSelectionListener(new SelectionAdapter() {
+		    @Override
+		    public void widgetSelected(SelectionEvent e) {
+		        String cpf = txtcpf.getText();
+
+		        if (cpf.isEmpty()) {
+		        	
+		            JOptionPane.showMessageDialog(null, "Informe um CPF válido para buscar um vendedor.");
+		            return;
+		        }
+
+		        Vendedor vendedor = mediator.buscar(cpf);
+
+		        if (vendedor != null) {
+		        	
+		            // Preencha os campos do formulário com os dados do vendedor encontrado
+		            txtNome.setText(vendedor.getNomeCompleto());
+		            txtRenda.setText(Double.toString(vendedor.getRenda()));
+
+		            // Resto do código para preencher os campos de endereço e outros dados...
+
+		            JOptionPane.showMessageDialog(null, "Vendedor encontrado com sucesso.");
+		        } 
+		        
+		        else {
+		            JOptionPane.showMessageDialog(null, "Vendedor não encontrado.");
+		        }
+		    }
+		});
 				
-						        try {
-						            double renda = Double.parseDouble(rendaStr);
-						            Sexo sexo = sexoM ? Sexo.MASCULINO : Sexo.FEMININO;
-						            Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
-				
-						            Vendedor novoVendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
-						            ResultadoInclusaoVendedor resultado = mediator.incluir(novoVendedor);
-				
-						            if (resultado.getNumeroCaixaDeBonus() > 0) {
-						                JOptionPane.showMessageDialog(null, "Vendedor incluído com sucesso. Número do caixa de bônus: " + resultado.getNumeroCaixaDeBonus());
-						            } else {
-						                JOptionPane.showMessageDialog(null, "Erro ao incluir o vendedor: " + resultado.getMensagemErroValidacao());
-						            }
-						        } catch (NumberFormatException ex) {
-						            JOptionPane.showMessageDialog(null, "Erro: A renda deve ser um número válido.");
-						        }
-						    }
-						});
-				
-				// Definição do Botão de IncluirAlterar
-				Button btnIncluirAlterar = new Button(shlTelaDeCdastro, SWT.NONE);
-				btnIncluirAlterar.setEnabled(false);
-				btnIncluirAlterar.setBounds(117, 241, 112, 30);
-				btnIncluirAlterar.setText("Incluir/Alterar");
-				
-				// Definição do Botão Buscar
-				Button btnBuscar = new Button(shlTelaDeCdastro, SWT.NONE);
-				btnBuscar.setBounds(252, 241, 90, 30);
-				btnBuscar.setText("Buscar");
-				
-						// Código do Botão de Buscar
-						btnBuscar.addSelectionListener(new SelectionAdapter() {
-						    @Override
-						    public void widgetSelected(SelectionEvent e) {
-						        String cpf = txtcpf.getText();
-				
-						        if (cpf.isEmpty()) {
-						        	
-						            JOptionPane.showMessageDialog(null, "Informe um CPF válido para buscar um vendedor.");
-						            return;
-						        }
-				
-						        Vendedor vendedor = mediator.buscar(cpf);
-				
-						        if (vendedor != null) {
-						        	
-						            // Preencha os campos do formulário com os dados do vendedor encontrado
-						            txtNome.setText(vendedor.getNomeCompleto());
-						            txtRenda.setText(Double.toString(vendedor.getRenda()));
-				
-						            // Resto do código para preencher os campos de endereço e outros dados...
-				
-						            JOptionPane.showMessageDialog(null, "Vendedor encontrado com sucesso.");
-						        } 
-						        
-						        else {
-						            JOptionPane.showMessageDialog(null, "Vendedor não encontrado.");
-						        }
-						    }
-						});
-				
-				// Definição do Botão Limpar
-				Button btnLimpar = new Button(shlTelaDeCdastro, SWT.NONE);
-				btnLimpar.setBounds(367, 241, 90, 30);
-				btnLimpar.setText("Limpar");
+		// Definição do Botão Limpar
+		Button btnLimpar = new Button(shlTelaDeCdastro, SWT.NONE);
+		btnLimpar.setBounds(367, 241, 90, 30);
+		btnLimpar.setText("Limpar");
 				
         // Código do Botão de Limpar
         btnLimpar.addSelectionListener(new SelectionAdapter() {
@@ -195,52 +195,52 @@ public class TelaCadastroGUI {
             }
         });
 				
-						// Definição do Botão Cancelar
-						Button btnCancelar = new Button(shlTelaDeCdastro, SWT.NONE);
-						btnCancelar.setEnabled(false);
-						btnCancelar.setBounds(488, 241, 90, 30);
-						btnCancelar.setText("Cancelar");
-				
-						// Definição do Label CPF
-						Label lblCpf = new Label(shlTelaDeCdastro, SWT.NONE);
-						lblCpf.setText("CPF");
-						lblCpf.setBounds(10, 24, 36, 20);
-				
-				txtcpf = new Text(shlTelaDeCdastro, SWT.BORDER);
-				txtcpf.setTouchEnabled(true);
-				txtcpf.setEnabled(true);
-				txtcpf.setBounds(64, 21, 225, 26);
-				
-				// Definição do Label Nome
-				Label lblNome = new Label(shlTelaDeCdastro, SWT.NONE);
-				lblNome.setBounds(10, 61, 47, 20);
-				lblNome.setText("Nome");
-				
-				txtNome = new Text(shlTelaDeCdastro, SWT.BORDER);
-				txtNome.setTouchEnabled(true);
-				txtNome.setEnabled(true);
-				txtNome.setBounds(64, 58, 225, 26);
-				
-						// Definição do Label e Botão Check Sexo
-						Label lblSexo = new Label(shlTelaDeCdastro, SWT.NONE);
-						lblSexo.setTouchEnabled(true);
-						lblSexo.setText("Sexo");
-						lblSexo.setBounds(10, 105, 47, 20);
+		// Definição do Botão Cancelar
+		Button btnCancelar = new Button(shlTelaDeCdastro, SWT.NONE);
+		btnCancelar.setEnabled(false);
+		btnCancelar.setBounds(488, 241, 90, 30);
+		btnCancelar.setText("Cancelar");
+
+		// Definição do Label CPF
+		Label lblCpf = new Label(shlTelaDeCdastro, SWT.NONE);
+		lblCpf.setText("CPF");
+		lblCpf.setBounds(10, 24, 36, 20);
 		
-				Button btnF = new Button(shlTelaDeCdastro, SWT.RADIO);
-				btnF.setBounds(146, 105, 36, 20);
-				btnF.setText("F");
-				
-				btnF.addSelectionListener(new SelectionAdapter() {
-				    @Override
-				    public void widgetSelected(SelectionEvent e) {
-				        if (btnF.getSelection()) {
-				            // Botão "F" está selecionado
-				            btnM.setSelection(false); // Desmarca o botão "M"
-				        }
-				    }
-				});
+		txtcpf = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtcpf.setTouchEnabled(true);
+		txtcpf.setEnabled(true);
+		txtcpf.setBounds(64, 21, 225, 26);
 		
+		// Definição do Label Nome
+		Label lblNome = new Label(shlTelaDeCdastro, SWT.NONE);
+		lblNome.setBounds(10, 61, 47, 20);
+		lblNome.setText("Nome");
+		
+		txtNome = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtNome.setTouchEnabled(true);
+		txtNome.setEnabled(true);
+		txtNome.setBounds(64, 58, 225, 26);
+		
+				// Definição do Label e Botão Check Sexo
+				Label lblSexo = new Label(shlTelaDeCdastro, SWT.NONE);
+				lblSexo.setTouchEnabled(true);
+				lblSexo.setText("Sexo");
+				lblSexo.setBounds(10, 105, 47, 20);
+
+		Button btnF = new Button(shlTelaDeCdastro, SWT.RADIO);
+		btnF.setBounds(146, 105, 36, 20);
+		btnF.setText("F");
+		
+		btnF.addSelectionListener(new SelectionAdapter() {
+		    @Override
+		    public void widgetSelected(SelectionEvent e) {
+		        if (btnF.getSelection()) {
+		            // Botão "F" está selecionado
+		            btnM.setSelection(false); // Desmarca o botão "M"
+		        }
+		    }
+		});
+
 		Button btnM = new Button(shlTelaDeCdastro, SWT.RADIO);
 		btnM.setBounds(64, 105, 36, 20);
 		btnM.setText("M");
