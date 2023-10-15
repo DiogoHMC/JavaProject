@@ -42,7 +42,7 @@ public class VendedorMediator {
         } else {
         	/* vendedor inexistente */
         	
-        	/* validação VPF */
+        	/* validação CPF */
         	if (StringUtil.ehNuloOuBranco(vendedor.getCpf())){
         		return new ResultadoInclusaoVendedor(0,"CPF não informado");
         	}
@@ -203,13 +203,16 @@ public class VendedorMediator {
         }
     }
     
+    // Método buscar
     public Vendedor buscar(String cpf) {
-    	if(StringUtil.ehNuloOuBranco(cpf) == true) {
-    		return null;
-    	}else {
-    		return vendedorCons.buscar(cpf);
-    	}
     	
+    	Vendedor vendedorEncontrado = this.vendedorCons.buscar(cpf);
+    	
+    	if (vendedorEncontrado != null) {
+            return vendedorEncontrado;
+        }
+    	
+    	return null;
     }
 
 
