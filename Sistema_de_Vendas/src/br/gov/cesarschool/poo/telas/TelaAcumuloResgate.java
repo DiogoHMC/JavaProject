@@ -119,7 +119,17 @@ public class TelaAcumuloResgate {
 		cboTipoResgate = new Combo(shell, SWT.READ_ONLY);
 		cboTipoResgate.setBounds(138, 127, 134, 23);
 		
-		/* Valor */ 
+		/* Botoes radio Acumular e Resgatar  */ 
+		radAcumular = new Button(shell, SWT.RADIO);
+		radAcumular.setEnabled(true);
+		radAcumular.setBounds(138, 55, 90, 16);
+		radAcumular.setText("Acumular");
+		
+		radResgatar = new Button(shell, SWT.RADIO);
+		radResgatar.setEnabled(true);
+		radResgatar.setBounds(239, 55, 90, 16);
+		radResgatar.setText("Resgatar");
+				/* Valor */ 
 		Label lblValor = new Label(shell, SWT.NONE);
 		lblValor.setBounds(23, 168, 55, 15);
 		lblValor.setText("Valor :");
@@ -131,7 +141,9 @@ public class TelaAcumuloResgate {
 		Label label = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setBounds(0, 211, 434, 2);
 
-		/* EVENTO BOTÃO BUSCAR */
+		/* Eventos dos Botões */
+		
+		/* BUSCAR */
 		btnBuscar.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -179,50 +191,7 @@ public class TelaAcumuloResgate {
 			}
 		});
 		
-/* Evento do botão Acumular/Resgatar */
-        btnAcumularResgatar.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                String numeroCaixa = txtNrCaixaBonus.getText();
-                String valorStr = txtValor.getText();
-                if (valorStr.isEmpty()) {
-                    showMessage("Digite um valor valido.");
-                    return;
-                }
-
-                double valor = 0;
-                try {
-                    valor = Double.parseDouble(valorStr);
-                } catch (NumberFormatException ex) {
-                    showMessage("Digite um valor valido.");
-                    return;
-                }
-
-                if (btnAcumularResgatar.getText().equals("Acumular")) {
-                    /* Chamada do método de acumular no mediator */
-                    String resultado = mediator.acumular(numeroCaixa, valor);
-                    if (resultado == null) {
-                        showMessage("Acúmulo bem-sucedido.");
-                    } else {
-                        showMessage("Erro ao acumular: " + resultado);
-                    }
-                } else if (btnAcumularResgatar.getText().equals("Resgatar")) {
-                    /* Verificar o tipo de resgate selecionado */
-                    String tipoResgate = cboTipoResgate.getText();
-
-                    /* Chamada do método de resgaste no mediator */
-                    String resultado = mediator.resgatar(numeroCaixa, valor, tipoResgate);
-                    if (resultado == null) {
-                        showMessage("Resgate bem-sucedido.");
-                    } else {
-                        showMessage("Erro ao resgatar: " + resultado);
-                    }
-                }
-                btnVoltar.notifyListeners(SWT.Selection, new Event());
-            }
-        });
-        
-/* EVENTO BOTÃO VOLTAR */
+	    /* VOLTAR */
         btnVoltar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				
@@ -246,32 +215,78 @@ public class TelaAcumuloResgate {
 	            btnAcumularResgatar.setText("Acumular/Resgatar");
 	        }
 		});
+        	
+		/* ACUMULO OU RESGATE CAIXA BONUS */
+        btnAcumularResgatar.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String numeroCaixa = txtNrCaixaBonus.getText();
+                String valorStr = txtValor.getText();
+                if (valorStr.isEmpty()) {
+                    showMessage("Digite um valor valido.");
+                    return;
+                }
+
+                double valor = 0;
+                try {
+                    valor = Double.parseDouble(valorStr);
+                } catch (NumberFormatException ex) {
+                    showMessage("Digite um valor valido.");
+                    return;
+                }
+
+                /* conversão de tipos para uso na chamada dos metodos */
+                long numeroCaixaLong = Long.parseLong(numeroCaixa);
+                
+                if (btnAcumularResgatar.getText().equals("Acumular")) {
+                    /* Chamada do método de acumular no mediator */
+                    String resultado = mediator.acumularBonus(numeroCaixaLong, valor);
+                    if (resultado == null) {
+                        showMessage("Acúmulo bem-sucedido.");
+                    } else {
+                        showMessage("Erro ao acumular: " + resultado);
+                    }
+                } else if (btnAcumularResgatar.getText().equals("Resgatar")) {
+                    /* Obter o tipo de resgate selecionado */
+                	//String tipoResgateSelecionado = cboTipoResgate.getText();
+                	int tipoResgateIndex = cboTipoResgate.getSelectionIndex();
+                	
+                	if (tipoResgateIndex == -1) {
+                		showMessage("Selecione um tipo de resgate.");
+                		return;
+                	}               	
+                	TipoResgate tipoResgateSelecionado = TipoResgate.values()[tipoResgateIndex];
+                	
+                    /* Chamada do método de resgaste no mediator */
+                    String resultado = mediator.resgatar(numeroCaixaLong, valor, tipoResgateSelecionado);
+                    if (resultado == null) {
+                        showMessage("Resgate bem-sucedido.");
+                        btnVoltar.notifyListeners(SWT.Selection, new Event());
+                    } else {
+                        showMessage("Erro ao resgatar: " + resultado);
+                    }
+                }
+               
+            }
+        });
         
-/* Evento para Tipo de Resgate */
-        /* Opção de resgate preenchida com os 3 tipos de resgate do enum */
+
+/* Opção de 'Tipo de Resgate' preenchida com os 3 tipos definidos no enum */
 		TipoResgate[] tiposResgate = TipoResgate.values();
 		String[] operacoes = new String[tiposResgate.length];
+		
 		for(int i = 0; i < tiposResgate.length; i++) {
 			operacoes[i] = tiposResgate[i].getDescricao();
 		}
+		
 		cboTipoResgate.setItems(operacoes);
-		
-		Button radAcumular = new Button(shell, SWT.RADIO);
-		radAcumular.setEnabled(true);
-		radAcumular.setBounds(138, 55, 90, 16);
-		radAcumular.setText("Acumular");
-		
-		Button radResgatar = new Button(shell, SWT.RADIO);
-		radResgatar.setEnabled(true);
-		radResgatar.setBounds(239, 55, 90, 16);
-		radResgatar.setText("Resgatar");
 		//cboTipoResgate.setItems(new String[] { "Cash", "Produto", "Serviço" });
-		
         
 	}
 	
+	/* Exibir caixa de mensagem de erros */
 	private void showMessage(String message) {
-        // Exibir uma caixa de mensagem com o texto fornecido
+        
         org.eclipse.swt.widgets.MessageBox messageBox = new org.eclipse.swt.widgets.MessageBox(shell, SWT.ICON_ERROR | SWT.OK);
         messageBox.setText("Erro");
         messageBox.setMessage(message);
