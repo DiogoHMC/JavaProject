@@ -60,8 +60,7 @@ public class AcumuloResgateMediator {
     	if (caixaDeBonus == null) {
             return "Caixa de bonus inexistente";
         }
-    	
-    	
+    	   	
     	caixaDeBonus.creditar(valor);
     	
     	repositorioCaixaDeBonus.alterar(caixaDeBonus);
@@ -87,7 +86,7 @@ public class AcumuloResgateMediator {
     	if (caixaDeBonus.getSaldo() < valor) {
             return "Saldo insuficiente";
         }
-    	
+    	   	
     	caixaDeBonus.debitar(valor);
     	
     	repositorioCaixaDeBonus.alterar(caixaDeBonus);
@@ -98,4 +97,15 @@ public class AcumuloResgateMediator {
     	
         return null;
     }
+    
+    /* Metodo para buscar saldo da caixa de bonus para ser usado na Tela Acumulo Resgate */
+    public double buscarSaldoCaixaDeBonus(long numeroCaixaDeBonus) {
+        CaixaDeBonus caixaDeBonus = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
+        if (caixaDeBonus != null) {
+            return caixaDeBonus.getSaldo();
+        }
+        return -1; // Ou outro valor de erro adequado, caso a caixa não seja encontrada
+    }
+
+
 }

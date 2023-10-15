@@ -16,6 +16,11 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+
 
 import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
@@ -59,6 +64,8 @@ public class TelaCadastroGUI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 
 	/**
@@ -232,6 +239,21 @@ public class TelaCadastroGUI {
 		lblSexo.setTouchEnabled(true);
 		lblSexo.setText("Sexo");
 		lblSexo.setBounds(10, 105, 47, 20);
+		
+				btnM = new Button(shlTelaDeCdastro, SWT.RADIO);
+				btnM.setBounds(64, 105, 36, 20);
+				btnM.setText("M");
+				
+				// CONDIÇÃO PARA QUE NÃO SEJA POSSÍVEL APERTAR AMBOS M E F
+				btnM.addSelectionListener(new SelectionAdapter() {
+				    @Override
+				    public void widgetSelected(SelectionEvent e) {
+				        if (btnM.getSelection()) {
+				            // Botão "M" está selecionado
+				            btnF.setSelection(false); // Desmarca o botão "F"
+				        }
+				    }
+				});
 
 		btnF = new Button(shlTelaDeCdastro, SWT.RADIO);
 		btnF.setBounds(146, 105, 36, 20);
@@ -246,21 +268,6 @@ public class TelaCadastroGUI {
 		        }
 		    }
 		});
-
-		btnM = new Button(shlTelaDeCdastro, SWT.RADIO);
-		btnM.setBounds(64, 105, 36, 20);
-		btnM.setText("M");
-		
-		// CONDIÇÃO PARA QUE NÃO SEJA POSSÍVEL APERTAR AMBOS M E F
-		btnM.addSelectionListener(new SelectionAdapter() {
-		    @Override
-		    public void widgetSelected(SelectionEvent e) {
-		        if (btnM.getSelection()) {
-		            // Botão "M" está selecionado
-		            btnF.setSelection(false); // Desmarca o botão "F"
-		        }
-		    }
-		});
 		
 		// Definição do Label e Inserir Data
 		Label lblDataDeNascimento = new Label(shlTelaDeCdastro, SWT.NONE);
@@ -270,6 +277,7 @@ public class TelaCadastroGUI {
 		// DateTime dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
 		dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
 		dateTime.setBounds(64, 139, 118, 28);
+		
 		
 		// Definição do Label Renda
 		Label lblRenda = new Label(shlTelaDeCdastro, SWT.NONE);
