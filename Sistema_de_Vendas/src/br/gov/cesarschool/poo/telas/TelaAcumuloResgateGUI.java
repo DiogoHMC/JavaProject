@@ -17,7 +17,7 @@ import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-public class TelaAcumuloResgate {
+public class TelaAcumuloResgateGUI {
 
 	protected Shell shell;
 	/* atributo mediator, tipo AcumuloResgateMediator, inicializado c/ a instância retornada pelo Singleton*/
@@ -39,7 +39,7 @@ public class TelaAcumuloResgate {
 	 */
 	public static void main(String[] args) {
 		try {
-			TelaAcumuloResgate window = new TelaAcumuloResgate();
+			TelaAcumuloResgateGUI window = new TelaAcumuloResgateGUI();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,7 +61,7 @@ public class TelaAcumuloResgate {
 		}
 	}
 	
-	public TelaAcumuloResgate() {
+	public TelaAcumuloResgateGUI() {
         mediator = AcumuloResgateMediator.getInstancia();
     }
 
