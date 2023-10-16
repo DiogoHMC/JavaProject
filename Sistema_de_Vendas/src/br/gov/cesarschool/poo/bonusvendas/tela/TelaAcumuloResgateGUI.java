@@ -1,4 +1,4 @@
-package br.gov.cesarschool.poo.telas;
+package br.gov.cesarschool.poo.bonusvendas.tela;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;

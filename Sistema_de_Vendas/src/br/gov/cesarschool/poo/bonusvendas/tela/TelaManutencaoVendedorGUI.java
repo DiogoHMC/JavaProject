@@ -1,4 +1,4 @@
-package br.gov.cesarschool.poo.telas;
+package br.gov.cesarschool.poo.bonusvendas.tela;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -32,9 +32,9 @@ import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
 import br.gov.cesarschool.poo.bonusvendas.negocio.VendedorMediator;
 import org.eclipse.swt.widgets.Combo;
 
-public class TelaCadastroGUI {
+public class TelaManutencaoVendedorGUI {
 
-	protected Shell shlTelaDeCdastro;
+	protected Shell shlTelaManutVendedor;
 	
 	static VendedorDAO vendedorDAO = new VendedorDAO();
 	static AcumuloResgateMediator acumuloResgateMediator = new AcumuloResgateMediator();
@@ -60,7 +60,7 @@ public class TelaCadastroGUI {
 	 */
 	public static void main(String[] args) {
 		try {
-			TelaCadastroGUI window = new TelaCadastroGUI();
+			TelaManutencaoVendedorGUI window = new TelaManutencaoVendedorGUI();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,9 +75,9 @@ public class TelaCadastroGUI {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
-		shlTelaDeCdastro.open();
-		shlTelaDeCdastro.layout();
-		while (!shlTelaDeCdastro.isDisposed()) {
+		shlTelaManutVendedor.open();
+		shlTelaManutVendedor.layout();
+		while (!shlTelaManutVendedor.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -89,12 +89,12 @@ public class TelaCadastroGUI {
 	 */
 	protected void createContents() {
 		
-		shlTelaDeCdastro = new Shell();
-		shlTelaDeCdastro.setSize(606, 340);
-		shlTelaDeCdastro.setText("Tela de cadastro");
+		shlTelaManutVendedor = new Shell();
+		shlTelaManutVendedor.setSize(606, 340);
+		shlTelaManutVendedor.setText("Tela de cadastro");
 				
 		// Definição do Botão Novo
-		Button btnNovo = new Button(shlTelaDeCdastro, SWT.NONE);
+		Button btnNovo = new Button(shlTelaManutVendedor, SWT.NONE);
 		btnNovo.setBounds(10, 241, 90, 30);
 		btnNovo.setText("Novo");
 				
@@ -193,13 +193,13 @@ public class TelaCadastroGUI {
 		});
 				
 		// Definição do Botão de IncluirAlterar
-		Button btnIncluirAlterar = new Button(shlTelaDeCdastro, SWT.NONE);
+		Button btnIncluirAlterar = new Button(shlTelaManutVendedor, SWT.NONE);
 		btnIncluirAlterar.setEnabled(false);
 		btnIncluirAlterar.setBounds(117, 241, 112, 30);
 		btnIncluirAlterar.setText("Incluir/Alterar");
 		
 		// Definição do Botão Buscar
-		Button btnBuscar = new Button(shlTelaDeCdastro, SWT.NONE);
+		Button btnBuscar = new Button(shlTelaManutVendedor, SWT.NONE);
 		btnBuscar.setBounds(252, 241, 90, 30);
 		btnBuscar.setText("Buscar");
 				
@@ -235,7 +235,7 @@ public class TelaCadastroGUI {
 		});
 				
 		// Definição do Botão Limpar
-		Button btnLimpar = new Button(shlTelaDeCdastro, SWT.NONE);
+		Button btnLimpar = new Button(shlTelaManutVendedor, SWT.NONE);
 		btnLimpar.setBounds(367, 241, 90, 30);
 		btnLimpar.setText("Limpar");
 				
@@ -260,38 +260,38 @@ public class TelaCadastroGUI {
         });
 				
 		// Definição do Botão Cancelar
-		Button btnCancelar = new Button(shlTelaDeCdastro, SWT.NONE);
+		Button btnCancelar = new Button(shlTelaManutVendedor, SWT.NONE);
 		btnCancelar.setEnabled(false);
 		btnCancelar.setBounds(488, 241, 90, 30);
 		btnCancelar.setText("Cancelar");
 
 		// Definição do Label CPF
-		Label lblCpf = new Label(shlTelaDeCdastro, SWT.NONE);
+		Label lblCpf = new Label(shlTelaManutVendedor, SWT.NONE);
 		lblCpf.setText("CPF");
 		lblCpf.setBounds(10, 24, 36, 20);
 		
-		txtcpf = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtcpf = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtcpf.setEnabled(true);
 		txtcpf.setEnabled(true);
 		txtcpf.setBounds(64, 21, 225, 26);
 		
 		// Definição do Label Nome
-		Label lblNome = new Label(shlTelaDeCdastro, SWT.NONE);
+		Label lblNome = new Label(shlTelaManutVendedor, SWT.NONE);
 		lblNome.setBounds(10, 61, 47, 20);
 		lblNome.setText("Nome");
 		
-		txtNome = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtNome = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtNome.setEnabled(true);
 		txtNome.setEnabled(true);
 		txtNome.setBounds(64, 58, 225, 26);
 		
 		// Definição do Label e Botão Check Sexo
-		Label lblSexo = new Label(shlTelaDeCdastro, SWT.NONE);
+		Label lblSexo = new Label(shlTelaManutVendedor, SWT.NONE);
 		lblSexo.setEnabled(true);
 		lblSexo.setText("Sexo");
 		lblSexo.setBounds(10, 105, 47, 20);
 		
-				btnM = new Button(shlTelaDeCdastro, SWT.RADIO);
+				btnM = new Button(shlTelaManutVendedor, SWT.RADIO);
 				btnM.setBounds(64, 105, 36, 20);
 				btnM.setText("M");
 				
@@ -306,7 +306,7 @@ public class TelaCadastroGUI {
 				    }
 				});
 
-		btnF = new Button(shlTelaDeCdastro, SWT.RADIO);
+		btnF = new Button(shlTelaManutVendedor, SWT.RADIO);
 		btnF.setBounds(146, 105, 36, 20);
 		btnF.setText("F");
 		
@@ -321,32 +321,32 @@ public class TelaCadastroGUI {
 		});
 		
 		// Definição do Label e Inserir Data
-		Label lblDataDeNascimento = new Label(shlTelaDeCdastro, SWT.NONE);
+		Label lblDataDeNascimento = new Label(shlTelaManutVendedor, SWT.NONE);
 		lblDataDeNascimento.setText("Data");
 		lblDataDeNascimento.setBounds(10, 139, 36, 20);
 
-		// DateTime dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
-		dateTime = new DateTime(shlTelaDeCdastro, SWT.BORDER);
+		// DateTime dateTime = new DateTime(shlTelaManutVendedor, SWT.BORDER);
+		dateTime = new DateTime(shlTelaManutVendedor, SWT.BORDER);
 		dateTime.setBounds(64, 139, 118, 28);
 		
 		
 		// Definição do Label Renda
-		Label lblRenda = new Label(shlTelaDeCdastro, SWT.NONE);
+		Label lblRenda = new Label(shlTelaManutVendedor, SWT.NONE);
 		lblRenda.setBounds(10, 187, 47, 20);
 		lblRenda.setText("Renda");
 		
-		txtRenda = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtRenda = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtRenda.setEnabled(true);
 		txtRenda.setEnabled(true);
 		txtRenda.setBounds(64, 184, 118, 26);
 		
 		// Definição do Label Endereço
-		Label lblEndereo = new Label(shlTelaDeCdastro, SWT.NONE);
+		Label lblEndereo = new Label(shlTelaManutVendedor, SWT.NONE);
 		lblEndereo.setText("Endereço");
 		lblEndereo.setBounds(418, 10, 70, 20);
 
 		// Definição do Label Logradouro
-		txtLogradouro = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtLogradouro = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtLogradouro.setMessage("Logradouro");
 		txtLogradouro.setToolTipText("");
 		txtLogradouro.setEnabled(true);
@@ -354,7 +354,7 @@ public class TelaCadastroGUI {
 		txtLogradouro.setBounds(339, 36, 239, 26);
 
 		// Definição do Label Número
-		txtNumero = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtNumero = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtNumero.setMessage("N°");
 		txtNumero.setEnabled(true);
 		txtNumero.setToolTipText("");
@@ -362,7 +362,7 @@ public class TelaCadastroGUI {
 		txtNumero.setBounds(339, 68, 47, 26);
 		
 		// Definição do Label Complemento
-		txtComplemento = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtComplemento = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtComplemento.setMessage("Complemento");
 		txtComplemento.setEnabled(true);
 		txtComplemento.setToolTipText("");
@@ -370,7 +370,7 @@ public class TelaCadastroGUI {
 		txtComplemento.setBounds(392, 68, 186, 26);
 
 		// Definição do Texto CEP
-		txtCep = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtCep = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtCep.setEnabled(true);
 		txtCep.setToolTipText("");
 		txtCep.setMessage("CEP");
@@ -378,7 +378,7 @@ public class TelaCadastroGUI {
 		txtCep.setBounds(339, 102, 239, 26);
 
 		// Definição do Texto Cidade
-		txtCidade = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtCidade = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtCidade.setEnabled(true);
 		txtCidade.setToolTipText("");
 		txtCidade.setMessage("Cidade");
@@ -386,7 +386,7 @@ public class TelaCadastroGUI {
 		txtCidade.setBounds(339, 141, 148, 26);
 
 		// Definição do Texto País
-		txtPais = new Text(shlTelaDeCdastro, SWT.BORDER);
+		txtPais = new Text(shlTelaManutVendedor, SWT.BORDER);
 		txtPais.setEnabled(true);
 		txtPais.setToolTipText("");
 		txtPais.setMessage("País");
@@ -395,10 +395,10 @@ public class TelaCadastroGUI {
 		txtPais.setBounds(339, 184, 239, 26);
 		
 		/* Check button criado porem não esta sendo usado */
-		// Button btnCheckButton = new Button(shlTelaDeCdastro, SWT.CHECK);
+		// Button btnCheckButton = new Button(shlTelaManutVendedor, SWT.CHECK);
 		
 		/* Inserir campo tipo combo para seleção do estado brasileiro */
-		txtEstado = new Combo(shlTelaDeCdastro, SWT.DROP_DOWN |SWT.NONE);
+		txtEstado = new Combo(shlTelaManutVendedor, SWT.DROP_DOWN |SWT.NONE);
 		txtEstado.setBounds(495, 141, 82, 26);
 		
 		/* Lista dos estados brasileiros - ordem alfabética */
