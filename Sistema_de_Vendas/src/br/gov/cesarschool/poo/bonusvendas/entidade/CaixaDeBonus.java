@@ -15,7 +15,7 @@ public class CaixaDeBonus implements Serializable{
 	private LocalDateTime dataHoraAtualizacao;
 	
 	/* constructor */ 
-	public CaixaDeBonus(long numeros, double saldo) {
+	public CaixaDeBonus(long numeros) {
 			
 		this.numeros = numeros;
 		this.saldo = 0;

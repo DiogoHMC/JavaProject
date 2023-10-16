@@ -38,7 +38,7 @@ public class AcumuloResgateMediator {
 
         long numeros = Long.parseLong(cpf + strDate);
         
-        CaixaDeBonus caixaDeBonus = new CaixaDeBonus(numeros, 0);
+        CaixaDeBonus caixaDeBonus = new CaixaDeBonus(numeros);
         boolean incluir = repositorioCaixaDeBonus.incluir(caixaDeBonus);
         
         if (incluir) {
