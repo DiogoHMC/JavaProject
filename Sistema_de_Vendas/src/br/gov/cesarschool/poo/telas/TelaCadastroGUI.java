@@ -157,14 +157,25 @@ public class TelaCadastroGUI {
 		        	}
 
 		        	/* Validação do CEP */
-		        	if (cep.length() != 8 || !cep.matches("\\d{2}\\.\\d{3}-\\d{3}")) {
-		        	    JOptionPane.showMessageDialog(null, "CEP inválido. Use o formato 99.999-999.");
+		        	if (!cep.matches("\\d{2}\\.\\d{3}-\\d{2}|\\d{8}")) {
+		        	    JOptionPane.showMessageDialog(null, "CEP inválido. Use o formato 99.999-99 ou 99999999.");
 		        	    return;
 		        	}
-
 		        	
+		            Sexo sexo = null;
+
+		            if (btnM.getSelection()) {
+		                sexo = Sexo.MASCULINO;
+		            } else if (btnF.getSelection()) {
+		                sexo = Sexo.FEMININO;
+		            }
+
+		            if (sexo == null) {
+		                JOptionPane.showMessageDialog(null, "Selecione o sexo do vendedor.");
+		                return;
+		            }
+		            
 		            double renda = Double.parseDouble(rendaStr);
-		            Sexo sexo = sexoM ? Sexo.MASCULINO : Sexo.FEMININO;
 		            Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
 
 		            Vendedor novoVendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
@@ -260,7 +271,7 @@ public class TelaCadastroGUI {
 		lblCpf.setBounds(10, 24, 36, 20);
 		
 		txtcpf = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtcpf.setTouchEnabled(true);
+		txtcpf.setEnabled(true);
 		txtcpf.setEnabled(true);
 		txtcpf.setBounds(64, 21, 225, 26);
 		
@@ -270,13 +281,13 @@ public class TelaCadastroGUI {
 		lblNome.setText("Nome");
 		
 		txtNome = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtNome.setTouchEnabled(true);
+		txtNome.setEnabled(true);
 		txtNome.setEnabled(true);
 		txtNome.setBounds(64, 58, 225, 26);
 		
 		// Definição do Label e Botão Check Sexo
 		Label lblSexo = new Label(shlTelaDeCdastro, SWT.NONE);
-		lblSexo.setTouchEnabled(true);
+		lblSexo.setEnabled(true);
 		lblSexo.setText("Sexo");
 		lblSexo.setBounds(10, 105, 47, 20);
 		
@@ -325,7 +336,7 @@ public class TelaCadastroGUI {
 		lblRenda.setText("Renda");
 		
 		txtRenda = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtRenda.setTouchEnabled(true);
+		txtRenda.setEnabled(true);
 		txtRenda.setEnabled(true);
 		txtRenda.setBounds(64, 184, 118, 26);
 		
@@ -338,14 +349,14 @@ public class TelaCadastroGUI {
 		txtLogradouro = new Text(shlTelaDeCdastro, SWT.BORDER);
 		txtLogradouro.setMessage("Logradouro");
 		txtLogradouro.setToolTipText("");
-		txtLogradouro.setTouchEnabled(true);
+		txtLogradouro.setEnabled(true);
 		txtLogradouro.setEnabled(true);
 		txtLogradouro.setBounds(339, 36, 239, 26);
 
 		// Definição do Label Número
 		txtNumero = new Text(shlTelaDeCdastro, SWT.BORDER);
 		txtNumero.setMessage("N°");
-		txtNumero.setTouchEnabled(true);
+		txtNumero.setEnabled(true);
 		txtNumero.setToolTipText("");
 		txtNumero.setEnabled(true);
 		txtNumero.setBounds(339, 68, 47, 26);
@@ -353,14 +364,14 @@ public class TelaCadastroGUI {
 		// Definição do Label Complemento
 		txtComplemento = new Text(shlTelaDeCdastro, SWT.BORDER);
 		txtComplemento.setMessage("Complemento");
-		txtComplemento.setTouchEnabled(true);
+		txtComplemento.setEnabled(true);
 		txtComplemento.setToolTipText("");
 		txtComplemento.setEnabled(true);
 		txtComplemento.setBounds(392, 68, 186, 26);
 
 		// Definição do Texto CEP
 		txtCep = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtCep.setTouchEnabled(true);
+		txtCep.setEnabled(true);
 		txtCep.setToolTipText("");
 		txtCep.setMessage("CEP");
 		txtCep.setEnabled(true);
@@ -368,7 +379,7 @@ public class TelaCadastroGUI {
 
 		// Definição do Texto Cidade
 		txtCidade = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtCidade.setTouchEnabled(true);
+		txtCidade.setEnabled(true);
 		txtCidade.setToolTipText("");
 		txtCidade.setMessage("Cidade");
 		txtCidade.setEnabled(true);
@@ -376,7 +387,7 @@ public class TelaCadastroGUI {
 
 		// Definição do Texto País
 		txtPais = new Text(shlTelaDeCdastro, SWT.BORDER);
-		txtPais.setTouchEnabled(true);
+		txtPais.setEnabled(true);
 		txtPais.setToolTipText("");
 		txtPais.setMessage("País");
 		txtPais.setEnabled(false);

@@ -71,72 +71,77 @@ public class TelaAcumuloResgateGUI {
 	 */
 	protected void createContents() {
 		shell = new Shell(SWT.CLOSE | SWT.TITLE | SWT.MIN);
-		shell.setSize(450, 300);
+		shell.setSize(490, 321);
 		shell.setText("Acumulo e Resgate de  Bônus");
 		
 		/* Botão Buscar */
 		btnBuscar = new Button(shell, SWT.NONE);
-		btnBuscar.setBounds(334, 24, 90, 25);
+		btnBuscar.setBounds(220, 239, 90, 25);
 		btnBuscar.setText("Buscar");
 
 		/* Botão acumular/resgatar */
 		btnAcumularResgatar = new Button(shell, SWT.NONE);
 		btnAcumularResgatar.setEnabled(false);
-		btnAcumularResgatar.setBounds(107, 226, 114, 25);
+		btnAcumularResgatar.setBounds(23, 239, 151, 25);
 		btnAcumularResgatar.setText("Acumular/Resgatar");
 		
 		/* Botão Voltar */
 		btnVoltar = new Button(shell, SWT.NONE);
-		btnVoltar.setBounds(254, 226, 75, 25);
+		btnVoltar.setBounds(359, 239, 75, 25);
 		btnVoltar.setText("Voltar");
 		
 		/* N° Caixa Bonus */ 
 		Label lblNrCaixaBonus = new Label(shell, SWT.NONE);
-		lblNrCaixaBonus.setBounds(23, 26, 114, 15);
-		lblNrCaixaBonus.setText("N° Caixa de Bônus :");
+		lblNrCaixaBonus.setBounds(23, 29, 134, 18);
+		lblNrCaixaBonus.setText("N° Caixa de Bônus:");
 		
 		txtNrCaixaBonus = new Text(shell, SWT.BORDER);
-		txtNrCaixaBonus.setBounds(138, 26, 134, 21);
+		txtNrCaixaBonus.setBounds(176, 26, 134, 21);
 		
 		/* Tipo de Operação */ 
 		Label lblOperacao = new Label(shell, SWT.NONE);
-		lblOperacao.setBounds(23, 56, 55, 15);
-		lblOperacao.setText("Operação :");
+		lblOperacao.setBounds(23, 56, 75, 18);
+		lblOperacao.setText("Operação:");
 		
 		/* Saldo Atual */ 
 		Label lblSaldoAtual = new Label(shell, SWT.NONE);
-		lblSaldoAtual.setBounds(23, 81, 75, 15);
+		lblSaldoAtual.setBounds(23, 92, 90, 34);
 		lblSaldoAtual.setText("Saldo Atual:");
 		
 		txtSaldoAtual = new Text(shell, SWT.BORDER | SWT.READ_ONLY);
-		txtSaldoAtual.setBounds(138, 77, 134, 21);
+		txtSaldoAtual.setBounds(176, 92, 134, 21);
 		
 		/* Tipo de Resgate */ 
 		Label lblTipoDeResgate = new Label(shell, SWT.NONE);
-		lblTipoDeResgate.setBounds(23, 132, 84, 15);
+		lblTipoDeResgate.setBounds(23, 132, 127, 25);
 		lblTipoDeResgate.setText("Tipo de Resgate:");
 				
 		cboTipoResgate = new Combo(shell, SWT.READ_ONLY);
-		cboTipoResgate.setBounds(138, 127, 134, 23);
+		cboTipoResgate.setBounds(176, 129, 134, 23);
 		
 		/* Botoes radio Acumular e Resgatar  */ 
 		radAcumular = new Button(shell, SWT.RADIO);
 		radAcumular.setEnabled(true);
-		radAcumular.setBounds(138, 55, 90, 16);
+		radAcumular.setBounds(176, 52, 90, 28);
 		radAcumular.setText("Acumular");
 		
 		radResgatar = new Button(shell, SWT.RADIO);
+		radResgatar.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+			}
+		});
 		radResgatar.setEnabled(true);
-		radResgatar.setBounds(239, 55, 90, 16);
+		radResgatar.setBounds(316, 54, 90, 25);
 		radResgatar.setText("Resgatar");
 				/* Valor */ 
 		Label lblValor = new Label(shell, SWT.NONE);
-		lblValor.setBounds(23, 168, 55, 15);
-		lblValor.setText("Valor :");
+		lblValor.setBounds(23, 168, 75, 25);
+		lblValor.setText("Valor:");
 		
 		txtValor = new Text(shell, SWT.BORDER);
 		txtValor.setEnabled(false);
-		txtValor.setBounds(138, 162, 134, 21);
+		txtValor.setBounds(176, 172, 134, 21);
 		
 		Label label = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setBounds(0, 211, 434, 2);
