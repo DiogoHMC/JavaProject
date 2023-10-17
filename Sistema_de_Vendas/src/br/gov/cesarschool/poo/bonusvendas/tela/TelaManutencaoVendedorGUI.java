@@ -58,6 +58,11 @@ public class TelaManutencaoVendedorGUI {
 	
 	private Button btnIncluirAlterar;
 	private Button btnCancelar;
+	private Button btnNovo;
+	private Button btnBuscar;
+	
+	/* Flag para definir ação, Incluir ou Alterar, para o botão btnIncluirAlterar */
+	private int acaoFlag = 0;
 	
 	/**
 	 * Launch the application.
@@ -102,12 +107,12 @@ public class TelaManutencaoVendedorGUI {
 		btnIncluirAlterar.setText("Incluir/Alterar");
 		
 		// Definição do Botão Novo
-		Button btnNovo = new Button(shlTelaManutVendedor, SWT.NONE);
+		btnNovo = new Button(shlTelaManutVendedor, SWT.NONE);
 		btnNovo.setBounds(216, 32, 90, 30);
 		btnNovo.setText("Novo");	
 
 		// Definição do Botão Buscar
-		Button btnBuscar = new Button(shlTelaManutVendedor, SWT.NONE);
+		btnBuscar = new Button(shlTelaManutVendedor, SWT.NONE);
 		btnBuscar.setBounds(312, 32, 90, 30);
 		btnBuscar.setText("Buscar");
 				
@@ -269,14 +274,14 @@ public class TelaManutencaoVendedorGUI {
 		});
         
         
-/* EVENTO BOTAO BUSCAR */ 
+/* EVENTO BOTAO BUSCAR - Para alterar cadastro vendedor */ 
 		btnBuscar.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
+		    	acaoFlag = 2;
 		        String cpf = txtcpf.getText();
 
-		        if (cpf.isEmpty() || cpf == null) {
-		        	
+		        if (cpf.isEmpty() || cpf == null) {	        	
 		            JOptionPane.showMessageDialog(null, "CPF nao informado.");
 		            return;
 		        } else {
@@ -284,13 +289,15 @@ public class TelaManutencaoVendedorGUI {
 			        VendedorMediator vendedorMediator = VendedorMediator.getInstance(vendedorDAO, acumuloResgateMediator);
 		            Vendedor vendedorEncontrado = vendedorMediator.buscar(cpf);
 	
-			        if (vendedorEncontrado  != null) {
-			        	
-				    	/* Habilita campos para preenchimento */ 					
+			        if (vendedorEncontrado  != null) {		        	
+				    	/* Habilita/desabilita os botoes */ 					
 						btnIncluirAlterar.setEnabled(true);
 				    	btnCancelar.setEnabled(true);
-				    	btnIncluirAlterar.setText("Alterar");		    	
-
+				    	btnIncluirAlterar.setText("Alterar");	
+				    	btnNovo.setEnabled(false);
+				    	btnBuscar.setEnabled(false);
+				    	
+				    	/* Habilita/desabilita campos para preenchimento */ 
 				    	txtcpf.setEnabled(false);
 				    	txtNome.setEnabled(true);
 				    	btnM.setEnabled(true);
@@ -308,8 +315,8 @@ public class TelaManutencaoVendedorGUI {
 			            txtNome.setText(vendedorEncontrado.getNomeCompleto());
 			            txtRenda.setText(Double.toString(vendedorEncontrado.getRenda()));
 				    	
-				    	LocalDate dataNascimento = vendedorEncontrado.getDataNascimento();
-				    	dateTime.setDate(dataNascimento.getYear(), dataNascimento.getMonthValue() - 1, dataNascimento.getDayOfMonth());
+				    	LocalDate dataDeNascimento = vendedorEncontrado.getDataNascimento();
+				    	dateTime.setDate(dataDeNascimento.getYear(), dataDeNascimento.getMonthValue() - 1, dataDeNascimento.getDayOfMonth());
 				    	
 				    	txtLogradouro.setText(vendedorEncontrado.getEndereco().getLogradouro());
 				    	txtNumero.setText(String.valueOf(vendedorEncontrado.getEndereco().getNumero()));
@@ -318,17 +325,17 @@ public class TelaManutencaoVendedorGUI {
 				    	txtCidade.setText(vendedorEncontrado.getEndereco().getCidade());
 				    	txtEstado.setText(vendedorEncontrado.getEndereco().getEstado());	   
 				    	
-				    	 if (vendedorEncontrado.getSexo() == Sexo.MASCULINO) {
-			                    btnM.setSelection(true);
+				    	if (vendedorEncontrado.getSexo() == Sexo.MASCULINO) {
+				    		btnM.setSelection(true);
+			                btnF.setSelection(false);
 		                } else if (vendedorEncontrado.getSexo() == Sexo.FEMININO) {
+		                	btnM.setSelection(false);
 		                    btnF.setSelection(true);
-		                }
-			            
+		                }	            
+				 			    	
 			            //JOptionPane.showMessageDialog(null, "Vendedor encontrado com sucesso.");
-			        } 
-			        
-			        else {
-			            JOptionPane.showMessageDialog(null, "Vendedor não encontrado.");
+			        } else {
+			            JOptionPane.showMessageDialog(null, "Vendedor inexistente");
 			        }
 		        }
 		    }
@@ -355,7 +362,7 @@ public class TelaManutencaoVendedorGUI {
         });
 				
 		
-/* EVENTO BOTAO INCLUIRALTERAR */       	
+/* EVENTO BOTAO INCLUIRALTERAR - Para inserir novo cadastro vendedor */       	
         btnIncluirAlterar.addSelectionListener(new SelectionAdapter() {
     		    @Override
     		    public void widgetSelected(SelectionEvent e) {
@@ -381,80 +388,91 @@ public class TelaManutencaoVendedorGUI {
     		            return;
     		        }
 
-    		        try {
-    		        	/* Validação CPF */
-    		        	if (cpf.length() != 11 || !cpf.matches("\\d{11}")) {
-    		        	    JOptionPane.showMessageDialog(null, "CPF invalido. Deve conter 11 digitos.");
-    		        	    return;
-    		        	}
-    		        	
-    		        	/* Validação da Data de Nascimento */
-    		        	int day = dateTime.getDay();
-    		        	int month = dateTime.getMonth() + 1; 
-    		        	int year = dateTime.getYear();
+		        	/* Validação CPF */
+		        	if (cpf.length() != 11 || !cpf.matches("\\d{11}")) {
+		        	    JOptionPane.showMessageDialog(null, "Formato do campo CPF invalido. Deve conter 11 digitos.");
+		        	    return;
+		        	}
+		        	
+		        	/* Validação da Data de Nascimento */
+		        	int day = dateTime.getDay();
+		        	int month = dateTime.getMonth() + 1; 
+		        	int year = dateTime.getYear();
 
-    		        	try {
-    		        	    LocalDate.of(year, month, day); 
-    		        	} catch (DateTimeException ex) {
-    		        	    JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Use o formato dd/mm/yyyy.");
-    		        	    return;
-    		        	}
+		        	try {
+		        	    LocalDate.of(year, month, day); 
+		        	} catch (DateTimeException ex) {
+		        	    JOptionPane.showMessageDialog(null, "Formato do campo Data de Nascimento invalido. Use o formato dd/mm/yyyy.");
+		        	    return;
+		        	}
 
-    		        	/* Validação Verificação da Renda */
-    		        	try {
-    		        	    double renda = Double.parseDouble(rendaStr);
-    		        	} catch (NumberFormatException ex) {
-    		        	    JOptionPane.showMessageDialog(null, "Renda inválida. Use um número decimal válido com ponto como separador.");
-    		        	    return;
-    		        	}
+		        	/* Validação Verificação da Renda */
+		        	try {
+		        	    double renda = Double.parseDouble(rendaStr);
+		        	} catch (NumberFormatException ex) {
+		        	    JOptionPane.showMessageDialog(null, "Formato do campo Renda invalido. Use um numero decimal valido com ponto como separador.");
+		        	    return;
+		        	}
 
-    		        	/* Validação Verificação do Número */
-    		        	if (numeroStr.length() > 7 || !numeroStr.matches("\\d{1,7}")) {
-    		        	    JOptionPane.showMessageDialog(null, "Número inválido. Deve ser um número inteiro com até 7 dígitos.");
-    		        	    return;
-    		        	}
+		        	/* Validação Verificação do Número */
+		        	if (numeroStr.length() > 7 || !numeroStr.matches("\\d{1,7}")) {
+		        	    JOptionPane.showMessageDialog(null, "Formato do campo Numero invalido. Deve ser um numero inteiro com até 7 digitos.");
+		        	    return;
+		        	}
 
-    		        	/* Validação do CEP */
-    		        	if (!cep.matches("\\d{2}\\.\\d{3}-\\d{2}|\\d{8}")) {
-    		        	    JOptionPane.showMessageDialog(null, "CEP inválido. Use o formato 99.999-99 ou 99999999.");
-    		        	    return;
-    		        	}
-    		        	
-    		            Sexo sexo = null;
+		        	/* Validação do CEP */
+		        	if (!cep.matches("\\d{2}\\.\\d{3}-\\d{2}|\\d{8}")) {
+		        	    JOptionPane.showMessageDialog(null, "Formato do campo CEP invalido. Use o formato 99.999-99 ou 99999999.");
+		        	    return;
+		        	}
 
-    		            if (btnM.getSelection()) {
-    		                sexo = Sexo.MASCULINO;
-    		            } else if (btnF.getSelection()) {
-    		                sexo = Sexo.FEMININO;
-    		            }
+		            Sexo sexo = null;
+		            if (btnM.getSelection()) {
+		                sexo = Sexo.MASCULINO;
+		            } else if (btnF.getSelection()) {
+		                sexo = Sexo.FEMININO;
+		            }
 
-    		            if (sexo == null) {
-    		                JOptionPane.showMessageDialog(null, "Selecione o sexo do vendedor.");
-    		                return;
-    		            }
-    		            
-    		            double renda = Double.parseDouble(rendaStr);
-    		            Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
+		            if (sexo == null) {
+		                JOptionPane.showMessageDialog(null, "Selecione o sexo do vendedor.");
+		                return;
+		            }
+		            
+		            double renda = Double.parseDouble(rendaStr);
+		            Endereco endereco = new Endereco(logradouro, Integer.parseInt(numeroStr), complemento, cep, cidade, estado, pais);
 
+		            /* Verificar ação, Incluir ou Alterar, para o evento  */
+		            if (acaoFlag == 1) {  // Incluir
+		            	/* Método inserir do VendedorMediator */
     		            Vendedor novoVendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
     		            ResultadoInclusaoVendedor resultado = mediator.incluir(novoVendedor);
 
     		            if (resultado.getNumeroCaixaDeBonus() > 0) {
-    		                JOptionPane.showMessageDialog(null, "Vendedor incluído com sucesso. Número do caixa de bônus: " + resultado.getNumeroCaixaDeBonus());
+    		                JOptionPane.showMessageDialog(null, "Vendedor incluido com sucesso. Numero do caixa de bonus: " + resultado.getNumeroCaixaDeBonus());
     		            } else {
     		                JOptionPane.showMessageDialog(null, "Erro ao incluir o vendedor: " + resultado.getMensagemErroValidacao());
     		            }
-    		        } catch (NumberFormatException ex) {
-    		            JOptionPane.showMessageDialog(null, "Erro: A renda deve ser um número válido.");
-    		        }
+		            } else {  // Alterar
+		            	/* Método alterar do VendedorMediator */
+				        Vendedor vendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
+				        String resultado = mediator.alterar(vendedor);
+
+				        if (resultado == null) {
+				            JOptionPane.showMessageDialog(null, "Vendedor alterado com sucesso!");
+				        } else {
+				            JOptionPane.showMessageDialog(null, "Erro ao alterar o vendedor: " + resultado);
+				        }
+		            	
+		            }
+    		            
     		    }
     		});
             
-/* EVENTO BOTAO NOVO */
+/* EVENTO BOTAO NOVO - Habilitar campos para preenchimento */
 		btnNovo.addSelectionListener(new SelectionAdapter() {
  		    @Override
 		    public void widgetSelected(SelectionEvent e) { 
-		    	
+ 		    	acaoFlag = 1;
 		        String cpf = txtcpf.getText();
 
 		        if (cpf.isEmpty()) {
@@ -486,8 +504,7 @@ public class TelaManutencaoVendedorGUI {
 				}
 		    }
         });
-              
-        
-        
+
+  
 	}
 }
