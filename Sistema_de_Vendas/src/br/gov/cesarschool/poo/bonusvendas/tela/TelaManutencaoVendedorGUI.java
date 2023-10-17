@@ -30,8 +30,7 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Sexo;
 import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
 import br.gov.cesarschool.poo.bonusvendas.negocio.VendedorMediator;
-import testes.telas.Entidade;
-import testes.telas.TelaExemploCadastro;
+
 
 import org.eclipse.swt.widgets.Combo;
 
