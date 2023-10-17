@@ -281,8 +281,14 @@ public class TelaManutencaoVendedorGUI {
 		            JOptionPane.showMessageDialog(null, "CPF nao informado.");
 		            return;
 		        } else {
+		        	
+		        	/* Validação CPF */
+		        	if (cpf.length() != 11 || !cpf.matches("\\d{11}")) {
+		        	    JOptionPane.showMessageDialog(null, "Formato do campo CPF invalido. Deve conter 11 digitos.");
+		        	    return;
+		        	}
 		        
-			        VendedorMediator vendedorMediator = VendedorMediator.getInstance(vendedorDAO, acumuloResgateMediator);
+			        VendedorMediator vendedorMediator = VendedorMediator.getInstancia(vendedorDAO, acumuloResgateMediator);
 		            Vendedor vendedorEncontrado = vendedorMediator.buscar(cpf);
 	
 			        if (vendedorEncontrado  != null) {		        	
