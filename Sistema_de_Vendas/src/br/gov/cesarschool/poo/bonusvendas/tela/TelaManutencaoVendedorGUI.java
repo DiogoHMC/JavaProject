@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-
+import org.eclipse.swt.widgets.Combo;
 
 import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
@@ -30,9 +30,6 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Sexo;
 import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
 import br.gov.cesarschool.poo.bonusvendas.negocio.VendedorMediator;
-
-
-import org.eclipse.swt.widgets.Combo;
 
 public class TelaManutencaoVendedorGUI {
 
@@ -193,8 +190,7 @@ public class TelaManutencaoVendedorGUI {
 		dateTime = new DateTime(shlTelaManutVendedor, SWT.BORDER);
 		dateTime.setEnabled(false);
 		dateTime.setBounds(141, 163, 88, 30);
-		
-		
+			
 		// Definição Renda
 		Label lblRenda = new Label(shlTelaManutVendedor, SWT.NONE);
 		lblRenda.setBounds(10, 205, 47, 20);
@@ -311,7 +307,7 @@ public class TelaManutencaoVendedorGUI {
 				    	txtCidade.setEnabled(true);
 				    	txtEstado.setEnabled(true);	   
 			        	
-			            // Preencha os campos do formulário com os dados do vendedor encontrado
+			            /* Preenche os campos com os dados do vendedor salvos */
 			            txtNome.setText(vendedorEncontrado.getNomeCompleto());
 			            txtRenda.setText(Double.toString(vendedorEncontrado.getRenda()));
 				    	
@@ -332,8 +328,6 @@ public class TelaManutencaoVendedorGUI {
 		                	btnM.setSelection(false);
 		                    btnF.setSelection(true);
 		                }	            
-				 			    	
-			            //JOptionPane.showMessageDialog(null, "Vendedor encontrado com sucesso.");
 			        } else {
 			            JOptionPane.showMessageDialog(null, "Vendedor inexistente");
 			        }
@@ -345,19 +339,22 @@ public class TelaManutencaoVendedorGUI {
         btnLimpar.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                txtcpf.setText("");
-                txtNome.setText("");
-                txtRenda.setText("");
-                btnM.setSelection(false);
-                btnF.setSelection(false);
-                dateTime.setDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1, LocalDate.now().getDayOfMonth());
-                txtLogradouro.setText("");
-                txtNumero.setText("");
-                txtComplemento.setText("");
-                txtCep.setText("");
-                txtCidade.setText("");
-                txtEstado.setText("");
-                //txtPais.setText("");
+            	if (acaoFlag == 0) {  // Limpar só o campo CPF
+            		txtcpf.setText("");
+            	} else {
+	                txtNome.setText("");
+	                txtRenda.setText("");
+	                btnM.setSelection(false);
+	                btnF.setSelection(false);
+	                dateTime.setDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1, LocalDate.now().getDayOfMonth());
+	                txtLogradouro.setText("");
+	                txtNumero.setText("");
+	                txtComplemento.setText("");
+	                txtCep.setText("");
+	                txtCidade.setText("");
+	                txtEstado.setText("");
+	                //txtPais.setText("");
+            	}
             }
         });
 				
@@ -458,7 +455,7 @@ public class TelaManutencaoVendedorGUI {
 				        String resultado = mediator.alterar(vendedor);
 
 				        if (resultado == null) {
-				            JOptionPane.showMessageDialog(null, "Vendedor alterado com sucesso!");
+				            JOptionPane.showMessageDialog(null, "Dados vendedor alterado com sucesso!");
 				        } else {
 				            JOptionPane.showMessageDialog(null, "Erro ao alterar o vendedor: " + resultado);
 				        }
