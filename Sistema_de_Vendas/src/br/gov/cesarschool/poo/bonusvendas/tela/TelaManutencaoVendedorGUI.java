@@ -487,6 +487,7 @@ public class TelaManutencaoVendedorGUI {
 		    	if (vendedor != null) {
 					JOptionPane.showMessageDialog(null, "CPF ja existe!");
 				} else {
+					
 			    	/* Habilita campos para preenchimento */ 					
 					btnIncluirAlterar.setEnabled(true);
 			    	btnCancelar.setEnabled(true);
