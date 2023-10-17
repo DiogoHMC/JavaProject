@@ -8,6 +8,8 @@ Projeto em desenvolvimento para disciplina POO - Programação Orientada a Objet
 * Java
 * Programação Orientada a Objeto
 * Eclipse IDE
+* Window Builder
+* SWT
 * JUnit
 
 # Colaboradores
