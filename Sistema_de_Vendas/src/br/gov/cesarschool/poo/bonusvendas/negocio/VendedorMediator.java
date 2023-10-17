@@ -1,10 +1,10 @@
 package br.gov.cesarschool.poo.bonusvendas.negocio;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-import br.gov.cesarschool.poo.bonusvendas.entidade.Endereco;
-import br.gov.cesarschool.poo.bonusvendas.persistencia.VendedorDAO;
-import br.gov.cesarschool.poo.bonusvendas.util.ValidadorCPF;
-import br.gov.cesarschool.poo.bonusvendas.util.StringUtil;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
+import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
+import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
+import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -28,7 +28,7 @@ public class VendedorMediator {
     }
 
     // Método público para obter a instância do Singleton
-    public static VendedorMediator getInstancia() {
+    public static VendedorMediator getInstancia(VendedorDAO vendedorDAO, AcumuloResgateMediator acumuloResgateMediator) {
         // Se a instância ainda não existe, cria-a
         if (instance == null) {
             instance = new VendedorMediator();

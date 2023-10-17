@@ -37,7 +37,7 @@ public class TelaManutencaoVendedorGUI {
 	
 	static VendedorDAO vendedorDAO = new VendedorDAO();
 	static AcumuloResgateMediator acumuloResgateMediator = new AcumuloResgateMediator();
-	static VendedorMediator mediator = VendedorMediator.getInstance(vendedorDAO, acumuloResgateMediator);
+	static VendedorMediator mediator = VendedorMediator.getInstancia(vendedorDAO, acumuloResgateMediator);
 	
 	private Text txtNome;
 	private Text txtRenda;
@@ -105,12 +105,12 @@ public class TelaManutencaoVendedorGUI {
 		
 		// Definição do Botão Novo
 		btnNovo = new Button(shlTelaManutVendedor, SWT.NONE);
-		btnNovo.setBounds(216, 32, 90, 30);
+		btnNovo.setBounds(216, 29, 90, 30);
 		btnNovo.setText("Novo");	
 
 		// Definição do Botão Buscar
 		btnBuscar = new Button(shlTelaManutVendedor, SWT.NONE);
-		btnBuscar.setBounds(312, 32, 90, 30);
+		btnBuscar.setBounds(318, 29, 90, 30);
 		btnBuscar.setText("Buscar");
 				
 		// Definição do Botão Limpar
@@ -137,7 +137,7 @@ public class TelaManutencaoVendedorGUI {
 		
 		// Definição Nome
 		Label lblNome = new Label(shlTelaManutVendedor, SWT.NONE);
-		lblNome.setBounds(10, 71, 96, 20);
+		lblNome.setBounds(10, 71, 112, 20);
 		lblNome.setText("Nome Completo");
 		
 		txtNome = new Text(shlTelaManutVendedor, SWT.BORDER);
@@ -184,12 +184,12 @@ public class TelaManutencaoVendedorGUI {
 		// Definição Data de Nascimento
 		Label lblDataDeNascimento = new Label(shlTelaManutVendedor, SWT.NONE);
 		lblDataDeNascimento.setText("Data de nascimento");
-		lblDataDeNascimento.setBounds(10, 167, 112, 26);
+		lblDataDeNascimento.setBounds(10, 167, 133, 26);
 
 		// DateTime dateTime = new DateTime(shlTelaManutVendedor, SWT.BORDER);
 		dateTime = new DateTime(shlTelaManutVendedor, SWT.BORDER);
 		dateTime.setEnabled(false);
-		dateTime.setBounds(141, 163, 88, 30);
+		dateTime.setBounds(161, 163, 102, 30);
 			
 		// Definição Renda
 		Label lblRenda = new Label(shlTelaManutVendedor, SWT.NONE);

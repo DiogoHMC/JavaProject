@@ -14,7 +14,7 @@ public class CaixaDeBonusDAO {
     
 	public boolean incluir(CaixaDeBonus prod) {
 		
-		CaixaDeBonus prodBusca = buscar(prod.getNumeros()); 
+		CaixaDeBonus prodBusca = buscar(prod.getNumero()); 
 		
 		if (prodBusca != null) {
 				
@@ -23,13 +23,13 @@ public class CaixaDeBonusDAO {
 		
 		else {
 			
-			cadastro.incluir(prod, BRANCO + prod.getNumeros());
+			cadastro.incluir(prod, BRANCO + prod.getNumero());
 			return true;
 		}		 
 	}
 	
 	public boolean excluir(CaixaDeBonus prod) {
-		CaixaDeBonus prodBusca = buscar(prod.getNumeros()); 
+		CaixaDeBonus prodBusca = buscar(prod.getNumero()); 
     	
     	 if (prodBusca == null) {
     		 
@@ -37,14 +37,14 @@ public class CaixaDeBonusDAO {
 	    }
     	 else {
     		 
-	        cadastro.excluir(BRANCO + prod.getNumeros());
+	        cadastro.excluir(BRANCO + prod.getNumero());
 	        return true;
 	    }
     }
 	
 	public boolean alterar(CaixaDeBonus prod) {
 			
-		CaixaDeBonus prodBusca = buscar(prod.getNumeros());
+		CaixaDeBonus prodBusca = buscar(prod.getNumero());
 		if (prodBusca == null) {
 			
 			return false;
@@ -52,7 +52,7 @@ public class CaixaDeBonusDAO {
 		
 		else {
 			
-			cadastro.alterar(prod, BRANCO + prod.getNumeros());
+			cadastro.alterar(prod, BRANCO + prod.getNumero());
 			return true;
 		}		
 	}

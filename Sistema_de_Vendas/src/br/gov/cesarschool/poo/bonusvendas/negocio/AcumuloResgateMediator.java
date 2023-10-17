@@ -66,7 +66,7 @@ public class AcumuloResgateMediator {
     	repositorioCaixaDeBonus.alterar(caixaDeBonus);
     	
     	LocalDateTime dataHoraAtual = LocalDateTime.now();
-    	LancamentoBonus lancamentoCredito = new LancamentoBonusCredito(caixaDeBonus.getNumeros(), valor, dataHoraAtual);
+    	LancamentoBonus lancamentoCredito = new LancamentoBonusCredito(caixaDeBonus.getNumero(), valor, dataHoraAtual);
         repositorioLancamento.incluir(lancamentoCredito);
         
         return null;
@@ -92,7 +92,7 @@ public class AcumuloResgateMediator {
     	repositorioCaixaDeBonus.alterar(caixaDeBonus);
     	
     	LocalDateTime dataHoraAtual = LocalDateTime.now();
-    	LancamentoBonus lancamentoDebito = new LancamentoBonusDebito(caixaDeBonus.getNumeros(), valor, dataHoraAtual, tipo);
+    	LancamentoBonus lancamentoDebito = new LancamentoBonusDebito(caixaDeBonus.getNumero(), valor, dataHoraAtual, tipo);
         repositorioLancamento.incluir(lancamentoDebito);
     	
         return null;
