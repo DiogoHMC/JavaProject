@@ -2,9 +2,11 @@ package br.gov.cesarschool.poo.bonusvendas.entidade;
 
 import java.io. Serializable;
 import java.time.LocalDate;
+
 import java.time.Period;
 
 import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
+
 
 public class Vendedor implements Serializable{
 	

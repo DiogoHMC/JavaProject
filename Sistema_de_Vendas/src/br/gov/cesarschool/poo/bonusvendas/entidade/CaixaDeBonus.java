@@ -10,21 +10,21 @@ public class CaixaDeBonus implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	/* attribute  */
-	private long numeros;
+	private long numero;
 	private double saldo;
 	private LocalDateTime dataHoraAtualizacao;
 	
 	/* constructor */ 
 	public CaixaDeBonus(long numeros) {
 			
-		this.numeros = numeros;
-		this.saldo = 0;
+		this.numero = numeros;
+		this.saldo = 0.0;
 		this.dataHoraAtualizacao = LocalDateTime.now();
 	}
 
-	public long getNumeros() {
+	public long getNumero() {
 		
-        return numeros;
+        return numero;
     }
 
     public double getSaldo() {

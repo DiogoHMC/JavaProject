@@ -14,11 +14,8 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/mgand/Downloads/PersistenciaObjetos.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/SWT Library"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/mgand/Downloads/swt-win64-3.6.2.jar/swt-win64-3.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/eclipse-SDK-4.29-win32-x86_64/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64.source_3.124.100.v20230825-1346.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/eclipse-SDK-4.29-win32-x86_64/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.124.100.v20230825-1346.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/eclipse-SDK-4.29-win32-x86_64/eclipse/plugins/org.eclipse.swt_3.124.100.v20230825-1346.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/eclipse-SDK-4.29-win32-x86_64/eclipse/plugins/org.eclipse.e4.ui.workbench.swt.source_0.17.100.v20230727-0604.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/eclipse-SDK-4.29-win32-x86_64/eclipse/plugins/org.eclipse.e4.ui.workbench.swt_0.17.100.v20230727-0604.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/PersistenciaObjetos.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/oblesqbom.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/PersistenciaObjetos.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
