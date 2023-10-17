@@ -307,10 +307,6 @@ public class TelaManutencaoVendedorGUI {
 			            // Preencha os campos do formulário com os dados do vendedor encontrado
 			            txtNome.setText(vendedorEncontrado.getNomeCompleto());
 			            txtRenda.setText(Double.toString(vendedorEncontrado.getRenda()));
-	
-	
-				    	btnM.setText(vendedorEncontrado.getNomeCompleto());
-				    	btnF.setText(vendedorEncontrado.getNomeCompleto());
 				    	
 				    	LocalDate dataNascimento = vendedorEncontrado.getDataNascimento();
 				    	dateTime.setDate(dataNascimento.getYear(), dataNascimento.getMonthValue() - 1, dataNascimento.getDayOfMonth());
@@ -354,7 +350,7 @@ public class TelaManutencaoVendedorGUI {
                 txtCep.setText("");
                 txtCidade.setText("");
                 txtEstado.setText("");
-                txtPais.setText("");
+                //txtPais.setText("");
             }
         });
 				
