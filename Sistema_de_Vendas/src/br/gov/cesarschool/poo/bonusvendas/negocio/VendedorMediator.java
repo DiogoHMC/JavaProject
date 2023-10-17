@@ -1,5 +1,11 @@
 package br.gov.cesarschool.poo.bonusvendas.negocio;
 
+import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.entidade.Endereco;
+import br.gov.cesarschool.poo.bonusvendas.persistencia.VendedorDAO;
+import br.gov.cesarschool.poo.bonusvendas.util.ValidadorCPF;
+import br.gov.cesarschool.poo.bonusvendas.util.StringUtil;
+
 import java.time.LocalDate;
 import java.time.Period;
 import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
@@ -10,26 +16,26 @@ import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 
 public class VendedorMediator {
 
-    // A instância única do Singleton
+    
     private static VendedorMediator instance;
-    //private java.time.LocalDate dataNascimento;
     private VendedorDAO vendedorCons;
     private AcumuloResgateMediator acumuloResgateCons;
 
     // Construtor privado para evitar criação direta
-    private VendedorMediator(VendedorDAO vendedorCons, AcumuloResgateMediator acumuloResgateCons) {
-        this.vendedorCons = vendedorCons;
-        this.acumuloResgateCons = acumuloResgateCons;
+    private VendedorMediator() {
+    	vendedorCons = new VendedorDAO();
+    	acumuloResgateCons = AcumuloResgateMediator.getInstancia();
     }
 
     // Método público para obter a instância do Singleton
-    public static VendedorMediator getInstance(VendedorDAO vendedor, AcumuloResgateMediator acumuloResgate) {
+    public static VendedorMediator getInstancia() {
         // Se a instância ainda não existe, cria-a
         if (instance == null) {
-            instance = new VendedorMediator(vendedor, acumuloResgate);
+            instance = new VendedorMediator();
         }
         // Retorna a instância existente
         return instance;
+        
     }
     
     /* Método para validar dados do vendedor recebido no objeto */

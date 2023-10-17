@@ -1,6 +1,7 @@
 package br.gov.cesarschool.poo.bonusvendas.entidade;
 
 import java.io. Serializable;
+import java.time.LocalDate;
 
 public class Vendedor implements Serializable{
 	
@@ -69,5 +70,10 @@ public class Vendedor implements Serializable{
 	public void setEndereco(br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco endereco) {
 		this.endereco = endereco;
 	}
+	
+	public int calcularIdade() {
+        LocalDate dataAtual = LocalDate.now();
+        return dataAtual.getYear() - dataNascimento.getYear();
+    }
 	
 }
