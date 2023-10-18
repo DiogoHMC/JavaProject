@@ -64,8 +64,6 @@ public class VendedorMediator {
 			
 		}
    
-    
-    
     public String alterar(Vendedor vendedor) {
         
 

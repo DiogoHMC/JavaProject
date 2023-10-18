@@ -37,7 +37,7 @@ public class TelaManutencaoVendedorGUI {
 	
 	static VendedorDAO vendedorDAO = new VendedorDAO();
 	static AcumuloResgateMediator acumuloResgateMediator = new AcumuloResgateMediator();
-	static VendedorMediator mediator = VendedorMediator.getInstancia(vendedorDAO, acumuloResgateMediator);
+	static VendedorMediator mediator = VendedorMediator.getInstancia();
 	
 	private Text txtNome;
 	private Text txtRenda;
@@ -288,7 +288,7 @@ public class TelaManutencaoVendedorGUI {
 		        	    return;
 		        	}
 		        
-			        VendedorMediator vendedorMediator = VendedorMediator.getInstancia(vendedorDAO, acumuloResgateMediator);
+			        VendedorMediator vendedorMediator = VendedorMediator.getInstancia();
 		            Vendedor vendedorEncontrado = vendedorMediator.buscar(cpf);
 	
 			        if (vendedorEncontrado  != null) {		        	
