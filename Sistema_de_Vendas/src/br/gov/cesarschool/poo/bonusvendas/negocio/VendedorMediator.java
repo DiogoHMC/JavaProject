@@ -212,13 +212,7 @@ public class VendedorMediator {
     // Método buscar
     public Vendedor buscar(String cpf) {
     	
-    	Vendedor vendedorEncontrado = this.vendedorCons.buscar(cpf);
-    	
-    	if (vendedorEncontrado != null) {
-            return vendedorEncontrado;
-        }
-    	
-    	return null;
+    	return vendedorCons.buscar(cpf);
     }
 
 
