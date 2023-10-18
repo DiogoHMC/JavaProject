@@ -455,6 +455,9 @@ public class TelaManutencaoVendedorGUI {
     		            } else {
     		                JOptionPane.showMessageDialog(null, "Erro ao incluir o vendedor: " + resultado.getMensagemErroValidacao());
     		            }
+    		            
+    		            btnCancelar.notifyListeners(SWT.Selection, new Event());
+    		            
 		            } else {  // Alterar
 		            	/* Método alterar do VendedorMediator */
 				        Vendedor vendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
@@ -466,6 +469,7 @@ public class TelaManutencaoVendedorGUI {
 				            JOptionPane.showMessageDialog(null, "Erro ao alterar o vendedor: " + resultado);
 				        }
 		            	
+				        btnCancelar.notifyListeners(SWT.Selection, new Event());
 		            }
     		            
     		    }
@@ -509,6 +513,49 @@ public class TelaManutencaoVendedorGUI {
 		    }
         });
 
-  
+		/* Evento para voltar ao estado inicial */ 
+		btnCancelar.addSelectionListener(new SelectionAdapter() {
+ 		    @Override
+		    public void widgetSelected(SelectionEvent e) { 
+ 		    	
+		    	/* Limpar conteudo dos campos */
+		    	txtcpf.setText("");
+		        txtNome.setText("");
+		        txtRenda.setText("");
+		        btnM.setSelection(false);
+		        btnF.setSelection(false);
+		        dateTime.setDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1, LocalDate.now().getDayOfMonth());
+		        txtLogradouro.setText("");
+		        txtNumero.setText("");
+		        txtComplemento.setText("");
+		        txtCep.setText("");
+		        txtCidade.setText("");
+		        txtEstado.setText("");
+		        
+		        /* Habilitar campo e botões */ 
+		        txtcpf.setEnabled(true);
+		        btnNovo.setEnabled(true);
+		        btnBuscar.setEnabled(true);
+
+ 		    	
+ 		    	/* Desabilitar campos e botões */ 		
+		        btnIncluirAlterar.setEnabled(false);
+		        btnCancelar.setEnabled(false);
+		        
+		        txtNome.setEnabled(false);
+		        btnM.setEnabled(false);
+		        btnF.setEnabled(false);
+		        dateTime.setEnabled(false);
+		        txtRenda.setEnabled(false);
+		        txtLogradouro.setEnabled(false);
+		        txtNumero.setEnabled(false);
+		        txtComplemento.setEnabled(false);
+		        txtCep.setEnabled(false);
+		        txtCidade.setEnabled(false);
+		        txtEstado.setEnabled(false);
+
+		    }
+        });
+
 	}
 }
