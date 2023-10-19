@@ -16,7 +16,7 @@ public class VendedorMediator {
 	private static VendedorMediator instance;
     private VendedorDAO vendedorCons;
 
-    // Construtor privado para evitar criação direta
+    /* Construtor privado para evitar criação direta */
     private VendedorMediator() {
         vendedorCons = new VendedorDAO();
     }
