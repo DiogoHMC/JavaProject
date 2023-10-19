@@ -21,7 +21,7 @@ public class VendedorMediator {
         vendedorCons = new VendedorDAO();
     }
 
-    // Método público para obter a instância do Singleton
+    /* Método público para obter a instância do Singleton */
     public static VendedorMediator getInstancia() {
         // Se a instância ainda não existe, cria-a
         if (instance == null) {
