@@ -1,18 +1,15 @@
 package br.gov.cesarschool.poo.bonusvendas.negocio;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-//import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
 import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
 
 import java.time.LocalDate;
 import java.time.Period;
-//import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
-//import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-//import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
-//import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
-//import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
+
+import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 
 public class VendedorMediator {
 
@@ -35,31 +32,70 @@ public class VendedorMediator {
         return instance;
     }
     
+    
+    
+//public ResultadoInclusaoVendedor incluir(Vendedor vendedor) {
+//    	
+//	Vendedor vendedorExistente = buscar(vendedor.getCpf());
+//	
+//	if (vendedorExistente != null) {
+//		return new ResultadoInclusaoVendedor(0, "Vendedor ja existente");
+//    }
+//	if (!vendedorCons.incluir(vendedor)) {
+//
+//        return new ResultadoInclusaoVendedor(0, "Vendedor ja existente");
+//    }        	
+//    	
+//    	/* gerar caixa de bonus vendedor */
+//    	AcumuloResgateMediator acumuloResgateMediator = new AcumuloResgateMediator();
+//    	
+//    	long numeroCaixaDeBonus = acumuloResgateMediator.gerarCaixaDeBonus(vendedor);
+//    	if (numeroCaixaDeBonus == 0) {
+//    		return new ResultadoInclusaoVendedor(0,"Caixa de bonus nao foi gerada");
+//    	} else {
+//    		return new ResultadoInclusaoVendedor(numeroCaixaDeBonus, null);
+//    	}
+//		
+//	}
+    
+    
     /* Método para validar dados do vendedor recebido no objeto */
     public ResultadoInclusaoVendedor incluir(Vendedor vendedor) {
-    	
-    	Vendedor vendedorExistente = buscar(vendedor.getCpf());
-    	
-    	/* vendedor já existe */
-    	
-    	if (vendedorExistente != null) {
-    		return new ResultadoInclusaoVendedor(0, validar(vendedorExistente));
-        }
-    	if (!vendedorCons.incluir(vendedor)) {
+        
+        // Validar os dados do vendedor
+        String validacao = validar(vendedor);
 
+        if (validacao != null) {
+            // Se algum dado estiver inválido, retornar resultado com código 0 e mensagem de erro
+            return new ResultadoInclusaoVendedor(0, validacao);
+        }
+
+        // Verificar se o vendedor já existe no repositório
+        Vendedor vendedorExistente = buscar(vendedor.getCpf());
+        if (vendedorExistente != null) {
+            // Se o vendedor já existe, retornar resultado com código 0 e mensagem específica
             return new ResultadoInclusaoVendedor(0, "Vendedor ja existente");
-        }        	
-        	
-        	/* gerar caixa de bonus vendedor */
-        	AcumuloResgateMediator acumuloResgateMediator = new AcumuloResgateMediator();
-        	long numeroCaixaDeBonus = acumuloResgateMediator.gerarCaixaDeBonus(vendedor);
-        	if (numeroCaixaDeBonus == 0) {
-        		return new ResultadoInclusaoVendedor(0,"Caixa de bonus nao foi gerada");
-        	} else {
-        		return new ResultadoInclusaoVendedor(numeroCaixaDeBonus, null);
-        	}
-			
-		}
+        }
+
+        // O vendedor está válido, vamos incluí-lo no repositório e gerar o número da caixa de bônus
+        if (!vendedorCons.incluir(vendedor)) {
+            // Se a inclusão falhar, retornar resultado com código 0 e mensagem específica
+            return new ResultadoInclusaoVendedor(0, "Vendedor ja existente no repositório");
+        }
+        
+        // Gerar caixa de bônus para o vendedor
+        AcumuloResgateMediator acumuloResgateMediator = new AcumuloResgateMediator();
+        long numeroCaixaDeBonus = acumuloResgateMediator.gerarCaixaDeBonus(vendedor);
+
+        if (numeroCaixaDeBonus == 0) {
+            // Se a geração da caixa de bônus falhar, retornar resultado com código 0 e mensagem específica
+            return new ResultadoInclusaoVendedor(0, "Caixa de bonus nao foi gerada");
+        } else {
+            // Vendedor incluído com sucesso, retornar número da caixa de bônus gerado e mensagem nula
+            return new ResultadoInclusaoVendedor(numeroCaixaDeBonus, null);
+        }
+    }
+
    
     public String alterar(Vendedor vendedor) {
         
