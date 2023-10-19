@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import java.time.Period;
 
-import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
+//import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
 
 
 public class Vendedor implements Serializable{

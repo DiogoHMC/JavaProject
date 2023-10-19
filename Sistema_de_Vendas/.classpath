@@ -11,16 +11,9 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/mgand/Downloads/PersistenciaObjetos.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/SWT Library"/>
-	<classpathentry kind="lib" path="C:/Users/mgand/Downloads/swt-win64-3.6.2.jar/swt-win64-3.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/mgand/Downloads/oblesqbom.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/mgand/OneDrive/Área de Trabalho/TentandoDenovo/JavaProject/arquivos/swt-win64-3.6.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/mgand/OneDrive/Área de Trabalho/TentandoDenovo/JavaProject/arquivos/oblesqbom.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/mgand/OneDrive/Área de Trabalho/TentandoDenovo/JavaProject/arquivos/PersistenciaObjetos.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/mgand/OneDrive/Área de Trabalho/TentandoDenovo/JavaProject/arquivos/swt.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/swt-win64-3.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/oblesqbom.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diogo/Downloads/PersistenciaObjetos.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/oblesqbom.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/PersistenciaObjetos.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yaraf/OneDrive/Documentos/swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

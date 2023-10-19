@@ -1,30 +1,28 @@
 package br.gov.cesarschool.poo.bonusvendas.negocio;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
+//import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
 import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
 
 import java.time.LocalDate;
 import java.time.Period;
-import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
-import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
-import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
-import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
+//import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
+//import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+//import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
+//import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
+//import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 
 public class VendedorMediator {
 
     
-    private static VendedorMediator instance;
+	private static VendedorMediator instance;
     private VendedorDAO vendedorCons;
-    private AcumuloResgateMediator acumuloResgateCons;
 
     // Construtor privado para evitar criação direta
     private VendedorMediator() {
-    	vendedorCons = new VendedorDAO();
-    	acumuloResgateCons = AcumuloResgateMediator.getInstancia();
+        vendedorCons = new VendedorDAO();
     }
 
     // Método público para obter a instância do Singleton
@@ -35,7 +33,6 @@ public class VendedorMediator {
         }
         // Retorna a instância existente
         return instance;
-        
     }
     
     /* Método para validar dados do vendedor recebido no objeto */

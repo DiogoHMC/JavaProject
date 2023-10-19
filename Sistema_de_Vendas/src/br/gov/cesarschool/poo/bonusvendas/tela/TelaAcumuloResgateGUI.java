@@ -10,12 +10,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+//import org.eclipse.swt.widgets.Listener;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
 import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.wb.swt.SWTResourceManager;
+//import org.eclipse.swt.widgets.Composite;
+//import org.eclipse.wb.swt.SWTResourceManager;
 
 public class TelaAcumuloResgateGUI {
 
