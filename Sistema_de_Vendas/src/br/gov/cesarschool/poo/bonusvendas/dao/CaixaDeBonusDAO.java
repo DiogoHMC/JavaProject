@@ -1,13 +1,19 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
 import java.io.Serializable;
-
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
+import br.edu.cesarschool.next.oo.persistenciaobjetos.DAOGenerico;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
+import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
 public class CaixaDeBonusDAO {
 	private static final String BRANCO = "";
-	private CadastroObjetos cadastro = new CadastroObjetos(CaixaDeBonus.class); 
+
+	private DAOGenerico<CaixaDeBonus> dao;
+
+    public CaixaDeBonusDAO() {
+        dao = new DAOGenerico<>(CaixaDeBonus.class);
+    }
+
 	public boolean incluir(CaixaDeBonus caixaBonus) {
 		CaixaDeBonus caixaBonusBusca = buscar(caixaBonus.getNumero());  
 		if (caixaBonusBusca != null) { 
