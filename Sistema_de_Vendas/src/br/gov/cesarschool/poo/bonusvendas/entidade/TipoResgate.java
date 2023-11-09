@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public enum TipoResgate implements Serializable {
 	PRODUTO (1,"Produto"), 
-	SERVICO (2,"Serviço"), 
+	SERVICO (2,"Servico"), 
 	CASH (3,"Cash");
 	private int codigo;
 	private String nome;

@@ -27,14 +27,14 @@ public class CaixaDeBonusDAO {
 		}		
 	}
 	public CaixaDeBonus buscar(long codigo) {
-		// Esta opera��o entre () vai ter significado mais � frente! 
+		// Esta operacao entre () vai ter significado mais a frente! 
 		return (CaixaDeBonus)cadastro.buscar(BRANCO + codigo);
 	}
 	public CaixaDeBonus[] buscarTodos() {
 		Serializable[] rets = cadastro.buscarTodos(CaixaDeBonus.class);
 		CaixaDeBonus[] caixaBonus = new CaixaDeBonus[rets.length];
 		for(int i=0; i<rets.length; i++) {
-			// Esta operacao entre () vai ter significado mais � frente! 
+			// Esta operacao entre () vai ter significado mais a frente! 
 			caixaBonus[i] = (CaixaDeBonus)rets[i];
 		}
 		return caixaBonus;
