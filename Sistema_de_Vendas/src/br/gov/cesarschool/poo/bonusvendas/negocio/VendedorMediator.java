@@ -1,7 +1,5 @@
 package br.gov.cesarschool.poo.bonusvendas.negocio;
 
-<<<<<<< HEAD
-=======
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
 import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
@@ -9,15 +7,8 @@ import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
 import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 
->>>>>>> f3c8b89e4bb2e9615920f16a4fc99c7222a8fce1
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
-<<<<<<< HEAD
-import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
-import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
-import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
 
 public class VendedorMediator {
 	private static VendedorMediator instancia;
