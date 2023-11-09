@@ -1,78 +1,51 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
-
-import br.gov.cesarschool.poo.bonusvendas.entidade.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
+import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 
 public class LancamentoBonusDAO {
-	
-	private static final String BRANCO = "";
 	private CadastroObjetos cadastro = new CadastroObjetos(LancamentoBonus.class); 
-	
-	public boolean incluir(LancamentoBonus prod) {
-		
-		long timestamp = prod.getDataHoraLancamento().toEpochSecond(java.time.ZoneOffset.UTC);
-		LancamentoBonus prodBusca = buscar(timestamp); 
-		
-		if (prodBusca != null) { 
-			
+	public boolean incluir(LancamentoBonus lancamento) {
+		String idUnico = obterIdUnico(lancamento);
+		LancamentoBonus lancamentoBusca = buscar(idUnico);  
+		if (lancamentoBusca != null) { 
 			return false;
-		} 
-		
-		else {
-			cadastro.incluir(prod, BRANCO + timestamp);
+		} else {
+			cadastro.incluir(lancamento, idUnico);
 			return true;
 		}		 
 	}
-	
-	public boolean excluir(LancamentoBonus prod) {
-		
-		long timestamp = prod.getDataHoraLancamento().toEpochSecond(java.time.ZoneOffset.UTC);
-		LancamentoBonus prodBusca = buscar(timestamp);
-    	
-    	 if (prodBusca == null) {
-    		 
-	        return false;
-	    }
-    	 else {
-    		 
-	        cadastro.excluir(BRANCO + timestamp);
-	        return true;
-	    }
-    }
-	
-	public boolean alterar(LancamentoBonus prod) {
-		
-		long timestamp = prod.getDataHoraLancamento().toEpochSecond(java.time.ZoneOffset.UTC);
-		LancamentoBonus prodBusca = buscar(timestamp);
-		
-		if (prodBusca == null) {
-			
+	public boolean alterar(LancamentoBonus lancamento) {
+		String idUnico = obterIdUnico(lancamento);
+		LancamentoBonus lancamentoBusca = buscar(idUnico);
+		if (lancamentoBusca == null) {
 			return false;
-		} 
-		
-		else {
-			
-			cadastro.alterar(prod, BRANCO + timestamp);
+		} else {
+			cadastro.alterar(lancamento, idUnico);
 			return true;
 		}		
 	}
-	public LancamentoBonus buscar(long timestamp) {
-		
-		return (LancamentoBonus)cadastro.buscar(BRANCO + timestamp);
+	public LancamentoBonus buscar(String codigo) {
+		// Esta operação entre () vai ter significado mais à frente! 
+		return (LancamentoBonus)cadastro.buscar(codigo);
 	}
-	
 	public LancamentoBonus[] buscarTodos() {
-		
 		Serializable[] rets = cadastro.buscarTodos(LancamentoBonus.class);
-		LancamentoBonus[] prods = new LancamentoBonus[rets.length];
-		
+		LancamentoBonus[] lancamentos = new LancamentoBonus[rets.length];
 		for(int i=0; i<rets.length; i++) {
-			
-			prods[i] = (LancamentoBonus)rets[i];
+			// Esta operação entre () vai ter significado mais à frente! 
+			lancamentos[i] = (LancamentoBonus)rets[i];
 		}
-		
-		return prods;
-	}    
+		return lancamentos;
+	} 
+	private String obterIdUnico(LancamentoBonus lancamento) {
+		DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		return lancamento.getNumeroCaixaDeBonus() + 
+				lancamento.getDataHoraLancamento().format(customFormatter);
+	}	
+
 }

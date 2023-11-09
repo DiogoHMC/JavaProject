@@ -1,40 +1,35 @@
 package br.gov.cesarschool.poo.bonusvendas.negocio.geral;
 
 public class ValidadorCPF {
-    private ValidadorCPF() {
-        // Construtor privado para evitar instância da classe
-    }
+	private ValidadorCPF() {}
+	public static boolean ehCpfValido(String cpf) {
+		boolean isValid = true;
+		
+		if(StringUtil.ehNuloOuBranco(cpf)
+			|| cpf.length() != 11
+			|| (cpf.chars().allMatch( Character::isDigit ) == false)) {
+			return false;
+		}
 
-    public static boolean ehCpfValido(String cpf) {
-    	
-        if (cpf == null || cpf.length() != 11 || !cpf.matches("\\d{11}")) {
-            return false;
-        }
+		int sum = 0;
+		for (int i = 0; i < 9; i++) {
+	        sum += Character.getNumericValue(cpf.charAt(i)) * (10 - i);
+	    }
+		int resto = sum % 11;
+		int primeiroDigito = resto < 2 ? 0 : 11 - resto;
+		
+		sum  = 0;
+	    for (int i = 0; i < 10; i++) {
+	        sum += Character.getNumericValue(cpf.charAt(i)) * (11 - i);
+	    }
+	    resto = sum % 11;
+	    
+	    int segundoDigito = resto < 2 ? 0 : 11 - resto;
+	    
+	    if(cpf.charAt(9) != Character.forDigit(primeiroDigito, 10) || cpf.charAt(10) != Character.forDigit(segundoDigito, 10)){
+	    	isValid = false;
+	    }
 
-        int soma = 0;
-        
-        for (int i = 0; i < 9; i++) {
-            soma += (cpf.charAt(i) - '0') * (10 - i);
-        }
-        
-        int penultimoDigito = 11 - (soma % 11);
-
-        if (penultimoDigito >= 10) {
-            penultimoDigito = 0;
-        }
-
-        soma = 0;
-        
-        for (int i = 0; i < 10; i++) {
-            soma += (cpf.charAt(i) - '0') * (11 - i);
-        }
-        
-        int ultimoDigito = 11 - (soma % 11);
-
-        if (ultimoDigito >= 10) {
-            ultimoDigito = 0;
-        }
-
-        return (cpf.charAt(9) - '0' == penultimoDigito && cpf.charAt(10) - '0' == ultimoDigito);
-    }
+		return isValid;
+	}
 }
