@@ -4,13 +4,17 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 
 public class LancamentoBonusDAO {
-	private CadastroObjetos cadastro = new CadastroObjetos(LancamentoBonus.class); 
+	private DAOGenerico<LancamentoBonus> dao;
+	
+	public LancamentoBonusDAO() {
+        this.dao = new DAOGenerico<>(LancamentoBonus.class);
+    }
+	
 	public boolean incluir(LancamentoBonus lancamento) {
-		String idUnico = obterIdUnico(lancamento);
+		String idUnico = getIdUnico(lancamento);
 		LancamentoBonus lancamentoBusca = buscar(idUnico);  
 		if (lancamentoBusca != null) { 
 			return false;
@@ -42,10 +46,5 @@ public class LancamentoBonusDAO {
 		}
 		return lancamentos;
 	} 
-	private String obterIdUnico(LancamentoBonus lancamento) {
-		DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-		return lancamento.getNumeroCaixaDeBonus() + 
-				lancamento.getDataHoraLancamento().format(customFormatter);
-	}	
 
 }
