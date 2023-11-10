@@ -12,8 +12,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/SWT Library"/>
-	<classpathentry kind="lib" path="C:/Users/adria/OneDrive/Documentos/Cesar - Ciencia da Computação/3° Semestre/POO/_PROJETO POO/PersistenciaObjetos.jar"/>
-	<classpathentry kind="lib" path="C:/Users/adria/OneDrive/Documentos/Cesar - Ciencia da Computação/3° Semestre/POO/_PROJETO POO/swt.jar"/>
-	<classpathentry kind="lib" path="C:/Users/adria/OneDrive/Documentos/Cesar - Ciencia da Computação/3° Semestre/POO/_PROJETO POO/Aula 12 - Testes automatizados fase 1 (projeto)/oblesqbom.jar"/>
+	<classpathentry kind="lib" path="swt.jar"/>
+	<classpathentry kind="lib" path="CaixaDeBonus/12345678920230101.dat"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
