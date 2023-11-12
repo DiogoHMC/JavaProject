@@ -1,6 +1,7 @@
-package br.gov.cesarschool.poo.bonusvendas.util;
+package br.gov.cesarschool.poo.bonusvendas.negocio;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.util.Comparador;
 
 public class ComparadorVendedorNome implements Comparador {
 	

@@ -11,9 +11,7 @@ public class Ordenadora {
         
     		for (int k = i + 1; k < lista.length; k++) {
             
-        		if (comp.comparar(lista[i], lista[k]) > 0) {
-                
-        			
+        		if (comp.comparar(lista[i], lista[k]) > 0) {       			
                     Object temp = lista[i];
                     lista[i] = lista[k];
                     lista[k] = temp;

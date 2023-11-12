@@ -6,6 +6,9 @@ import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.StringUtil;
 import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
+import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorVendedorNome;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorVendedorRenda;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -24,6 +27,7 @@ public class VendedorMediator {
 		repositorioVendedor = new VendedorDAO();
 		caixaDeBonusMediator = AcumuloResgateMediator.getInstancia();
 	}
+	
 	public ResultadoInclusaoVendedor incluir(Vendedor vendedor) {
 		long numeroCaixaBonus = 0;
 		String msg = validar(vendedor);
@@ -40,6 +44,44 @@ public class VendedorMediator {
 		}
 		return new ResultadoInclusaoVendedor(numeroCaixaBonus, msg);
 	}
+	
+	/* New Methods */ 
+	public Vendedor[] gerarListagemClienteOrdenadaPorNome() {
+        /* Chama o método buscarTodos do DAO para obter todos os vendedores */ 
+        Vendedor[] vendedores = repositorioVendedor.buscarTodos();
+
+        /* Verifica se há vendedores para ordenar */
+        if (vendedores != null && vendedores.length > 0) {
+            /* Ordena por nome vendedor utilizando as classes Ordenadora e ComparadorVendedorNome. */
+        	ComparadorVendedorNome comparadorNome = ComparadorVendedorNome.getInstance();
+        	Ordenadora.ordenar(vendedores, comparadorNome);
+
+            /*Retorna a lista ordenada */
+            return vendedores;
+        } else {
+            /* retorna um array vazio se não houver vendedores */
+            return new Vendedor[0];
+        }
+    }
+	
+	public Vendedor[] gerarListagemClienteOrdenadaPorRenda() {
+        // Chama o método buscarTodos do DAO para obter todos os vendedores
+        Vendedor[] vendedores = repositorioVendedor.buscarTodos();
+
+        /* Verifica se há vendedores para ordenar */
+        if (vendedores != null && vendedores.length > 0) {
+            /* Ordena os vendedores por renda, utilizando o ComparadorVendedorRenda */
+            ComparadorVendedorRenda comparadorRenda = ComparadorVendedorRenda.getInstance();
+            Ordenadora.ordenar(vendedores, comparadorRenda);
+
+            /* Retorna a lista ordenada */
+            return vendedores;
+        } else {
+        	 /* retorna um array vazio se não houver vendedores */
+            return new Vendedor[0];
+        }
+    }
+	
 	public String alterar(Vendedor vendedor) {
 		String msg = validar(vendedor);
 		if (msg == null) {
