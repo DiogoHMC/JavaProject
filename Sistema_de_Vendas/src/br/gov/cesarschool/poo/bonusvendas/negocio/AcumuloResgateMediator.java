@@ -11,6 +11,7 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusDebito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 
 public class AcumuloResgateMediator {
 	private static final String CAIXA_DE_BONUS_INEXISTENTE = "Caixa de bonus inexistente";
@@ -72,4 +73,43 @@ public class AcumuloResgateMediator {
 		repositorioLancamento.incluir(lancamento);
 		return null;
 	}
+	
+	public CaixaDeBonus[] listaCaixaDeBonusPorSaldoMaior(double saldoInicial) {
+	    
+	    CaixaDeBonusDAO caixaDeBonusDao = new CaixaDeBonusDAO();
+	    
+	    CaixaDeBonus[] listaDeCaixaDeBonus = caixaDeBonusDao.buscarTodos();
+
+	    CaixaDeBonus[] caixasFiltradas = filtrarPorSaldoMaiorOuIgual(listaDeCaixaDeBonus, saldoInicial);
+
+	    Ordenadora.ordenar(caixasFiltradas, ComparadorCaixaDeBonusSaldoDec.getInstance());
+
+	    // Retornar o array ordenado
+	    return caixasFiltradas;
+	}
+
+	// Método auxiliar para filtrar caixas de bônus por saldo maior ou igual a um valor
+	private CaixaDeBonus[] filtrarPorSaldoMaiorOuIgual(CaixaDeBonus[] caixas, double saldo) {
+		
+	    int count = 0;
+	    for (CaixaDeBonus caixa : caixas) {
+	        if (caixa.getSaldo() >= saldo) {
+	            count++;
+	        }
+	    }
+	    
+	    CaixaDeBonus[] caixasFiltradas = new CaixaDeBonus[count];
+
+	    // Preencher o novo array com as caixas que atendem ao critério
+	    int index = 0;
+	    for (CaixaDeBonus caixa : caixas) {
+	        if (caixa.getSaldo() >= saldo) {
+	            caixasFiltradas[index++] = caixa;
+	        }
+	    }
+
+	    return caixasFiltradas;
+	}
+
+	
 }
