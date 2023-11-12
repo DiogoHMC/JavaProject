@@ -7,7 +7,7 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 public class ComparadorLancamentoBonusDHDec implements Comparator {
 	private static final ComparadorLancamentoBonusDHDec instance = new ComparadorLancamentoBonusDHDec();
 
-    // Construtor privado para Singleton
+    /* Constructor private para Singleton */
     private ComparadorLancamentoBonusDHDec() {}
 
     public static ComparadorLancamentoBonusDHDec getInstance() {
@@ -19,7 +19,6 @@ public class ComparadorLancamentoBonusDHDec implements Comparator {
         LocalDateTime dataHora1 = ((LancamentoBonus) o1).getDataHoraLancamento();
         LocalDateTime dataHora2 = ((LancamentoBonus) o2).getDataHoraLancamento();
 
-        // Compare em ordem DECRESCENTE de dataHoraLancamento
         return dataHora2.compareTo(dataHora1);
     }
 }
