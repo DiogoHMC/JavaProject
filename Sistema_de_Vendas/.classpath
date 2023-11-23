@@ -12,6 +12,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/SWT Library"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="swt.jar"/>
 	<classpathentry kind="lib" path="CaixaDeBonus/12345678920230101.dat"/>
 	<classpathentry kind="output" path="bin"/>

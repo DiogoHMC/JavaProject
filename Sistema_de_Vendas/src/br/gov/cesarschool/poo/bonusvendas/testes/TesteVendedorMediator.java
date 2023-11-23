@@ -453,4 +453,3 @@ public class TesteVendedorMediator extends TesteGeral {
 		Assertions.assertEquals(caixaBonusGravada.getSaldo(), caixaBonusOri.getSaldo());		
 	}
 }
-

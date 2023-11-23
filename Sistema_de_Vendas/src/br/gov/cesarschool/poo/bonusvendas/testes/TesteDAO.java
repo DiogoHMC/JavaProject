@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -245,12 +249,25 @@ public class TesteDAO extends TesteGeral {
 		cadastroLanc.incluir(lbc3, lbc3.getIdUnico());
 		DAOGenerico daoLanc = new DAOGenerico(LancamentoBonus.class);
 		Registro[] regs = daoLanc.buscarTodos();
+		List<Registro> listRegs = new ArrayList<Registro>();
+		for (Registro registro : regs) {
+			listRegs.add(registro);
+		}
+		Collections.sort(listRegs,new Comparator<Registro>() {
+			@Override
+			public int compare(Registro o1, Registro o2) {
+				LancamentoBonus l1 = (LancamentoBonus)o1;
+				LancamentoBonus l2 = (LancamentoBonus)o2;
+				return l1.getDataHoraLancamento().compareTo(l2.getDataHoraLancamento());
+			}
+			
+		});
 		Assertions.assertEquals(3, regs.length);
-		Assertions.assertTrue(regs[0] instanceof LancamentoBonusCredito); 
-		Assertions.assertTrue(regs[1] instanceof LancamentoBonusDebito);
-		Assertions.assertTrue(regs[2] instanceof LancamentoBonusCredito);
-		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(regs[0], lbc1));
-		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(regs[1], lbc2));
-		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(regs[2], lbc3));
+		Assertions.assertTrue(listRegs.get(0) instanceof LancamentoBonusCredito); 
+		Assertions.assertTrue(listRegs.get(1) instanceof LancamentoBonusDebito);
+		Assertions.assertTrue(listRegs.get(2) instanceof LancamentoBonusCredito);
+		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(listRegs.get(0), lbc1));
+		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(listRegs.get(1), lbc2));
+		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(listRegs.get(2), lbc3));
 	}	
 }
