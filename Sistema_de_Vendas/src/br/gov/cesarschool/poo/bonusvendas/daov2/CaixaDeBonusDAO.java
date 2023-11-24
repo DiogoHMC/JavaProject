@@ -1,6 +1,8 @@
 package br.gov.cesarschool.poo.bonusvendas.daov2;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 
 public class CaixaDeBonusDAO {
 
@@ -10,24 +12,25 @@ public class CaixaDeBonusDAO {
         dao = new DAOGenerico<>(CaixaDeBonus.class);
     }
 
-	public boolean incluir(CaixaDeBonus caixaBonus) {
+	public void incluir(CaixaDeBonus caixaBonus) throws ExcecaoObjetoJaExistente {
 		String idUnico = caixaBonus.getIdUnico();
 		CaixaDeBonus caixaBonusBusca = buscar(Long.parseLong(idUnico));  
+		
 		if (caixaBonusBusca != null) { 
-			return false;
+			throw new ExcecaoObjetoJaExistente();
 		} else {
 			dao.incluir(caixaBonus);
-			return true;
 		}		 
 	}
-	public boolean alterar(CaixaDeBonus caixaBonus) {
+	
+	public void alterar(CaixaDeBonus caixaBonus) {
 		String idUnico = caixaBonus.getIdUnico();
 		CaixaDeBonus caixaBonusBusca = buscar(Long.parseLong(idUnico));
+		
 		if (caixaBonusBusca == null) {
-			return false;
+			
 		} else {
 			dao.alterar(caixaBonus);
-			return true;
 		}		
 	}
 	
@@ -35,7 +38,13 @@ public class CaixaDeBonusDAO {
 	
 	
 	public CaixaDeBonus buscar(long codigo) {
-		return dao.buscar(String.valueOf(codigo));
+		CaixaDeBonus caixa = dao.buscar(String.valueOf(codigo));
+		
+		if (caixa == null) {
+			
+		}
+		
+		return caixa;
 	}
 	
 	public CaixaDeBonus[] buscarTodos() {
