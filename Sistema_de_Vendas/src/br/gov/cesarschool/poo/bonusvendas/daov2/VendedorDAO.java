@@ -1,6 +1,8 @@
 package br.gov.cesarschool.poo.bonusvendas.daov2;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 
 public class VendedorDAO {
 	
@@ -11,28 +13,34 @@ public class VendedorDAO {
 
 	}
 
-	public boolean incluir(Vendedor vend) {
+	public void incluir(Vendedor vend) throws ExcecaoObjetoJaExistente {
 		String idUnico = vend.getIdUnico();
 		Vendedor vendBusca = buscar(idUnico);  
+		
 		if (vendBusca != null) { 
-			return false;
+			throw new ExcecaoObjetoJaExistente();
 		} else {
 			dao.incluir(vend);
-			return true;
 		}		 
 	}
-	public boolean alterar(Vendedor vend) {
+	public void alterar(Vendedor vend) {
 		String idUnico = vend.getIdUnico();
 		Vendedor vendBusca = buscar(idUnico);
+		
 		if (vendBusca == null) {
-			return false;
+			
 		} else {
 			dao.alterar(vend);
-			return true;
 		}		
 	}
 	public Vendedor buscar(String cpf) {
-		return dao.buscar(cpf);
+		Vendedor vendedor = dao.buscar(cpf);
+		
+		if (vendedor == null) {
+			
+		}
+		
+		return vendedor;
 	}
 	public Vendedor[] buscarTodos() {
 		return dao.buscarTodos();
