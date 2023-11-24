@@ -11,7 +11,7 @@ public class LancamentoBonusDAO {
         this.dao = new DAOGenerico<>(LancamentoBonus.class);
     }
 	
-	public void incluir(LancamentoBonus lancamento) throws ExcecaoObjetoJaExistente {
+	public void incluir(LancamentoBonus lancamento) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
 		String idUnico = lancamento.getIdUnico();
 		LancamentoBonus lancamentoBusca = buscar(idUnico);  
 		
@@ -21,21 +21,21 @@ public class LancamentoBonusDAO {
 			dao.incluir(lancamento);
 		}		 
 	}
-	public void alterar(LancamentoBonus lancamento) {
+	public void alterar(LancamentoBonus lancamento) throws ExcecaoObjetoNaoExistente {
 		String idUnico = lancamento.getIdUnico();
 		LancamentoBonus lancamentoBusca = buscar(idUnico);
 		
 		if (lancamentoBusca == null) {
-		
+			throw new ExcecaoObjetoNaoExistente();
 		} else {
 			dao.alterar(lancamento);
 		}		
 	}
-	public LancamentoBonus buscar(String codigo) {
+	public LancamentoBonus buscar(String codigo) throws ExcecaoObjetoNaoExistente {
 		LancamentoBonus lancamento = dao.buscar(codigo);
 		
 		if (lancamento == null) {
-			
+			throw new ExcecaoObjetoNaoExistente();
 		}
 		
 		return lancamento;
