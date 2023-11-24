@@ -7,9 +7,8 @@ import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 
 public class DAOGenerico<T extends Registro> {
     private CadastroObjetos cadastro;
-    private String nomeEntidade; // Novo atributo privado
+    private String nomeEntidade;
 
-    // Novo construtor com a String como parâmetro adicional
     public DAOGenerico(Class<T> tipo, String nomeEntidade) {
         this.cadastro = new CadastroObjetos(tipo);
         this.nomeEntidade = nomeEntidade;
