@@ -13,7 +13,7 @@ public class VendedorDAO {
 
 	}
 
-	public void incluir(Vendedor vend) throws ExcecaoObjetoJaExistente {
+	public void incluir(Vendedor vend) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
 		String idUnico = vend.getIdUnico();
 		Vendedor vendBusca = buscar(idUnico);  
 		
@@ -23,21 +23,21 @@ public class VendedorDAO {
 			dao.incluir(vend);
 		}		 
 	}
-	public void alterar(Vendedor vend) {
+	public void alterar(Vendedor vend) throws ExcecaoObjetoNaoExistente {
 		String idUnico = vend.getIdUnico();
 		Vendedor vendBusca = buscar(idUnico);
 		
 		if (vendBusca == null) {
-			
+			throw new ExcecaoObjetoNaoExistente();
 		} else {
 			dao.alterar(vend);
 		}		
 	}
-	public Vendedor buscar(String cpf) {
+	public Vendedor buscar(String cpf) throws ExcecaoObjetoNaoExistente {
 		Vendedor vendedor = dao.buscar(cpf);
 		
 		if (vendedor == null) {
-			
+			throw new ExcecaoObjetoNaoExistente();
 		}
 		
 		return vendedor;
