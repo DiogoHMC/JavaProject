@@ -12,7 +12,7 @@ public class CaixaDeBonusDAO {
         dao = new DAOGenerico<>(CaixaDeBonus.class);
     }
 
-	public void incluir(CaixaDeBonus caixaBonus) throws ExcecaoObjetoJaExistente {
+	public void incluir(CaixaDeBonus caixaBonus) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
 		String idUnico = caixaBonus.getIdUnico();
 		CaixaDeBonus caixaBonusBusca = buscar(Long.parseLong(idUnico));  
 		
@@ -23,12 +23,12 @@ public class CaixaDeBonusDAO {
 		}		 
 	}
 	
-	public void alterar(CaixaDeBonus caixaBonus) {
+	public void alterar(CaixaDeBonus caixaBonus) throws ExcecaoObjetoNaoExistente {
 		String idUnico = caixaBonus.getIdUnico();
 		CaixaDeBonus caixaBonusBusca = buscar(Long.parseLong(idUnico));
 		
 		if (caixaBonusBusca == null) {
-			
+			throw new ExcecaoObjetoNaoExistente();
 		} else {
 			dao.alterar(caixaBonus);
 		}		
@@ -37,11 +37,11 @@ public class CaixaDeBonusDAO {
 	
 	
 	
-	public CaixaDeBonus buscar(long codigo) {
+	public CaixaDeBonus buscar(long codigo) throws ExcecaoObjetoNaoExistente {
 		CaixaDeBonus caixa = dao.buscar(String.valueOf(codigo));
 		
 		if (caixa == null) {
-			
+			throw new ExcecaoObjetoNaoExistente();
 		}
 		
 		return caixa;
