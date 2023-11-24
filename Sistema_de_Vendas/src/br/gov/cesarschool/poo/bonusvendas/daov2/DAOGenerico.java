@@ -2,38 +2,44 @@ package br.gov.cesarschool.poo.bonusvendas.daov2;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 
 public class DAOGenerico<T extends Registro> {
     private CadastroObjetos cadastro;
+    private String nomeEntidade;
 
-    public DAOGenerico(Class<T> tipo) {
+    public DAOGenerico(Class<T> tipo, String nomeEntidade) {
         this.cadastro = new CadastroObjetos(tipo);
+        this.nomeEntidade = nomeEntidade;
     }
 
-    public boolean incluir(T reg) {
+    public void incluir(T reg) throws ExcecaoObjetoJaExistente {
         String idUnico = reg.getIdUnico();
         T regBusca = buscar(idUnico);
         if (regBusca != null) {
-            return false;
+            throw new ExcecaoObjetoJaExistente(nomeEntidade + " ja existente");
         } else {
             cadastro.incluir(reg, idUnico);
-            return true;
         }
     }
 
-    public boolean alterar(T reg) {
+    public void alterar(T reg) throws ExcecaoObjetoNaoExistente {
         String idUnico = reg.getIdUnico();
         T regBusca = buscar(idUnico);
         if (regBusca == null) {
-            return false;
+            throw new ExcecaoObjetoNaoExistente(nomeEntidade + " nao existente");
         } else {
             cadastro.alterar(reg, idUnico);
-            return true;
         }
     }
 
-    public T buscar(String id) {
-        return (T) cadastro.buscar(id);
+    public T buscar(String id) throws ExcecaoObjetoNaoExistente {
+        T objeto = (T) cadastro.buscar(id);
+        if (objeto == null) {
+            throw new ExcecaoObjetoNaoExistente(nomeEntidade + " nao existente");
+        }
+        return objeto;
     }
 
     public T[] buscarTodos() {
