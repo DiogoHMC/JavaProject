@@ -3,7 +3,7 @@ package br.gov.cesarschool.poo.bonusvendas.excecoes;
 public class ExcecaoObjetoJaExistente extends Exception {
 
 	public ExcecaoObjetoJaExistente() {
-        super("Objeto já existente");
+        super("Objeto ja existente");
     }
 
     public ExcecaoObjetoJaExistente(String mensagem) {
