@@ -8,7 +8,7 @@ public class LancamentoBonusDAO {
 	private DAOGenerico<LancamentoBonus> dao;
 	
 	public LancamentoBonusDAO() {
-        this.dao = new DAOGenerico<>(LancamentoBonus.class);
+        this.dao = new DAOGenerico<>(LancamentoBonus.class, "Lancamento");
     }
 	
 	public void incluir(LancamentoBonus lancamento) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
