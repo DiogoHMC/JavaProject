@@ -9,7 +9,7 @@ public class CaixaDeBonusDAO {
 	private DAOGenerico<CaixaDeBonus> dao;
 
     public CaixaDeBonusDAO() {
-        dao = new DAOGenerico<>(CaixaDeBonus.class);
+        dao = new DAOGenerico<>(CaixaDeBonus.class, "Caixa");
     }
 
 	public void incluir(CaixaDeBonus caixaBonus) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
