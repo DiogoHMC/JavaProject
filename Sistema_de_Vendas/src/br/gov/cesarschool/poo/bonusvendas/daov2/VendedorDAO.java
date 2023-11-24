@@ -9,7 +9,7 @@ public class VendedorDAO {
 	private DAOGenerico<Vendedor> dao;
 
     public VendedorDAO() {
-        dao = new DAOGenerico<>(Vendedor.class);
+        dao = new DAOGenerico<>(Vendedor.class, "Vendedor");
 
 	}
 
