@@ -6,6 +6,7 @@ public class CaixaDeBonus extends Registro {
 	private long numero; 
 	private double saldo; 
 	private LocalDateTime dataHoraAtualizacao;
+	public int length;
 
 	@Override
 	public String getIdUnico() {

@@ -14,6 +14,8 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusDebito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorCaixaDeBonusSaldoDec;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorLancamentoBonusDHDec;
 import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 
 
@@ -116,7 +118,7 @@ public class AcumuloResgateMediator {
 	}
 	
 	
-	 LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
+	 public LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
 
 	        LancamentoBonusDAO lancamentoBonusDAO = new LancamentoBonusDAO();
 

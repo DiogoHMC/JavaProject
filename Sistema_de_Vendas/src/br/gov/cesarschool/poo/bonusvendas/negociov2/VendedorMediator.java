@@ -9,6 +9,7 @@ import br.gov.cesarschool.poo.bonusvendas.negocio.AcumuloResgateMediator;
 import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorVendedorNome;
 import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorVendedorRenda;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -28,7 +29,7 @@ public class VendedorMediator {
 		caixaDeBonusMediator = AcumuloResgateMediator.getInstancia();
 	}
 	
-	public ResultadoInclusaoVendedor incluir(Vendedor vendedor) {
+	public long incluir(Vendedor vendedor) {
 		long numeroCaixaBonus = 0;
 		String msg = validar(vendedor);
 		if (msg == null) {
@@ -42,7 +43,7 @@ public class VendedorMediator {
 				}
 			}
 		}
-		return new ResultadoInclusaoVendedor(numeroCaixaBonus, msg);
+		return numeroCaixaBonus;
 	}
 	
 	/* New Methods */ 
@@ -140,6 +141,11 @@ public class VendedorMediator {
 	private boolean dataNascimentoInvalida(LocalDate dataNasc) {
 		long yearsDifference = ChronoUnit.YEARS.between(dataNasc, LocalDate.now());
 		return yearsDifference < 17;
+	}
+
+	public void buscar(String outroCpfValido) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -6,35 +6,37 @@ import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 
 public class VendedorDAO {
 	
-	private DAOGenerico<Vendedor> dao;
+	private DAOGenerico dao;
 
     public VendedorDAO() {
-        dao = new DAOGenerico<>(Vendedor.class, "Vendedor");
+        this.dao = new DAOGenerico(Vendedor.class, "Vendedor");
 
 	}
 
 	public void incluir(Vendedor vend) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
 		String idUnico = vend.getIdUnico();
-		Vendedor vendBusca = buscar(idUnico);  
 		
-		if (vendBusca != null) { 
+		try { 
+			buscar(idUnico); 
 			throw new ExcecaoObjetoJaExistente();
-		} else {
+		} catch (ExcecaoObjetoJaExistente e) {
 			dao.incluir(vend);
 		}		 
 	}
+	
 	public void alterar(Vendedor vend) throws ExcecaoObjetoNaoExistente {
 		String idUnico = vend.getIdUnico();
-		Vendedor vendBusca = buscar(idUnico);
 		
-		if (vendBusca == null) {
+		try {
+			buscar(idUnico);
 			throw new ExcecaoObjetoNaoExistente();
-		} else {
+		} catch (ExcecaoObjetoNaoExistente e) {
 			dao.alterar(vend);
 		}		
 	}
+	
 	public Vendedor buscar(String cpf) throws ExcecaoObjetoNaoExistente {
-		Vendedor vendedor = dao.buscar(cpf);
+		Vendedor vendedor = (Vendedor) dao.buscar(cpf);
 		
 		if (vendedor == null) {
 			throw new ExcecaoObjetoNaoExistente();
@@ -43,6 +45,15 @@ public class VendedorDAO {
 		return vendedor;
 	}
 	public Vendedor[] buscarTodos() {
-		return dao.buscarTodos();
+		return (Vendedor[]) dao.buscarTodos();
 	}
+	
+	 public boolean existeVendedor(String cpf) {
+        try {
+            buscar(cpf);
+            return true;
+        } catch (ExcecaoObjetoNaoExistente e) {
+            return false;
+        }
+	 }
 }

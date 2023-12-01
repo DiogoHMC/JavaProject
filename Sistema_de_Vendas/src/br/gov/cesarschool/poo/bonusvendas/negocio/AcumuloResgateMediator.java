@@ -116,7 +116,7 @@ public class AcumuloResgateMediator {
 	}
 	
 	
-	 LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
+	 public LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
 
 	        LancamentoBonusDAO lancamentoBonusDAO = new LancamentoBonusDAO();
 

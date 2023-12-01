@@ -5,9 +5,11 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
 
 public class DAOGenerico<T extends Registro> {
     private CadastroObjetos cadastro;
+    private Class<?> tipo;
 
     public DAOGenerico(Class<T> tipo) {
         this.cadastro = new CadastroObjetos(tipo);
+        this.tipo = tipo;
     }
 
     public boolean incluir(T reg) {
@@ -38,7 +40,7 @@ public class DAOGenerico<T extends Registro> {
 
     public T[] buscarTodos() {
         Object[] rets = cadastro.buscarTodos();
-        T[] regs = (T[]) java.lang.reflect.Array.newInstance(cadastro.getTipo(), rets.length);
+        T[] regs = (T[]) java.lang.reflect.Array.newInstance(tipo, rets.length);
         for (int i = 0; i < rets.length; i++) {
             regs[i] = (T) rets[i];
         }
