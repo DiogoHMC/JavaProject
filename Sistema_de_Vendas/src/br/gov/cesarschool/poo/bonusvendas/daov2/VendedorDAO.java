@@ -1,59 +1,43 @@
 package br.gov.cesarschool.poo.bonusvendas.daov2;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
+
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 
 public class VendedorDAO {
+	DAOGenerico dao;
 	
-	private DAOGenerico dao;
-
-    public VendedorDAO() {
+	public VendedorDAO() {
         this.dao = new DAOGenerico(Vendedor.class, "Vendedor");
+    }
 
-	}
+    public void incluir(Vendedor vend) throws ExcecaoObjetoJaExistente {
+        dao.incluir(vend);
+    }
 
-	public void incluir(Vendedor vend) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
-		String idUnico = vend.getIdUnico();
-		
-		try { 
-			buscar(idUnico); 
-			throw new ExcecaoObjetoJaExistente();
-		} catch (ExcecaoObjetoJaExistente e) {
-			dao.incluir(vend);
-		}		 
-	}
+    public void alterar(Vendedor vend) throws ExcecaoObjetoNaoExistente {
+        dao.alterar(vend);
+    }
+
+    public Vendedor buscar(String cpf) throws ExcecaoObjetoNaoExistente {
+        return (Vendedor) dao.buscar(cpf);
+    }
 	
-	public void alterar(Vendedor vend) throws ExcecaoObjetoNaoExistente {
-		String idUnico = vend.getIdUnico();
+	public Vendedor[] buscarTodos() {
+		Registro[] regs = dao.buscarTodos();
+		Vendedor[] vend = new Vendedor[regs.length];
 		
-		try {
-			buscar(idUnico);
-			throw new ExcecaoObjetoNaoExistente();
-		} catch (ExcecaoObjetoNaoExistente e) {
-			dao.alterar(vend);
-		}		
-	}
-	
-	public Vendedor buscar(String cpf) throws ExcecaoObjetoNaoExistente {
-		Vendedor vendedor = (Vendedor) dao.buscar(cpf);
-		
-		if (vendedor == null) {
-			throw new ExcecaoObjetoNaoExistente();
+		for (int i = 0; i < regs.length; i++) {
+		    if (regs[i] instanceof Vendedor) {
+		        vend[i] = (Vendedor) regs[i];
+		    } else {
+		        System.out.println("errou");
+		    }
 		}
 		
-		return vendedor;
-	}
-	public Vendedor[] buscarTodos() {
-		return (Vendedor[]) dao.buscarTodos();
-	}
-	
-	 public boolean existeVendedor(String cpf) {
-        try {
-            buscar(cpf);
-            return true;
-        } catch (ExcecaoObjetoNaoExistente e) {
-            return false;
-        }
-	 }
+		return vend;
+	} 
+
 }

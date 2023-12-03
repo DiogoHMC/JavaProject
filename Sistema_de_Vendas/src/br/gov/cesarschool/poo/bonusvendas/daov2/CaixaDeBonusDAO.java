@@ -1,42 +1,45 @@
 package br.gov.cesarschool.poo.bonusvendas.daov2;
 
-import java.io.Serializable;
-
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
-import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+
+
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 
 public class CaixaDeBonusDAO {
-	private DAOGenericoTp<CaixaDeBonus> dao; 
-
-    public CaixaDeBonusDAO() {
-        this.dao = new DAOGenericoTp<>(CaixaDeBonusDAO.class, "Caixa");
+	DAOGenerico dao;
+	
+	public CaixaDeBonusDAO() {
+        this.dao = new DAOGenerico(CaixaDeBonus.class, "Caixa");
     }
-
-    public void incluir(CaixaDeBonus caixa) throws ExcecaoObjetoJaExistente {
-    	dao.incluir(caixa);
+	
+	public void incluir(CaixaDeBonus caixa) throws ExcecaoObjetoJaExistente {
+        dao.incluir(caixa);
     }
 
     public void alterar(CaixaDeBonus caixa) throws ExcecaoObjetoNaoExistente {
         dao.alterar(caixa);
     }
-
-    public void excluir(long numero) throws ExcecaoObjetoNaoExistente {
-    	dao.excluir(numero + "");
-    }
-
+    
     public CaixaDeBonus buscar(long numero) throws ExcecaoObjetoNaoExistente {
-    	return dao.buscar(numero + "");
+        String id = Long.toString(numero);
+        return (CaixaDeBonus) dao.buscar(id);
     }
+	
+	public CaixaDeBonus[] buscarTodos() {
+		Registro[] regs = dao.buscarTodos();
+		CaixaDeBonus[] caixa = new CaixaDeBonus[regs.length];
+		
+		for (int i = 0; i < regs.length; i++) {
+		    if (regs[i] instanceof CaixaDeBonus) {
+		        caixa[i] = (CaixaDeBonus) regs[i];
+		    } else {
+		        System.out.println("errou");
+		    }
+		}
+		
+		return caixa;
+	} 
 
-    public CaixaDeBonus[] buscarTodos() {
-        CaixaDeBonus[] rets = dao.buscarTodos();
-        CaixaDeBonus[] caixas = new CaixaDeBonus[rets.length];
-        for(int i=0; i<rets.length; i++) {
-            caixas[i] = rets[i];
-        }
-        return caixas;
-    } 
 }

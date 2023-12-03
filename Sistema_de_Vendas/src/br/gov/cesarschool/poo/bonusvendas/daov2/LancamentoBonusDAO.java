@@ -1,47 +1,45 @@
 package br.gov.cesarschool.poo.bonusvendas.daov2;
 
+
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
-import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
+
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 
 public class LancamentoBonusDAO {
-	private DAOGenerico dao;
+	DAOGenerico dao;
 	
 	public LancamentoBonusDAO() {
         this.dao = new DAOGenerico(LancamentoBonus.class, "Lancamento");
     }
 	
-	public void incluir(LancamentoBonus lancamento) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
-		String idUnico = lancamento.getIdUnico();
-		LancamentoBonus lancamentoBusca = buscar(idUnico);  
+	public void incluir(LancamentoBonus lanc) throws ExcecaoObjetoJaExistente {
+        dao.incluir(lanc);
+    }
+
+    public void alterar(LancamentoBonus lanc) throws ExcecaoObjetoNaoExistente {
+        dao.alterar(lanc);
+    }
+
+    public LancamentoBonus buscar(String id) throws ExcecaoObjetoNaoExistente {
+        return (LancamentoBonus) dao.buscar(id);
+    }
+	
+	public LancamentoBonus[] buscarTodos() {
+		Registro[] regs = dao.buscarTodos();
+		LancamentoBonus[] lanc = new LancamentoBonus[regs.length];
 		
-		if (lancamentoBusca != null) { 
-			throw new ExcecaoObjetoJaExistente();
-		} else {
-			dao.incluir(lancamento);
-		}		 
-	}
-	public void alterar(LancamentoBonus lancamento) throws ExcecaoObjetoNaoExistente {
-		String idUnico = lancamento.getIdUnico();
-		LancamentoBonus lancamentoBusca = buscar(idUnico);
-		
-		if (lancamentoBusca == null) {
-			throw new ExcecaoObjetoNaoExistente();
-		} else {
-			dao.alterar(lancamento);
-		}		
-	}
-	public LancamentoBonus buscar(String codigo) throws ExcecaoObjetoNaoExistente {
-		LancamentoBonus lancamento = (LancamentoBonus) dao.buscar(codigo);
-		
-		if (lancamento == null) {
-			throw new ExcecaoObjetoNaoExistente();
+		for (int i = 0; i < regs.length; i++) {
+		    if (regs[i] instanceof LancamentoBonus) {
+		        lanc[i] = (LancamentoBonus) regs[i];
+		    } else {
+		        System.out.println("errou");
+		    }
 		}
 		
-		return lancamento;
-	}
-	public LancamentoBonus[] buscarTodos() {
-		return (LancamentoBonus[]) dao.buscarTodos();
+		return lanc;
 	} 
-
+	
+	
 }

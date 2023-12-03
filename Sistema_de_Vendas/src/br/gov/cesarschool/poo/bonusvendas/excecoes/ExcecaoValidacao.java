@@ -5,28 +5,20 @@ import java.util.List;
 
 public class ExcecaoValidacao extends Exception {
 
-	/**
+    /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<ErroValidacao> errosValidacao;
-	
-	// Construtor que aceita uma mensagem
-    public ExcecaoValidacao(String mensagem) {
-        super(mensagem);
-        this.errosValidacao = new ArrayList<>();
+	private List<ErroValidacao> errosValidacao = new ArrayList<>();
+
+    public ExcecaoValidacao(String message) {
+        super(message);
     }
 
-    // Construtor que aceita uma lista de erros
     public ExcecaoValidacao(List<ErroValidacao> errosValidacao) {
-        super("Erros na validação");
-        this.errosValidacao = (errosValidacao != null) ? new ArrayList<>(errosValidacao) : new ArrayList<>();
-    }
-
-    // Construtor que aceita uma mensagem e uma causa (exceção anterior)
-    public ExcecaoValidacao(String mensagem, Throwable causa) {
-        super(mensagem, causa);
-        this.errosValidacao = new ArrayList<>();
+        if (errosValidacao != null) {
+            this.errosValidacao = errosValidacao;
+        }
     }
 
     public List<ErroValidacao> getErrosValidacao() {

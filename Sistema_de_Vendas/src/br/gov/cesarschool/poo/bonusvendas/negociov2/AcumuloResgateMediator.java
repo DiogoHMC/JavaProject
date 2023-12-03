@@ -2,12 +2,12 @@ package br.gov.cesarschool.poo.bonusvendas.negociov2;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
-import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
+
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
@@ -18,124 +18,132 @@ import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorCaixaDeBonusSaldoDec
 import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorLancamentoBonusDHDec;
 import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 
+import br.gov.cesarschool.poo.bonusvendas.daov2.CaixaDeBonusDAO;
+import br.gov.cesarschool.poo.bonusvendas.daov2.LancamentoBonusDAO;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoValidacao;
 
 public class AcumuloResgateMediator {
-	private static final String CAIXA_DE_BONUS_INEXISTENTE = "Caixa de bonus inexistente";
-	private static final String VALOR_MENOR_OU_IGUAL_A_ZERO = "Valor menor ou igual a zero";
-	private static AcumuloResgateMediator instancia;
-	public static AcumuloResgateMediator getInstancia() {
-		if (instancia == null) {
-			instancia = new AcumuloResgateMediator();
-		}
-		return instancia;
-	}
+	//Attributes
 	private CaixaDeBonusDAO repositorioCaixaDeBonus;
 	private LancamentoBonusDAO repositorioLancamento;
-	private AcumuloResgateMediator() {
-		repositorioCaixaDeBonus = new CaixaDeBonusDAO();
-		repositorioLancamento = new LancamentoBonusDAO();
-	}
-	public long gerarCaixaDeBonus(Vendedor vendedor) {
-		LocalDate dataAtual = LocalDate.now();
-		DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-		long numero = Long.parseLong(vendedor.getCpf().substring(0, 9) + 
-				dataAtual.format(customFormatter));
-		CaixaDeBonus caixa = new CaixaDeBonus(numero);
-		boolean ret = repositorioCaixaDeBonus.incluir(caixa);
-		if (ret) {
-			return numero;
-		} else {
-			return 0;
-		}		 
-	}
-	public String acumularBonus(long numeroCaixaDeBonus, double valor) {
-		if (valor <= 0) {
-			return VALOR_MENOR_OU_IGUAL_A_ZERO; 
-		} 
-		CaixaDeBonus caixa = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
-		if (caixa == null) {
-			return CAIXA_DE_BONUS_INEXISTENTE;
-		} 
-		caixa.creditar(valor);
-		repositorioCaixaDeBonus.alterar(caixa);
-		LancamentoBonusCredito lancamento = new LancamentoBonusCredito(numeroCaixaDeBonus, valor, LocalDateTime.now());
-		repositorioLancamento.incluir(lancamento);
-		return null;
-	}
-	public String resgatar(long numeroCaixaDeBonus, double valor, TipoResgate tipoResgate) {
-		if (valor <= 0) {
-			return VALOR_MENOR_OU_IGUAL_A_ZERO; 
-		} 
-		CaixaDeBonus caixa = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
-		if (caixa == null) {
-			return CAIXA_DE_BONUS_INEXISTENTE;
-		} 
-		if (caixa.getSaldo() < valor) {
-			return "Saldo insuficiente";
-		}
-		caixa.debitar(valor);
-		repositorioCaixaDeBonus.alterar(caixa);
-		LancamentoBonusDebito lancamento = new LancamentoBonusDebito(numeroCaixaDeBonus, valor, LocalDateTime.now(), tipoResgate);
-		repositorioLancamento.incluir(lancamento);
-		return null;
-	}
 	
+			//Singleton
+	private static AcumuloResgateMediator instance;
+	
+	
+	//Constructor
+	public AcumuloResgateMediator() {
+        this.repositorioCaixaDeBonus = new CaixaDeBonusDAO();
+        this.repositorioLancamento = new LancamentoBonusDAO();
+    }
+	
+			//Singleton
+	public static AcumuloResgateMediator getInstancia() {
+        if (instance == null) {
+            instance = new AcumuloResgateMediator();
+        }
+        return instance;
+    }
+
+	
+	//Methods
+	public long gerarCaixaDeBonus(Vendedor vendedor) throws ExcecaoObjetoJaExistente {
+   
+        // format
+        LocalDate dataAtual = LocalDate.now();
+        int ano = dataAtual.getYear();
+        int mes = dataAtual.getMonthValue();
+        int dia = dataAtual.getDayOfMonth();
+        String codigo = vendedor.getCpf().substring(0, 9) + String.format("%04d%02d%02d", ano, mes, dia);
+        long numCaixa = Long.parseLong(codigo);
+
+        // create
+        CaixaDeBonus caixa = new CaixaDeBonus(numCaixa);
+        repositorioCaixaDeBonus.incluir(caixa);
+        return numCaixa;
+    }
+	
+	public void acumularBonus(long numeroCaixaDeBonus, double valor) throws ExcecaoObjetoNaoExistente, ExcecaoValidacao {
+        if (valor <= 0) {
+            throw new ExcecaoValidacao("Valor menor ou igual a zero");
+        }
+
+        CaixaDeBonus caixa = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
+        caixa.creditar(valor);
+        repositorioCaixaDeBonus.alterar(caixa);
+
+        LancamentoBonusCredito lancamentoCredito = new LancamentoBonusCredito(numeroCaixaDeBonus, valor, LocalDateTime.now());
+        try {
+            repositorioLancamento.incluir(lancamentoCredito);
+        } catch (ExcecaoObjetoJaExistente e) {
+            throw new ExcecaoValidacao("Inconsistencia no cadastro de lancamento");
+        }
+    }
+	
+	public void resgatar(long numeroCaixaDeBonus, double valor, TipoResgate tipo) throws ExcecaoObjetoNaoExistente, ExcecaoValidacao {
+        if (valor <= 0) {
+            throw new ExcecaoValidacao("Valor menor ou igual a zero");
+        }
+
+        CaixaDeBonus caixa = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
+        if (caixa.getSaldo() < valor) {
+            throw new ExcecaoValidacao("Saldo insuficiente");
+        }
+
+        caixa.debitar(valor);
+        repositorioCaixaDeBonus.alterar(caixa);
+
+        LancamentoBonusDebito lancamentoDebito = new LancamentoBonusDebito(numeroCaixaDeBonus, valor, LocalDateTime.now(), tipo);
+        try {
+            repositorioLancamento.incluir(lancamentoDebito);
+        } catch (ExcecaoObjetoJaExistente e) {
+            throw new ExcecaoValidacao("Inconsistencia no cadastro de lancamento");
+        }
+    }
+
+	public CaixaDeBonus buscar(long numeroCaixaDeBonus) throws ExcecaoObjetoNaoExistente {
+	    return repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
+	}
+
+	
+	
+
+
 	public CaixaDeBonus[] listaCaixaDeBonusPorSaldoMaior(double saldoInicial) {
+	    CaixaDeBonus[] caixas = repositorioCaixaDeBonus.buscarTodos();
 	    
-	    CaixaDeBonusDAO caixaDeBonusDao = new CaixaDeBonusDAO();
-	    
-	    CaixaDeBonus[] listaDeCaixaDeBonus = caixaDeBonusDao.buscarTodos();
+	    List<CaixaDeBonus> filteredCaixas = new ArrayList<>();
 
-	    CaixaDeBonus[] caixasFiltradas = filtrarPorSaldoMaiorOuIgual(listaDeCaixaDeBonus, saldoInicial);
+	    for (CaixaDeBonus caixa : caixas) {
+	        if (caixa.getSaldo() >= saldoInicial) {
+	            filteredCaixas.add(caixa);
+	        }
+	    }
 
-	    Ordenadora.ordenar(caixasFiltradas, ComparadorCaixaDeBonusSaldoDec.getInstance());
+	    CaixaDeBonus[] result = filteredCaixas.toArray(new CaixaDeBonus[0]);
 
-	    //array ordenado
-	    return caixasFiltradas;
+	    Ordenadora.ordenar(result, ComparadorCaixaDeBonusSaldoDec.getInstance());
+
+	    return result;
 	}
 
-	// Método auxiliar para filtrar caixas de bônus por saldo maior ou igual a um valor
-	private CaixaDeBonus[] filtrarPorSaldoMaiorOuIgual(CaixaDeBonus[] caixas, double saldo) {
-		
+	  public LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
+	    LancamentoBonus[] todosLancamentos = repositorioLancamento.buscarTodos();
+	    LancamentoBonus[] lancamentosFiltradosTemp = new LancamentoBonus[todosLancamentos.length];
+
 	    int count = 0;
-	    for (CaixaDeBonus caixa : caixas) {
-	        if (caixa.getSaldo() >= saldo) {
-	            count++;
+	    for (LancamentoBonus lancamento : todosLancamentos) {
+	        if (!lancamento.getDataHoraLancamento().toLocalDate().isBefore(d1) &&
+	            !lancamento.getDataHoraLancamento().toLocalDate().isAfter(d2)) {
+	            lancamentosFiltradosTemp[count++] = lancamento;
 	        }
 	    }
-	    
-	    CaixaDeBonus[] caixasFiltradas = new CaixaDeBonus[count];
+	    LancamentoBonus[] lancamentosFiltrados = new LancamentoBonus[count];
+	    System.arraycopy(lancamentosFiltradosTemp, 0, lancamentosFiltrados, 0, count);
+	    Collections.sort(Arrays.asList(lancamentosFiltrados), ComparadorLancamentoBonusDHDec.getInstance());
 
-	    // Preencher o novo array com as caixas que atendem ao critério
-	    int index = 0;
-	    for (CaixaDeBonus caixa : caixas) {
-	        if (caixa.getSaldo() >= saldo) {
-	            caixasFiltradas[index++] = caixa;
-	        }
-	    }
-
-	    return caixasFiltradas;
+	    return lancamentosFiltrados;
 	}
-	
-	
-	 public LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
-
-	        LancamentoBonusDAO lancamentoBonusDAO = new LancamentoBonusDAO();
-
-	        LancamentoBonus[] listaDeLancamento = lancamentoBonusDAO.buscarTodos();
-
-	        // Filtrar os lançamentos pela faixa de datas
-	        LancamentoBonus[] lancamentosFiltrados = Arrays.stream(listaDeLancamento)
-	                .filter(l -> l.getDataHoraLancamento().toLocalDate().compareTo(d1) >= 0
-	                        && l.getDataHoraLancamento().toLocalDate().compareTo(d2) <= 0)
-	                .toArray(LancamentoBonus[]::new);
-
-	        // Ordenar os lançamentos filtrados usando Arrays.sort
-	        Arrays.sort(lancamentosFiltrados, Collections.reverseOrder(ComparadorLancamentoBonusDHDec.getInstance()));
-
-	        // Retornar o array ordenado
-	        return lancamentosFiltrados;
-	    }
-
-	
-}
+	}
