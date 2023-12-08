@@ -2,7 +2,7 @@
 
 Projeto em desenvolvimento para disciplina POO - Programação Orientada a Objeto - do curso de Ciência de Computação da Faculdade CESAR School. **Sistema de Vendas** é um sistema de controle de bonificação em vendas que permitirá que o vendedor acumule bônus proporcional às suas vendas e estes bônus poderão ser resgatados para compra de produtos, serviços ou saque em cash. 
 
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+![Badge Concluído](http://img.shields.io/static/v1?label=STATUS&message=CONCLU%C3%8DDO&color=BLUE&style=for-the-badge)
 
 # Tecnologias utilizadas
 * Java
